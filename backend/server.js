@@ -1,6 +1,10 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+require('dotenv').config()
+const connectDB = require('./config/db')
+
+
 
 // mongoose.connect("mongodb://localhost/productsWithReviewsTest", {
 //   useNewUrlParser: true,
@@ -8,6 +12,9 @@ const bodyParser = require("body-parser");
 // });
 
 const app = express();
+
+connectDB()
+
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");

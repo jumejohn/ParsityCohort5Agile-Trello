@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-// router.get("/generate-fake-data", (req,res,next) => {
+router.get("/generate-fake-data", (req,res,next) => {
 //   let org = new Organization()
 //   org.orgName = "Parsity"
 //   org.orgOwner = "John Smith"
@@ -34,7 +34,9 @@ router.get('/', function(req, res, next) {
 //   user.save((err) => {
 //     if(err) throw err
 //   })
-//   res.end()
-// })
+
+  
+  res.end()
+})
 
 module.exports = router;
