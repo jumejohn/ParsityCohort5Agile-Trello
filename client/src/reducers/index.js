@@ -2,6 +2,7 @@
 // so we shouldn't need separate reducers?
 const initialState = {
   isLoggedIn: false,
+  token: localStorage.token
 };
 
 const reducer = (state = initialState, action) => {
@@ -11,7 +12,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         isLoggedIn: true,
-        user: action.payload,
+        token: action.payload.token,
       };
     }
     default:
