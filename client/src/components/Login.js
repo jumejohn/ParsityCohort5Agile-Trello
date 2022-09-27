@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { handleLogin } from "../actions/Login";
+import { useNavigate } from "react-router-dom";
 
 // hardcoded users for now
 const users = [
@@ -16,10 +17,24 @@ const users = [
     password: "password",
   }
 ];
+const org1 = {
+  _id: "12345",
+  orgName: "test organization",
+  orgOwner: "tester1",
+  orgBoards: [],
+};
+const board1 = {
+  boardname: "Todo",
+  users: [],
+  lists: [],
+};
+org1.orgBoards.push(board1);
+users[0].organization.push(org1);
 
 const Login = () => {
   const isLoggedIn = useSelector(state => state.reducer.isLoggedIn);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
 
   const onSubmit = (data) => {
@@ -29,7 +44,8 @@ const Login = () => {
     console.log(data);
     let validUser = users.find(user => user.username === data.username && user.password === data.password);
     if (validUser) {
-      dispatch(handleLogin(validUser));
+      dispatch(handleLogin(validUser))
+        .then(navigate("/"));
     } else {
       alert("Invalid username/password");
     }
