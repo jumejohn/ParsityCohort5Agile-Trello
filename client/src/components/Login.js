@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 // hardcoded users for now
 const users = [
   {
-    username: "tester2",
+    username: "",
     firstname: "Mark",
     lastname: "Cook",
     email: "mark.cook@email.com",
@@ -14,7 +14,7 @@ const users = [
     avatarUrl: "https://thumbs.dreamstime.com/z/cool-kid-10482439.jpg",
     contacts: [],
     organization: [],
-    password: "password",
+    password: "",
   }
 ];
 const org1 = {
@@ -28,6 +28,13 @@ const board1 = {
   users: [],
   lists: [],
 };
+org1.orgBoards.push(board1);
+org1.orgBoards.push(board1);
+org1.orgBoards.push(board1);
+org1.orgBoards.push(board1);
+org1.orgBoards.push(board1);
+org1.orgBoards.push(board1);
+org1.orgBoards.push(board1);
 org1.orgBoards.push(board1);
 users[0].organization.push(org1);
 
