@@ -1,7 +1,17 @@
-export const handleLogin = (userData) => {
+import axios from "axios";
+import { HANDLE_LOGIN } from "./types";
+export const handleLogin = (userData) => (dispatch) => {
+  const url = `http://localhost:8000/auth/signin`;
+  const user = {
+    userData,
+  };
 
-  return {
-    type: "HANDLE_LOGIN",
-    payload: userData,
-  }
+  axios.post(url, user).then(function (response) {
+    dispatch({
+      type: HANDLE_LOGIN,
+      payload: response.data,
+    });
+    console.log(response.data);
+    localStorage.setItem("token", response.data.token);
+  });
 };
