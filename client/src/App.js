@@ -4,9 +4,7 @@ import { Navigate } from "react-router-dom";
 import Workspace from "./components/Workspace";
 
 const App = () => {
-  const isLoggedIn = useSelector((state) => state.reducer.isLoggedIn);
-
-  if (!isLoggedIn) {
+  if (!localStorage.token) {
     return <Navigate to="/login" />;
   }
 
