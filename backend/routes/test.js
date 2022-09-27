@@ -9,10 +9,10 @@ const { route } = require('./main');
 
 router.get('/cards', (req, res, next) => {
   let card = new Card()
-  card.cardData = [{
-    cardName: "card2",
-    data: "Humblebrag artisan austin before they sold out umami. Ugh man braid enamel pin hell of, cronut poutine man bun franzen single-origin coffee mumblecore. VHS affogato fanny pack snackwave, biodiesel +1 messenger bag helvetica four dollar toast activated charcoal chia. Fanny pack yuccie ethical ennui. Tbh marfa tumeric forage iPhone enamel pin tote bag semiotics vegan kale chips offal shoreditch cardigan bruh taiyaki. Humblebrag normcore post-ironic pug art party roof party"
-  }]
+  card.cardTitle = "card1"
+  card.cardLabel = "test card 1"
+  card.cardDescription = "Polaroid man braid kombucha twee jean shorts semiotics. Godard poutine poke, same bushwick man bun portland blue bottle hashtag pug gentrify migas DSA. Thundercats mixtape quinoa austin master cleanse, plaid kitsch. Artisan kinfolk fanny pack, selfies VHS roof party pabst paleo vibecession before they sold out crucifix iceland man braid waistcoat unicorn. Big mood hot chicken fashion axe subway tile, gluten-free single-origin coffee palo santo quinoa unicorn stumptown etsy tumblr next level. Photo booth snackwave chicharrones XOXO semiotics humblebrag, gatekeep irony normcore polaroid chia."
+  
   card.save((err) => {
     if(err) throw err
   })
