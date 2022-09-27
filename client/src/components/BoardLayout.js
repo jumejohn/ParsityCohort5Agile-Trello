@@ -1,12 +1,12 @@
 import React from "react";
 
-const Display = () => {
+const BoardLayout = () => {
 
   return (
     <div>
-      Placeholder
+      Board
     </div>
   )
 };
 
-export default Display;
+export default BoardLayout;

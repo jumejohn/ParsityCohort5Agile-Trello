@@ -1,3 +1,4 @@
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { handleLogin } from "../actions/Login";
@@ -24,9 +25,22 @@ const org1 = {
   orgBoards: [],
 };
 const board1 = {
-  boardname: "Todo",
+  boardname: "Test Board",
   users: [],
-  lists: [],
+  lists: [
+    {
+      _id: "1",
+      listName: "todos",
+      cards: [
+        {
+          cardTitle: "Clean Room",
+        },
+        {
+          cardTitle: "Wash Dishes"
+        }
+      ],
+    }
+  ],
 };
 org1.orgBoards.push(board1);
 users[0].organization.push(org1);
