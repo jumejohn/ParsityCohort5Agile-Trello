@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 
 const Header = () => {
-  const name = useSelector(state => state.reducer.user.firstname);
+  const name = useSelector(state => state.reducer.user.organization[0].orgName);
 
   return (
     <nav className="navbar">
