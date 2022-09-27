@@ -9,8 +9,8 @@ const UserSchema = new Schema({
   email: {type: String, required: true, unique: true},
   phone: {type: Number, required: false},
   avatarUrl: {type: String, required: false},
-  contacts: [],
-  organization: [],
+  contacts: [{type: Schema.Types.ObjectId, ref: "User"}],
+  organization: {type:Schema.Types.ObjectId, ref: "Organization"},
   password: {type: String, required: true}
 })
 
