@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 require('dotenv').config()
 const mongoConnection = process.env.ATLAS_URI
-console.log(mongoConnection)
 
 const connectDB = async () => {
   try {
