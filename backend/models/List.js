@@ -3,8 +3,8 @@ const BoardSchema = require("./Board")
 const Schema = mongoose.Schema
 
 const ListSchema = new Schema({
-  boardName: {type: String, required: true},
-  boards: [],
+  listName: {type: String, required: true},
+  cards: [{type: Schema.Types.ObjectId, ref: "Card"}],
 })
 
 module.exports = mongoose.model("List", ListSchema)

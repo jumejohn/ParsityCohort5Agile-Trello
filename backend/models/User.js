@@ -7,10 +7,10 @@ const UserSchema = new Schema({
   firstname: {type: String, required: true},
   lastname: {type: String, required: true},
   email: {type: String, required: true, unique: true},
-  phone: {type: Number, required: false},
+  phone: {type: String, required: false},
   avatarUrl: {type: String, required: false},
-  contacts: [],
-  organization: [],
+  contacts: [{type: Schema.Types.ObjectId, ref: "User"}],
+  organization: {type:Schema.Types.ObjectId, ref: "Organization"},
   password: {type: String, required: true}
 })
 
