@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { handleLogin } from "../actions/Login";
 import { useNavigate } from "react-router-dom";
@@ -47,7 +47,6 @@ org1.orgBoards.push(board1);
 users[0].organization.push(org1);
 
 const Login = () => {
-  const isLoggedIn = useSelector((state) => state.reducer.isLoggedIn);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
@@ -65,6 +64,8 @@ const Login = () => {
   //  } else {
   //   alert("Invalid username/password");
 
+  //Changed this from a conditional depending on state to just looking for a token in the localStorage.
+  //State can now be used on next components, but isn't necessary here.
   if (!localStorage.token) {
     return (
       <form onSubmit={handleSubmit(onSubmit)}>
