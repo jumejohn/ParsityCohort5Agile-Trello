@@ -6,12 +6,18 @@ export const handleLogin = (userData) => (dispatch) => {
     userData,
   };
 
-  axios.post(url, user).then(function (response) {
-    dispatch({
-      type: HANDLE_LOGIN,
-      payload: response.data,
+  axios
+    .post(url, user)
+    .then(function (response) {
+      dispatch({
+        type: HANDLE_LOGIN,
+        payload: response.data,
+      });
+      console.log(response.data);
+      localStorage.setItem("token", response.data.token);
+    })
+    .catch(function (error) {
+      console.log(error);
+      alert(error);
     });
-    console.log(response.data);
-    localStorage.setItem("token", response.data.token);
-  });
 };
