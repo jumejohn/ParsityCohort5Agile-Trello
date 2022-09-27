@@ -44,8 +44,8 @@ const Login = () => {
     console.log(data);
     let validUser = users.find(user => user.username === data.username && user.password === data.password);
     if (validUser) {
-      dispatch(handleLogin(validUser))
-        .then(navigate("/"));
+      dispatch(handleLogin(validUser));
+      navigate("/");
     } else {
       alert("Invalid username/password");
     }
