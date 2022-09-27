@@ -1,5 +1,7 @@
 import { useSelector } from "react-redux";
 import Login from "./components/Login";
+import Header from "./components/Header";
+import Display from "./components/Display";
 
 const App = () => {
   const isLoggedIn = useSelector(state => state.reducer.isLoggedIn);
@@ -7,7 +9,8 @@ const App = () => {
   if (isLoggedIn) {
     return (
       <div className="container">
-        Placeholder
+        <Header />
+        <Display />
       </div>
     );
   }
