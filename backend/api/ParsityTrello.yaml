@@ -1,0 +1,212 @@
+swagger: '2.0'
+info:
+  title: Parsity_Trello API
+  description: Move your app forward with the Parsity_Trello API
+  version: '1.0.0'
+# the domain of the service
+host: api.parsityTrello.com
+# array of all schemes that your API supports
+schemes:
+  - https
+# will be prefixed to all paths
+basePath: /v1
+produces:
+  - application/json
+paths:
+  /login:
+    post:
+      summary: user login
+      tags:
+        - UserAccount
+      description: Let user login
+      parameters:
+        - name: username
+          in: query
+          description: user's login username
+          required: true
+          type: string
+        - name: password
+          in: query
+          description: user's login password
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /logout:
+    post:
+      summary: user logout
+      description: Let user logout
+      tags:
+        - UserAccount
+      responses:
+        '200':
+          description: user logout success
+        '400':
+          description: Bad request
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /boards:
+    get:
+      summary: get user boards
+      description: get boards
+      tags:
+        - Boards
+      responses:
+        '200':
+          description: success
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      summary: add an user board
+      description: add an user board
+      tags:
+        - Boards
+      responses:
+        '200':
+          description: success
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+  /boards/:id:
+    get:
+      summary: get an user board by id
+      description: get an user board by id
+      tags:
+        - Boards
+      responses:
+        '200':
+          description: success
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+    put:
+      summary: update an user board
+      description: update an user board
+      tags:
+        - Boards
+      responses:
+        '200':
+          description: success
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+    delete:
+      summary: delete an user board
+      description: delete an user board
+      tags:
+        - Boards
+      responses:
+        '200':
+          description: success
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+  /boards/:id/user:
+    post:
+      summary: add an user to board
+      description: add an user to board
+      tags:
+        - Boards
+      responses:
+        '200':
+          description: success
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+    delete:
+      summary: remove an user from board
+      description: remove an user from board
+      tags:
+        - Boards
+      responses:
+        '200':
+          description: success
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+  /organization:
+    post:
+      summary: add an organization
+      description: add an organization
+      tags:
+        - Organization
+      responses:
+        '200':
+          description: success
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      summary: remove an organization
+      description: remove an organization
+      tags:
+        - Organization
+      responses:
+        '200':
+          description: success
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+definitions:
+  User:
+    type: object
+    properties:
+      user_name:
+        type: string
+        description: Username of the account.
+      first_name:
+        type: string
+        description: First name of the Uber user.
+      last_name:
+        type: string
+        description: Last name of the Uber user.
+      email:
+        type: string
+        description: Email address of the Uber user
+      avatar:
+        type: string
+        description: Image URL of the Uber user.
+      PhoneNumber:
+        type: string
+        description: User's phone number.
+      Contacts:
+        type: string
+        description: User's phone number.
+      Organizations:
+        type: object
+        description: User's collection of boards.
+
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      fields:
+        type: string
