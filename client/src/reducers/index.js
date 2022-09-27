@@ -4,12 +4,20 @@ const initialState = {
   isLoggedIn: false,
 };
 
-const reducer = (state=initialState, action) => {
+const reducer = (state = initialState, action) => {
   switch (action.type) {
     case "HANDLE_LOGIN": {
       return {
-        ...state, isLoggedIn: true, user: action.payload,
-      }
+        ...state,
+        isLoggedIn: true,
+        user: action.payload,
+      };
+    }
+    case "LOAD_CARD": {
+      return {
+        ...state,
+        cards: action.payload,
+      };
     }
     default:
       return state;
