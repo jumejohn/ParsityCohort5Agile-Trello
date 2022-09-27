@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const OrganizationSchema = require('./Organization');
 
 const UserSchema = new Schema({
+
   username: { type: String, required: true, unique: true },
   firstname: { type: String, required: true },
   lastname: { type: String, required: true },
@@ -34,3 +35,5 @@ UserSchema.methods.validPassword = function (password) {
 };
 
 module.exports = mongoose.model('User', UserSchema);
+
+

@@ -40,6 +40,7 @@ router.get('/', function (req, res, next) {
 
 // requireSignin
 
+
 router.post('/auth/signin', Auth.signin);
 //requireSignin
 module.exports = router;
