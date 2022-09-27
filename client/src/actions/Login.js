@@ -1,7 +1,7 @@
-export const handleLogin = (data) => {
+export const handleLogin = (userData) => {
 
   return {
     type: "HANDLE_LOGIN",
-    payload: data,
+    payload: userData,
   }
 };

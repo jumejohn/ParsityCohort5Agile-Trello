@@ -8,7 +8,7 @@ const reducer = (state=initialState, action) => {
   switch (action.type) {
     case "HANDLE_LOGIN": {
       return {
-        ...state, isLoggedIn: true,
+        ...state, isLoggedIn: true, user: action.payload,
       }
     }
     default:
