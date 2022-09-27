@@ -2,12 +2,9 @@ import axios from "axios";
 import { HANDLE_LOGIN } from "./types";
 export const handleLogin = (userData) => (dispatch) => {
   const url = `http://localhost:8000/auth/signin`;
-  const user = {
-    userData,
-  };
 
   axios
-    .post(url, user)
+    .post(url, userData)
     .then(function (response) {
       dispatch({
         type: HANDLE_LOGIN,
