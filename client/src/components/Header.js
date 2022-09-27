@@ -1,3 +1,4 @@
+import React from "react";
 import { useSelector } from "react-redux";
 
 const Header = () => {
@@ -6,7 +7,7 @@ const Header = () => {
   return (
     <nav className="navbar">
       <div className="container-fluid"> 
-        <div className="navbar-brand">{name}'s Boards</div>
+        <div className="navbar-brand">{name}&apos;s Boards</div>
         <button type="button">Logout</button>
       </div>
     </nav>
