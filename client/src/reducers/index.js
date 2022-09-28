@@ -1,3 +1,4 @@
+import {HANDLE_LOGOUT} from '../actions/Logout'
 // We shouldn't have too many different kinds of actions
 // so we shouldn't need separate reducers?
 const initialState = {
@@ -15,6 +16,8 @@ const reducer = (state = initialState, action) => {
         token: action.payload.token,
       };
     }
+    case HANDLE_LOGOUT:
+      return initialState;
     default:
       return state;
   }
