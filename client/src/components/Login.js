@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 // hardcoded users for now
 const users = [
   {
-    username: "",
+    username: "tester2",
     firstname: "Mark",
     lastname: "Cook",
     email: "mark.cook@email.com",
@@ -14,7 +14,7 @@ const users = [
     avatarUrl: "https://thumbs.dreamstime.com/z/cool-kid-10482439.jpg",
     contacts: [],
     organization: [],
-    password: "",
+    password: "password",
   }
 ];
 const org1 = {
