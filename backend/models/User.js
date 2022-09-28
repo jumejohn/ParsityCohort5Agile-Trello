@@ -4,7 +4,6 @@ const Schema = mongoose.Schema;
 const OrganizationSchema = require('./Organization');
 
 const UserSchema = new Schema({
-
   username: { type: String, required: true, unique: true },
   firstname: { type: String, required: true },
   lastname: { type: String, required: true },
@@ -27,13 +26,11 @@ UserSchema.methods.setPassword = function (password) {
 };
 
 UserSchema.methods.validPassword = function (password) {
+  // this.salt = crypto.randomBytes(16).toString('hex');
   const hash = crypto
     .pbkdf2Sync(password, this.salt, 1000, 64, 'sha512')
     .toString('hex');
-
   return this.hash === hash;
 };
 
 module.exports = mongoose.model('User', UserSchema);
-
-
