@@ -53,8 +53,9 @@ const Login = () => {
 
   const onSubmit = (data) => {
     console.log(data);
-    dispatch(handleLogin(data));
-    navigate("/");
+    dispatch(handleLogin(data, () => {
+      navigate('/')
+    }));
   };
   // For now, we will search the users array, then dispatch the action
   // Later, we can use axios to send a request to the server, then dispatch
@@ -75,7 +76,7 @@ const Login = () => {
       </form>
     );
   } else {
-    return <></>;
+    useNavigate('/');
   }
 };
 
