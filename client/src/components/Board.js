@@ -1,4 +1,5 @@
 import '../css/Board.css'
+import React from 'react'
 
 const Board = ({boardname, numBoards}) => {
   return (

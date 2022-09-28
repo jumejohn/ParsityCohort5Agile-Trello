@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import Board from './Board'
 import '../css/Display.css'
+import React from 'react'
 
 const Display = () => {
   const boardsData = useSelector(({reducer}) => reducer.user.organization[0].orgBoards)
