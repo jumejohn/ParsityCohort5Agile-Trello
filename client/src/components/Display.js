@@ -1,11 +1,7 @@
 import React from "react";
-import Card from "./Card";
+
 const Display = () => {
-  return (
-    <div>
-      <Card />
-    </div>
-  );
+  return <div>Placeholder</div>;
 };
 
 export default Display;

@@ -1,7 +1,7 @@
 import axios from "axios";
-export const LOAD_CARD = "LOAD_CARD";
+import { LOAD_CARD } from "./types";
 
-export const loadCard = (username) => (dispatch) => {
+export const loadCard = () => (dispatch) => {
   const config = {
     headers: {
       Authorization: "Bearer " + localStorage.getItem("token"),
@@ -9,5 +9,6 @@ export const loadCard = (username) => (dispatch) => {
   };
   axios.get(`http://localhost:8000/cards`, config).then(function (response) {
     dispatch({ type: LOAD_CARD, payload: response.data });
+    console.log(response.data);
   });
 };
