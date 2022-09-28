@@ -13,7 +13,7 @@ basePath: /v1
 produces:
   - application/json
 paths:
-  /login:
+  /auth/signin:
     post:
       summary: user login
       tags:
@@ -37,7 +37,7 @@ paths:
           description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
-  /logout:
+  /auth/signout:
     post:
       summary: user logout
       description: Let user logout
@@ -52,6 +52,97 @@ paths:
           description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
+  /user:
+    get:
+      summary: get list of users
+      description: get users
+      tags:
+        - Users
+      responses:
+        '200':
+          description: A JSON array of users
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  _id:
+                    description: auto-generated id for users. this is the {userId} path parameter
+                  username:
+                    type: string
+                  firstname:
+                    type: string
+                  lastname:
+                    type: string
+                  email:
+                    type: string
+                  phone:
+                    type: string
+                  avatarUrl:
+                    description: profile picture
+                    type: string
+                  contacts:
+                    description: array of contacts (ref user id)
+                    type: array
+                    items:
+                      _id:
+                        type: string
+                  organization:
+                    description: array of organizations that the user belongs to (ref organization id)
+                    type: array
+                    items:
+                      _id:
+                        type: string
+                  password:
+                    description: user password (this will eventually be changed to a more secure method, also will eventually not be returned)
+                    type: string
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      summary: add new User
+      description: add new User
+      tags:
+        - Users
+      responses:
+        '204':
+          description: success
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /user/:userId:
+    get:
+      description: get User by userId
+      tags:
+        - Users
+      parameters:
+        - userId: _id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+    delete:
+      description: remove User by userId
+      tags:
+        - Users
+      parameters:
+        - userId: _id
+          in: path
+          required: true
+      responses:
+        '204':
+          description: success
+          content:
+            string: 'User has been successfully removed from the database'
   /boards:
     get:
       summary: get user boards
@@ -76,7 +167,7 @@ paths:
         default:
           description: Unexpected error
           schema:
-            $ref: '#/definitions/Error'
+            $ref: '#/components/definitions/Error'
 
   /boards/:id:
     get:
@@ -170,36 +261,128 @@ paths:
           description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
-
+components:
 definitions:
   User:
     type: object
     properties:
-      user_name:
-        type: string
+      username:
         description: Username of the account.
-      first_name:
         type: string
-        description: First name of the Uber user.
-      last_name:
+        minlength: 4
+        required: true
+        unique: true
+      firstname:
+        description: First name of the User.
         type: string
-        description: Last name of the Uber user.
+        minlength: 1
+        required: true
+        unique: true
+      lastname:
+        description: Last name of the User.
+        type: string
+        minlength: 1
+        required: true
       email:
+        description: Email address of the User
         type: string
-        description: Email address of the Uber user
-      avatar:
+        required: true
+      avatarUrl:
+        description: Image URL of the User.
         type: string
-        description: Image URL of the Uber user.
-      PhoneNumber:
-        type: string
+        required: false
+      phone:
         description: User's phone number.
-      Contacts:
         type: string
-        description: User's phone number.
-      Organizations:
+        required: false
+      contacts:
+        description: User's contacts/friends (ref User id)
+        type: array
+        items:
+          type: string
+      organization:
+        description: array of Organizations that the User belongs to (ref Organization id)
+        type: array
+        items:
+          type: string
+      password:
+        description: User password. sooner or later this will be replaced by a more secure method.
+        type: string
+        minlength: 6
+  Organization:
+    description: Primary owner of boards. Contains Users
+    type: object
+    properties:
+      orgName:
+        description: the name of the Organization
+        type: string
+        required: true
+      orgOwner:
+        description: the user who is owner of the Organization
+        type: string
+        required: true
+      orgBoards:
+        description: array of Boards that the Organization is using (ref Board id)
+        type: array
+        items:
+          type: string
+      orgMembers:
+        description: array of Users
+        type: array
+        items:
+          type: string
+  Board:
+    description: collection of Lists.
+    type: object
+    properties:
+      boardName:
+        description: the name of the board
+        type: string
+        required: true
+      organization:
+        description: the Organization that the board belongs to
         type: object
-        description: User's collection of boards.
-
+        properties:
+          _id: string
+      users:
+        description: an array of Users who subscribe to the Board (ref User id)
+        type: array
+        items:
+          type: string
+      lists:
+        description: an array of Lists that are contained in the Board (ref List id)
+        type: array
+        items:
+          type: string
+  List:
+    description: collection of Cards
+    type: object
+    properties:
+      listName:
+        type: string
+        required: true
+      cards:
+        description: an array of Cards that are contained in the List (ref Card id)
+        type: array
+        items:
+          type: string
+  Card:
+    description: contains data. Smallest form of organization, can support any data type
+    type: object
+    properties:
+      cardTitle:
+        description: the title of the Card
+        type: string
+        required: true
+        minlength: 1
+      cardLabel:
+        description: additional information about the contents of the Card
+        type: string
+        required: false
+      cardDescription:
+        description: the primary contents of the Card
+        type: string
+        required: false
   Error:
     type: object
     properties:
