@@ -15,6 +15,7 @@ router.get('/', function (req, res, next) {
 // requireSignin
 
 router.post('/auth/signin', requireSignin, Auth.signin);
+router.get('/auth/current_user', requireAuth, Auth.currentUser);
 router.get('/auth/signout', (req, res) => {
   req.logout();
   res.send('Logged out!');
