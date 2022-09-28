@@ -2,7 +2,7 @@ import {HANDLE_LOGOUT} from '../actions/Logout'
 // We shouldn't have too many different kinds of actions
 // so we shouldn't need separate reducers?
 const initialState = {
-  isLoggedIn: false,
+  userID: null,
   token: localStorage.token,
 };
 
@@ -12,7 +12,7 @@ const reducer = (state = initialState, action) => {
       console.log(action.payload);
       return {
         ...state,
-        isLoggedIn: true,
+        userID: action.payload.userID,
         token: action.payload.token,
       };
     }
