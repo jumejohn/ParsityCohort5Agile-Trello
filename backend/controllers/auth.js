@@ -13,9 +13,10 @@ const tokenForUser = (user) => {
 };
 
 exports.signin = function (req, res, next) {
-  console.log(req.body);
+  console.log(req.user._id);
   res.send({
     token: tokenForUser(req.body),
+    userID: req.user._id,
   });
 };
 
