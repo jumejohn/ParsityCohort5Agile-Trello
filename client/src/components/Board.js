@@ -1,18 +1,18 @@
 import '../css/Board.css'
 
-const Board = () => {
+const Board = ({boardname, numBoards}) => {
   return (
-    <div className='col-md-4'>
-      <button className="card2" href="#">
-        <h3>This is option 2</h3>
-        {/* <p className="small"></p>     */}
+
+      <button className="card2 col-md-4 " href="#">
+        <h3>{boardname}</h3>
+        <p className="small">Lists In Board: {numBoards}</p>    
         <div className="go-corner" href="#">
           <div className="go-arrow">
             →
           </div>
         </div>
       </button>
-    </div>
+
   
 )
 };

@@ -42,12 +42,12 @@ p {
   display: block;
   top: 0px;
   position: relative;
-  /* max-width: 262px; */
+  max-width: 262px;
   min-width: 400px;
   background-color: #f2f8f9;
   border-radius: 4px;
   padding: 32px 24px;
-  /* margin: 12px; */
+  margin: 12px;
   text-decoration: none;
   z-index: 0;
   overflow: hidden;

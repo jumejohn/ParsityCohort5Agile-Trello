@@ -29,13 +29,6 @@ const board1 = {
   lists: [],
 };
 org1.orgBoards.push(board1);
-org1.orgBoards.push(board1);
-org1.orgBoards.push(board1);
-org1.orgBoards.push(board1);
-org1.orgBoards.push(board1);
-org1.orgBoards.push(board1);
-org1.orgBoards.push(board1);
-org1.orgBoards.push(board1);
 users[0].organization.push(org1);
 
 const Login = () => {
