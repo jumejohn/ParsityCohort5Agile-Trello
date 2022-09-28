@@ -1,12 +1,20 @@
-import React from "react";
+import '../css/Board.css'
 
-const Board = () => {
-  
+const Board = ({boardname, numBoards}) => {
   return (
-    <div>
-      Lists!
-    </div>
-  )
+
+      <button className="card2 col-md-4 " href="#">
+        <h3>{boardname}</h3>
+        <p className="small">Lists In Board: {numBoards}</p>    
+        <div className="go-corner" href="#">
+          <div className="go-arrow">
+            →
+          </div>
+        </div>
+      </button>
+
+  
+)
 };
 
 export default Board;
