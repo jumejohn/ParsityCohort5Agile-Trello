@@ -15,7 +15,9 @@ router.get('/', function(req, res, next) {
 /* GET user by id */
 router.get('/:userId', function(req, res, next) {
   const id = req.params.userId
-  User.findById(id).exec((err, user) => {
+  User.findById(id)
+    .populate("organization")
+    .exec((err, user) => {
     if(err) return next(err)
     res.status(200).send(user).end()
   })
