@@ -1,5 +1,6 @@
 import '../css/Board.css'
 import React from 'react'
+import PropTypes from "prop-types";
 
 const Board = ({boardname, numBoards}) => {
   return (
@@ -17,5 +18,10 @@ const Board = ({boardname, numBoards}) => {
   
 )
 };
+
+Board.propTypes = {
+  boardname: PropTypes.string,
+  numBoards: PropTypes.number,
+}
 
 export default Board;
