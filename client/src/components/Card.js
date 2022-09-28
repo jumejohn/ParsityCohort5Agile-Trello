@@ -13,10 +13,10 @@ const cards = [
 ];
 
 const Card = () => {
-    const currentUser = useSelector((state) => state.reducer.userID);
+    const currentUser = useSelector((state) => state.userID);
     //useEffect(useDispatch(loadCard(currentUser)));
     //const card = useSelector((state) => state.cards);
-    console.log("this", currentUser);
+    console.log("cardstate", currentUser);
   return cards.map((card) => {
     return (
       <div className="card" key={card.cardTitle}>
