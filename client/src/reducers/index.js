@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 
-import reducerLogin from "./reducerLogin";
-import reducerUser from "./reducerUser"
+import reducerLogin from "../reducers/reducerLogin";
+import reducerUser from "../reducers/reducerUser"
 
 const rootReducer = combineReducers({
     token: reducerLogin,
