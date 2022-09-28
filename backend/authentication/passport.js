@@ -27,13 +27,14 @@ const localLogin = new LocalStrategy((username, password, done) => {
 
 const jwtOptions = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: 'helloworld',
+  secretOrKey: 'helloWorld',
 };
 
-const jwtLogin = new JwtStrategy(jwtOptions, function (payload, done) {
+const jwtLogin = new JwtStrategy(jwtOptions, (payload, done) => {
   // See if the user ID in the payload exists in our database
   // If it does, call 'done' with that other
   // otherwise, call done without a user object
+  // console.log('Payload: ', payload);
   User.findById(payload.sub, function (err, user) {
     if (err) {
       return done(err, false);
