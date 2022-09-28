@@ -1,4 +1,3 @@
-
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -11,7 +10,6 @@ const session = require('express-session');
 //   useNewUrlParser: true,
 //   useUnifiedTopology: true,
 // });
-
 
 const app = express();
 
@@ -34,21 +32,11 @@ app.use(
 );
 
 app.use(bodyParser.json());
-
-// app.use(
-//   session({
-//     resave: false,
-//     saveUninitialized: true,
-//     secret: 'helloworld',
-//   })
-// );
 // app.use(passport.initialize());
 // app.use(passport.session());
 
 const mainRoutes = require('./routes/main');
 app.use(mainRoutes);
-
-
 
 module.exports = app.listen(8000, () => {
   console.log(`Node.js listening on port 8000`);

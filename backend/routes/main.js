@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const passport = require('passport');
+const passportService = require('../authentication/passport');
 
 const Auth = require('../controllers/auth');
 const requireAuth = passport.authenticate('jwt', { session: false });
@@ -40,7 +41,6 @@ router.get('/', function (req, res, next) {
 
 // requireSignin
 
-
-router.post('/auth/signin', Auth.signin);
-//requireSignin
+router.post('/auth/signin', requireSignin, Auth.signin);
+// router.post('/auth/signin', Auth.signin);
 module.exports = router;
