@@ -2,21 +2,17 @@
 // so we shouldn't need separate reducers?
 const initialState = {
   isLoggedIn: false,
+  token: localStorage.token,
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case "HANDLE_LOGIN": {
+      console.log(action.payload);
       return {
         ...state,
         isLoggedIn: true,
-        user: action.payload,
-      };
-    }
-    case "LOAD_CARD": {
-      return {
-        ...state,
-        cards: action.payload,
+        token: action.payload.token,
       };
     }
     default:

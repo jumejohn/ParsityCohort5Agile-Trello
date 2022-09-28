@@ -1,16 +1,13 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import Card from "./components/Card";
+import Workspace from "./components/Workspace";
 
 const App = () => {
-  const isLoggedIn = useSelector((state) => state.reducer.isLoggedIn);
-
   if (!localStorage.token) {
     return <Navigate to="/login" />;
   }
 
-  return <Card />;
+  return <Workspace />;
 };
 
 export default App;
