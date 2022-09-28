@@ -1,4 +1,6 @@
-import { useSelector, useDispatch } from "react-redux";
+import React from "react";
+
+import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { handleLogin } from "../actions/Login";
 import { useNavigate } from "react-router-dom";
@@ -15,7 +17,7 @@ const users = [
     contacts: [],
     organization: [],
     password: "password",
-  }
+  },
 ];
 const org1 = {
   _id: "12345",
@@ -24,41 +26,56 @@ const org1 = {
   orgBoards: [],
 };
 const board1 = {
-  boardname: "Todo",
+  boardname: "Test Board",
   users: [],
-  lists: [],
+  lists: [
+    {
+      _id: "1",
+      listName: "todos",
+      cards: [
+        {
+          cardTitle: "Clean Room",
+        },
+        {
+          cardTitle: "Wash Dishes",
+        },
+      ],
+    },
+  ],
 };
 org1.orgBoards.push(board1);
 users[0].organization.push(org1);
 
 const Login = () => {
-  const isLoggedIn = useSelector(state => state.reducer.isLoggedIn);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
 
   const onSubmit = (data) => {
-    // For now, we will search the users array, then dispatch the action
-    // Later, we can use axios to send a request to the server, then dispatch
-    // based on success
     console.log(data);
-    let validUser = users.find(user => user.username === data.username && user.password === data.password);
-    if (validUser) {
-      dispatch(handleLogin(validUser));
-      navigate("/");
-    } else {
-      alert("Invalid username/password");
-    }
-  }
+    dispatch(handleLogin(data));
+    navigate("/");
+  };
+  // For now, we will search the users array, then dispatch the action
+  // Later, we can use axios to send a request to the server, then dispatch
+  // based on success
+  // let validUser = users.find(user => user.username === data.username && user.password === data.password);
+  // if (validUser) {
+  //  } else {
+  //   alert("Invalid username/password");
 
-  if (!isLoggedIn) {
+  //Changed this from a conditional depending on state to just looking for a token in the localStorage.
+  //State can now be used on next components, but isn't necessary here.
+  if (!localStorage.token) {
     return (
       <form onSubmit={handleSubmit(onSubmit)}>
-        <input {...register("username")}/>
-        <input type={"password"} {...register("password")}/>
-        <input type="submit"/>
+        <input {...register("username")} />
+        <input type={"password"} {...register("password")} />
+        <input type="submit" />
       </form>
-    )
+    );
+  } else {
+    return <></>;
   }
 };
 
