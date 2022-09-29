@@ -31,7 +31,7 @@ const List = (props) => {
     // newListTitle = data.newListTitle
     // Here we need to dispatch List creator
     console.log(data)
-    dispatch(createList(data.newListTitle))
+    dispatch(createList(data.newListTitle, props.boardId))
   }
 
   let cards = props.cards;
@@ -40,7 +40,7 @@ const List = (props) => {
   // If the list rendering is a "temporary" list that will be added to the board
   if (!name) {
     return (
-      <div className="col-3">
+      <div className="col-3" style={{"z-index": "-1"}}>
         <div className="card bg-black">
           <form onSubmit={handleSubmit(onNewListSubmit)}>
             <div className="card-body">
@@ -60,7 +60,7 @@ const List = (props) => {
 
   // This is what renders for normal lists
   return (
-    <div className="col-3">
+    <div className="col-3" style={{"z-index": "-1"}}>
       <div className="card bg-black">
         <div className="card-body">
           <h3 className="card-title text-white">{name}</h3>
@@ -97,6 +97,7 @@ const List = (props) => {
 List.propTypes = {
   cards: PropTypes.array,
   name: PropTypes.string.isRequired,
+  boardId: PropTypes.string.isRequired,
 };
 
 export default List;
