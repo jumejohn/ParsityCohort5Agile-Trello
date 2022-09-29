@@ -18,7 +18,7 @@ router.get('/:orgId', requireAuth, function (req, res, next) {
       res.status(200).send(org).end();
     });
 });
-
+// Add new user to org
 router.put('/', requireAuth, function (req, res, next) {
   const userId = req.body.userId;
   const orgId = req.body.orgId;

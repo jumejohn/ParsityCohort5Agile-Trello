@@ -68,4 +68,34 @@ router.delete('/:userId', requireAuth, function (req, res, next) {
   });
 });
 
+router.put("/:userId", requireAuth, async function (req, res, next) {
+  const userId = req.params.userId
+  const {
+    username,
+    firstname,
+    lastname,
+    email,
+    phone,
+    avatarUrl,
+    contacts,
+    organization,
+    password,
+  } = req.body;
+  const update = {
+    username: username,
+    firstname: firstname,
+    lastname: lastname,
+    email: email,
+    phone: phone,
+    avatarUrl: avatarUrl,
+    contacts: contacts,
+    organization: organization,
+    password: password
+  }
+  const filter = { _id: userId}
+  const updateUser = await User.findOneAndUpdate(filter, update, {new: true})
+  res.send(updateUser)
+  res.status(200)
+})
+
 module.exports = router;
