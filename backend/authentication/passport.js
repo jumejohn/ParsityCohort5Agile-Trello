@@ -3,6 +3,7 @@ const app = express();
 const passport = require('passport');
 const bodyParser = require('body-parser');
 const User = require('../models/User');
+const keys = require('../config/keys');
 
 const jwt = require('jwt-simple');
 const ExtractJwt = require('passport-jwt').ExtractJwt;
@@ -27,7 +28,7 @@ const localLogin = new LocalStrategy((username, password, done) => {
 
 const jwtOptions = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: 'helloWorld',
+  secretOrKey: keys.TOKEN_SECRET,
 };
 
 const jwtLogin = new JwtStrategy(jwtOptions, (payload, done) => {
