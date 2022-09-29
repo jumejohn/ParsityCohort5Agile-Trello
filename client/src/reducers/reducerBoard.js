@@ -18,6 +18,8 @@ const reducerBoard = (state = initialState, action) => {
       }
     case HANDLE_LOGOUT:
       return initialState;
+    case "RESET_CURRENT_BOARD":
+      return initialState;
     default:
       return state;
   }
