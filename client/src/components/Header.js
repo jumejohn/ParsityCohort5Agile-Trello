@@ -1,10 +1,17 @@
+import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux";
-import { handleLogout } from '../actions/Logout'
-import React from 'react'
 import { useNavigate } from "react-router-dom";
+import { handleLogout } from '../actions/Logout';
+import { fetchUser } from "../actions/UserFetch";
+
 const Header = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+
+  const token = localStorage.token;
+  useEffect(() => {dispatch(fetchUser(token))}
+  , [])
+
   const name = useSelector(state => state.rootReducer.user.currentUser);
   console.log("headerstate", name)
 
