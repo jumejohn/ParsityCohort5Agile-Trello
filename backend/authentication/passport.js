@@ -31,21 +31,38 @@ const jwtOptions = {
 };
 
 const jwtLogin = new JwtStrategy(jwtOptions, (payload, done) => {
-  // See if the user ID in the payload exists in our database
-  // If it does, call 'done' with that other
-  // otherwise, call done without a user object
-  // console.log('Payload: ', payload);
-  User.findById(payload.sub, function (err, user) {
-    if (err) {
-      return done(err, false);
-    }
+  // User.findById(payload.sub, function (err, user) {
+  //   if (err) {
+  //     return done(err, false);
+  //   }
 
-    if (user) {
-      done(null, user);
-    } else {
-      done(null, false);
-    }
-  });
+  //   if (user) {
+  //     console.log('UUUser: ', user);
+  //     done(null, user);
+  //   } else {
+  //     done(null, false);
+  //   }
+  // });
+
+  User.findById(payload.sub)
+    .populate({
+      path: 'organization',
+      populate: {
+        path: 'orgBoards orgMembers',
+      },
+    })
+    .exec((err, user) => {
+      if (err) {
+        return done(err, false);
+      }
+
+      if (user) {
+        console.log('UUUser: ', user);
+        done(null, user);
+      } else {
+        done(null, false);
+      }
+    });
 });
 
 passport.use(jwtLogin);

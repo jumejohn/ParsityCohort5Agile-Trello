@@ -1,26 +1,13 @@
-import {HANDLE_LOGOUT} from '../actions/Logout'
-// We shouldn't have too many different kinds of actions
-// so we shouldn't need separate reducers?
-const initialState = {
-  userID: null,
-  token: localStorage.token,
-};
+import { combineReducers } from "redux";
 
-const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case "HANDLE_LOGIN": {
-      console.log(action.payload);
-      return {
-        ...state,
-        userID: action.payload.userID,
-        token: action.payload.token,
-      };
-    }
-    case HANDLE_LOGOUT:
-      return initialState;
-    default:
-      return state;
-  }
-};
+import reducerLogin from "../reducers/reducerLogin";
+import reducerUser from "../reducers/reducerUser"
+import reducerBoard from "./reducerBoard";
 
-export default reducer;
+const rootReducer = combineReducers({
+    token: reducerLogin,
+    user: reducerUser,
+    currentBoard: reducerBoard
+  });
+
+export default rootReducer;

@@ -5,9 +5,10 @@ import { Provider } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import store from "./store";
 import App from './App';
-import Board from './components/Board';
-import BoardLayout from './components/BoardLayout';
+import BoardViewLayout from './components/BoardViewLayout';
+import BoardView from './components/BoardView';
 import Login from './components/Login';
+import NoBoardView from './components/NoBoardView';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -15,8 +16,10 @@ root.render(
     <BrowserRouter>
       <Routes>
       <Route path="/" element={<App />} />
-      <Route path="/b" element={<BoardLayout />} />
-        <Route path="/:id" element={<Board />} />
+      <Route path="/b" element={<BoardViewLayout />}>
+        <Route path=":boardId" element={<BoardView />} />
+        <Route path="*" element={<NoBoardView />} />
+      </Route>
       <Route exact path="/login" element={<Login />} />
       </Routes>
     </BrowserRouter>

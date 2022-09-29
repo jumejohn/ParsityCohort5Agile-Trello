@@ -1,8 +1,9 @@
 var express = require('express');
 var router = express.Router();
-const Board = require('../models/Board')
+const Board = require('../models/Board');
 
 router
+
 // GET board from Organization
   .get('/:boardId', function (req, res, next) {
     const boardId = req.params.boardId
@@ -24,7 +25,8 @@ router
       if(err) return next(err)
       res.status(200).json(newBoard)
     })
-  })
+  });
+
 
 // DELETE board by id
   .delete('/:boardId', function(req, res, next){
@@ -45,4 +47,4 @@ router
     res.status(200)
   })
 
-module.exports = router
+module.exports = router;

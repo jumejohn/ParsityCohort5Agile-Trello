@@ -11,9 +11,10 @@ export const handleLogin = (userData, callback) => (dispatch) => {
         payload: response.data,
       });
       //shows the data returned in the payload for dev purposes
-      console.log("here", response.data);
+      console.log("login action", response.data);
       //sets token into local storage upon successful login
       localStorage.setItem("token", response.data.token);
+      localStorage.setItem('userID', response.data.userID)
       callback();
     })
     .catch(function (error) {
