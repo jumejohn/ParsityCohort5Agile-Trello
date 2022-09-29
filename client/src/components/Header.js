@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { handleLogout } from '../actions/Logout';
 import { fetchUser } from "../actions/UserFetch";
 
@@ -25,7 +25,10 @@ const Header = () => {
     return (
       <nav className="navbar">
         <div className="container-fluid">
-          <div className="navbar-brand">{name.organization.orgName}&apos;s Boards</div>
+          <div className="navbar-brand">
+            <Link to="/" style={linkStyle}>{name.organization.orgName}</Link>
+            &apos;s Boards
+            </div>
           <button type="button" onClick={handleLogoutClick}>Logout</button>
 
         </div>
@@ -34,6 +37,11 @@ const Header = () => {
   else {
     <></>
   }
+};
+
+const linkStyle = {
+  textDecoration: "none",
+  color: "inherit",
 };
 
 export default Header;
