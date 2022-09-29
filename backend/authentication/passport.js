@@ -31,19 +31,6 @@ const jwtOptions = {
 };
 
 const jwtLogin = new JwtStrategy(jwtOptions, (payload, done) => {
-  // User.findById(payload.sub, function (err, user) {
-  //   if (err) {
-  //     return done(err, false);
-  //   }
-
-  //   if (user) {
-  //     console.log('UUUser: ', user);
-  //     done(null, user);
-  //   } else {
-  //     done(null, false);
-  //   }
-  // });
-
   User.findById(payload.sub)
     .populate({
       path: 'organization',

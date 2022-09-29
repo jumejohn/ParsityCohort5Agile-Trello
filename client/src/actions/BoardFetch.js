@@ -1,18 +1,19 @@
 import axios from "axios";
 
 export const FETCH_BOARD = "FETCH_BOARD";
-export const fetchBoard =(boardId) => dispatch =>{
-    const url = `http://localhost:8000/boards/${boardId}`
-    console.log(url);
+export const fetchBoard =(boardId, token) => dispatch =>{
+  const url = `http://localhost:8000/boards/${boardId}`
 
-    axios
-        .get(url)
-        .then(function (response) {
-            // console.log("Fetch Board Data:", response.data);
-            dispatch({
-                type: FETCH_BOARD,
-                payload: response.data,
-            })
-        })
-        .catch((error) => console.log(error))
-        };
+  return axios
+    .get(url, { headers:  {'Authorization': `Bearer ${token}`}})
+    .then(function (response) {
+      dispatch({
+          type: FETCH_BOARD,
+          payload: response.data,
+      })
+      return response
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+};
