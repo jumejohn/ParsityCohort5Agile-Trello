@@ -14,7 +14,7 @@ const Workspace = () => {
 
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate("/b/1");
+    navigate("/b/6333499197311dc26cfff7a0");
   }
 
   return (
