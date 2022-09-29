@@ -7,11 +7,11 @@ import { loadCard } from "../actions/LoadCard";
 
 const List = (props) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const handleClick = () => {
+  const handleClick = (e) => {
     setModalIsOpenToTrue();
-    loadCard(card._id);
+    localStorage.setItem("card", e.target.value);
   };
-  const setModalIsOpenToTrue = () => {
+  const setModalIsOpenToTrue = (e) => {
     setModalIsOpen(true);
   };
 
@@ -32,6 +32,7 @@ const List = (props) => {
               return (
                 <div key={card._id}>
                   <button
+                    value={card._id}
                     onClick={handleClick}
                     className="list-group-item list-group-item-action"
                   >

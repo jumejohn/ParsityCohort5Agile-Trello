@@ -1,4 +1,6 @@
-import { LOAD_CARD } from "../actions/types";
+import { LOAD_CARD } from "../actions/LoadCard";
+import { HANDLE_LOGOUT } from "../actions/Logout";
+
 const initialState = { _id: "" };
 const reducerCard = (state = initialState, action) => {
   switch (action.type) {

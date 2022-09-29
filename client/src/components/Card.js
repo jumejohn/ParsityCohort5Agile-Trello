@@ -4,8 +4,15 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 
 const Card = () => {
-  const currentCard = useSelector((state) => state.rootReducer || null);
-  console.log(currentCard);
+  const dispatch = useDispatch();
+  const thisCard = localStorage.card;
+  useEffect(() => {
+    dispatch(loadCard(thisCard));
+  }, []);
+  const currentCard = useSelector(
+    (state) => state.rootReducer.currentCard || null
+  );
+  console.log("currentCard", currentCard);
   if (currentCard) {
     return (
       <div className="card">
