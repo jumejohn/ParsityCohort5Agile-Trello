@@ -19,6 +19,7 @@ router
       });
   })
 
+
   // POST add new board
   .post('/', requireAuth, function (req, res, next) {
     const { boardName, organization, users } = req.body;
