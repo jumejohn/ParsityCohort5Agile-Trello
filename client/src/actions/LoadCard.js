@@ -5,7 +5,7 @@ export const LOAD_CARD = "LOAD_CARD";
 export const loadCard = (cardID) => (dispatch) => {
   const token = localStorage.token;
   axios
-    .get(`http://localhost:8000/cards/${cardID}`, {
+    .get(`/cards/${cardID}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
     .then(function (response) {
