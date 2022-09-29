@@ -17,7 +17,7 @@ const reducerLogin = (state = initialState, action) => {
         token: action.payload.token,
       };
     case HANDLE_LOGOUT:
-      return {initialState};
+      return initialState;
     default:
       return state;
   }
