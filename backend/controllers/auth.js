@@ -23,6 +23,7 @@ exports.signin = function (req, res, next) {
 
 exports.currentUser = function (req, res) {
   // console.log('cur_req: ', req.user);
+  console.log(req)
   const user = {
     username: req.user.username,
     firstname: req.user.firstname,

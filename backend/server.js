@@ -11,6 +11,8 @@ const testRoutes = require("./routes/test")
 const boardRoutes = require('./routes/boards')
 const orgRoutes = require('./routes/organization')
 const userRoutes = require('./routes/users')
+const listRoutes = require('./routes/lists')
+const cardRoutes = require('./routes/cards')
 const app = express();
 
 connectDB();
@@ -41,6 +43,8 @@ app.use('/test', testRoutes)
 app.use('/boards', boardRoutes)
 app.use('/organization', orgRoutes)
 app.use('/user', userRoutes)
+app.use('/lists', listRoutes)
+app.use('/cards', cardRoutes)
 
 
 
