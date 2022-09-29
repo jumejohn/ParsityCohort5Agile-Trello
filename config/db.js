@@ -1,15 +1,15 @@
-const mongoose = require('mongoose');
-require('dotenv').config();
+const mongoose = require("mongoose");
+require("dotenv").config();
 // const mongoConnection = process.env.ATLAS_URI
-const keys = require('./keys');
+const keys = require("./keys");
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(keys.ATLAS_URI, {
+    await mongoose.connect(keys.MONGODB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    console.log('MongoDB connected');
+    console.log("MongoDB connected");
   } catch (error) {
     console.log(error.message);
     process.exit(1);
