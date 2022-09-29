@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import { useDispatch } from "react-redux";
 import { fetchUser } from "../actions/UserFetch";
 import Header from "./Header";
-// import Display from "./Display";
+import Display from "./Display";
 import { useNavigate } from "react-router-dom";
 import Card from "./Card";
 
@@ -20,8 +20,8 @@ const Workspace = () => {
   return (
     <div className="container-fluid">
       <Header />
-      {/* <Display /> */}
-      <Card />
+      <Display />
+      {/* <Card /> */}
       {/* This is just for testing BoardView */}
       <button onClick={handleClick}>To BoardView</button>
     </div>
