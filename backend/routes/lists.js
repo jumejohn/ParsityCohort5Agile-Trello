@@ -12,27 +12,39 @@ router
     List.findById(listId)
       .populate('cards')
       .exec((err, list) => {
-        if (err) return next(err);
-        res.status(200).send(list).end();
+        if (err) {
+          res.status(400).send(err)
+          return next(err);
+        } else {
+          res.status(200).send(list).end();
+        }
       });
   })
 
   .delete('/:listId', requireAuth, function (req, res, next) {
     const listId = req.params.listId;
     List.findByIdAndDelete(listId).exec((err) => {
-      if (err) return next(err);
-      res
+      if (err) {
+        res.status(400).send(err)
+        return next(err);
+      } else {
+        res
         .send('List has been successfully removed from the database')
         .status(204)
         .end();
+      }
     });
   })
 
   .post('/', requireAuth, function (req, res, next) {
     const { listName, cards } = req.body;
     const newList = new List({ listName, cards }).save((err) => {
-      if (err) return next(err);
+      if (err) {
+        res.status(400).send(err)
+        return next(err);
+      } else {
       res.status(200).json(newList);
+      }
     });
   })
 
