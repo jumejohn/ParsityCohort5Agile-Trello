@@ -5,15 +5,18 @@ import '../css/Display.css'
 import React from 'react'
 
 const Display = () => {
-  const boardsData = useSelector(state => state.rootReducer.user.currentUser.organization.orgBoards);
+  const boardsData = useSelector(state => {
+    if(state.rootReducer.user.currentUser){
+      return state.rootReducer.user.currentUser.organization.orgBoards
+    }
+  });
 
   const renderBoards = () => {
     const boardsArray = boardsData.map((board, i) => {
       return (
         <Board
           key={i}
-          boardname={board.boardname}
-          numBoards={board.lists.length}
+          boardId={board._id}
         ></Board>
       );
     });
@@ -30,7 +33,7 @@ const Display = () => {
     </section>
   )}
   else {
-    <></>
+    <div>LOADING</div>
   }
 };
 
