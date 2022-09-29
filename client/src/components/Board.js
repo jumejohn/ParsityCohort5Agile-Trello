@@ -9,7 +9,7 @@ const Board = ({boardId}) => {
   const navigate = useNavigate()
 
   const fetchBoard = () => {
-    const url = `http://localhost:8000/boards/${boardId}`
+    const url = `/boards/${boardId}`
     const token = localStorage.token
     axios.get(url, { headers:  {'Authorization': `Bearer ${token}`}}).then((res) => {
       setBoardData(res.data)
