@@ -17,12 +17,11 @@ exports.signin = function (req, res, next) {
   // user.body
   res.send({
     token: tokenForUser(req.user),
-    // userID: req.user._id,
+    userID: req.user._id,
   });
 };
 
 exports.currentUser = function (req, res) {
-
   const user = {
     username: req.user.username,
     firstname: req.user.firstname,
