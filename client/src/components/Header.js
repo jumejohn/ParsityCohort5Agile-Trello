@@ -5,15 +5,15 @@ import React from 'react'
 const Header = () => {
   const dispatch = useDispatch
   const name = useSelector(state => state.rootReducer.user.currentUser);
-   console.log("headerstate", name)
+  console.log("headerstate", name)
   const handleLogoutClick = () => {
     dispatch(handleLogout())
   }
-if(name){
+if(name){ 
   return (
     <nav className="navbar">
       <div className="container-fluid">
-        <div className="navbar-brand">{name.organization.orgName}'s Boards</div>
+        <div className="navbar-brand">{name.organization.orgName}&apos;s Boards</div>
         <button type="button" onClick={handleLogoutClick}>Logout</button>
 
       </div>
