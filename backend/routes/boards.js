@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const Board = require('../models/Board');
+const Organization = require('../models/Organization')
 
 router
 
@@ -19,12 +20,24 @@ router
   })
   
 // POST add new board
-  .post('/', function(req, res, next){
+  .post('/', async function(req, res, next){
     const {boardName, organization, users} = req.body
-    const newBoard = new Board({boardName, organization, users}).save((err) => {
+    const newBoard = await new Board({boardName, organization, users}).save((err, board) => {
       if(err) return next(err)
-      res.status(200).json(newBoard)
-    })
+      res.send(newBoard).status(200)
+      Organization.updateOne(
+        { _id: organization},
+        { $push: { orgBoards: [board._id]}},
+        function(err, result) {
+          if(err){
+            res.send(err)
+          } else {
+            res.send(result)
+          }
+        }
+        
+        )
+      })
   })
 
 
