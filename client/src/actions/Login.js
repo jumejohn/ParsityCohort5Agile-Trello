@@ -2,7 +2,7 @@ import axios from "axios";
 import { HANDLE_LOGIN } from "./types";
 export const handleLogin = (userData, callback) => (dispatch) => {
   const url = `http://localhost:8000/auth/signin`;
-
+  console.log(userData)
   axios
     .post(url, userData)
     .then(function (response) {

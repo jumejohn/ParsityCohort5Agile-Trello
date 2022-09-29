@@ -25,15 +25,15 @@ router
     const {boardName, organization, users} = req.body
     const newBoard = await new Board({boardName, organization, users}).save((err, board) => {
       if(err) return next(err)
-      res.send(newBoard).status(200)
       Organization.updateOne(
         { _id: organization},
         { $push: { orgBoards: [board._id]}},
         function(err, result) {
           if(err){
-            res.send(err)
-          } else {
-            res.send(result)
+            return next(err)
+          }
+          else{
+            return res.send(board).status(200)
           }
         }
         
