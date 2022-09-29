@@ -7,10 +7,14 @@ const passport = require("passport");
 const cookieSession = require("cookie-session");
 const session = require("express-session");
 const mainRoutes = require("./routes/main");
-const testRoutes = require("./routes/test");
-const boardRoutes = require("./routes/boards");
-const orgRoutes = require("./routes/organization");
-const userRoutes = require("./routes/users");
+
+const testRoutes = require("./routes/test")
+const boardRoutes = require('./routes/boards')
+const orgRoutes = require('./routes/organization')
+const userRoutes = require('./routes/users')
+const listRoutes = require('./routes/lists')
+const cardRoutes = require('./routes/cards')
+
 const app = express();
 
 connectDB();
@@ -37,10 +41,13 @@ app.use(bodyParser.json());
 // main routes for login/logout
 app.use("/", mainRoutes);
 // test routes for adding testing data
-app.use("/test", testRoutes);
-app.use("/boards", boardRoutes);
-app.use("/organization", orgRoutes);
-app.use("/user", userRoutes);
+
+app.use('/test', testRoutes)
+app.use('/boards', boardRoutes)
+app.use('/organization', orgRoutes)
+app.use('/user', userRoutes)
+app.use('/lists', listRoutes)
+app.use('/cards', cardRoutes)
 
 module.exports = app.listen(8000, () => {
   console.log(`Node.js listening on port 8000`);

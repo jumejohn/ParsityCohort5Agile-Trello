@@ -1,0 +1,42 @@
+var express = require('express');
+var router = express.Router();
+const List = require('../models/List')
+
+router
+  .get('/:listId', function (req, res, next) {
+    const listId = req.params.listId
+    List.findById(listId)
+      .populate("cards")
+      .exec((err, list) => {
+        if(err) return next(err)
+        res.status(200).send(list).end()
+      })
+  })
+
+  .delete('/:listId', function (req, res, next) {
+    const listId = req.params.listId
+    List.findByIdAndDelete(listId).exec((err) => {
+      if(err) return next(err)
+      res.send("List has been successfully removed from the database").status(204).end()
+    })
+  }) 
+
+  .post('/', function(req, res, next){
+    const {listName, cards} = req.body
+    const newList = new List({listName, cards}).save((err)=>{
+      if(err) return next(err)
+      res.status(200).json(newList)
+    })
+  })
+
+  .put('/:listId', async function(req, res, next){
+    const listId = req.params.listId
+    const { listName, cards} = req.body
+    const update = {listName: listName, cards: cards}
+    const filter = {_id: listId}
+    const updateList = await List.findOneAndUpdate(filter, update, {new: true})
+    res.send(updateList).populate("cards")
+    res.status(200)
+  })
+
+  module.exports = router
