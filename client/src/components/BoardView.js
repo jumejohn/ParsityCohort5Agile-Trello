@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
+import { fetchBoard } from "../actions/BoardFetch";
 import List from "./List";
 
 // temporary front end example
@@ -55,14 +57,24 @@ const boards = [
 
 const BoardView = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   let { boardId } = useParams();
   let validBoard = boards.find(board => board._id == boardId);
   if (!validBoard) {
     navigate("/b")
   }
 
-  let name = validBoard.boardName;
-  let lists = validBoard.lists;
+  useEffect(() => {
+      // console.log("useEffect is firing");
+      dispatch(fetchBoard("6333499197311dc26cfff7a0"))
+    }
+  , []);
+
+  const name = useSelector(state => state.rootReducer.currentBoard.boardName);
+  const lists = useSelector(state => state.rootReducer.currentBoard.lists);
+  lists.map(list => console.log("list.cards", list.cards));
+  // let name = validBoard.boardName;
+  // let lists = validBoard.lists;
 
   return (
     <div className="container-fluid">
