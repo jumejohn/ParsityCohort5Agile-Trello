@@ -7,11 +7,11 @@ import { useNavigate } from "react-router-dom";
 const Board = ({boardId}) => {
   const [boardData, setBoardData] = useState(null)
   const navigate = useNavigate()
-  
+
   const fetchBoard = () => {
     const url = `http://localhost:8000/boards/${boardId}`
-
-    axios.get(url).then((res) => {
+    const token = localStorage.token
+    axios.get(url, { headers:  {'Authorization': `Bearer ${token}`}}).then((res) => {
       setBoardData(res.data)
     }).catch((err) => console.log("ERROR", err))
   }
@@ -24,7 +24,7 @@ const Board = ({boardId}) => {
         return  (
           <button className="card2 col-md-4 " onClick={handleNavigateToBoard}>
             <h3>{boardData.boardName}</h3>
-            <p className="small">Lists In Board: {boardData.lists.length}</p>    
+            <p className="small">Lists In Board: {boardData.lists.length}</p>
             <div className="go-corner" href="#">
               <div className="go-arrow">
                 →
@@ -38,7 +38,7 @@ const Board = ({boardId}) => {
         return (
         <a className="card2 col-md-4 " href='#'>
           <h3>Loading...</h3>
-          <p className="small"></p>    
+          <p className="small"></p>
           <div className="go-corner" href="#">
             <div className="go-arrow">
               →
@@ -48,10 +48,10 @@ const Board = ({boardId}) => {
       )
       }
     }
-      
+
     return renderBoard()
 }
-  
+
 
 
 

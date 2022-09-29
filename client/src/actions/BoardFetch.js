@@ -3,9 +3,9 @@ import axios from "axios";
 export const FETCH_BOARD = "FETCH_BOARD";
 export const fetchBoard =(boardId) => dispatch =>{
     const url = `http://localhost:8000/boards/${boardId}`
-
+    const token = localStorage.token
     axios
-        .get(url)
+        .get(url, { headers:  {'Authorization': `Bearer ${token}`}})
         .then(function (response) {
             // console.log("Fetch Board Data:", response.data);
             dispatch({
