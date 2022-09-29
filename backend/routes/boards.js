@@ -20,7 +20,7 @@ router
   })
   
 // POST add new board
-  .post('/', async function(req, res, next){
+  .post('/', requireAuth, async function(req, res, next){
     const {boardName, organization, users} = req.body
     const newBoard = await new Board({boardName, organization, users}).save((err, board) => {
       if(err) return next(err)
