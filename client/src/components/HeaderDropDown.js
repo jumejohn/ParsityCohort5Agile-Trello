@@ -1,14 +1,19 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 
 const HeaderDropDown = (props) => {
+  const dispatch = useDispatch();
   const isViewingBoard = useSelector(state => state.rootReducer.currentBoard.boardName);
   const boards = useSelector(state => state.rootReducer.user.currentUser.organization.orgBoards);
 
   if (isViewingBoard) {
     let splitUrlArr = window.location.href.split("/");
     let currentBoardId = splitUrlArr[splitUrlArr.length-1];
+
+    const handleClick = () => {
+      dispatch({type: "RESET_CURRENT_BOARD"});
+    }
 
     return (
       <div className="dropdown">
@@ -24,7 +29,7 @@ const HeaderDropDown = (props) => {
               </li>
             )})}
           <li><hr className="dropdown-divider" /></li>
-          <li><a className="dropdown-item" href="/">Back to Workspace</a></li>
+          <li><a className="dropdown-item" href="/" onClick={handleClick}>Back to Workspace</a></li>
         </ul>
       </div>
     )
