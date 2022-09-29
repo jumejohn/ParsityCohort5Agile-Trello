@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { handleLogout } from '../actions/Logout';
 import { fetchUser } from "../actions/UserFetch";
+import HeaderDropDown from './HeaderDropDown';
 
 const Header = () => {
   const dispatch = useDispatch()
@@ -13,22 +14,34 @@ const Header = () => {
   , [])
 
   const name = useSelector(state => state.rootReducer.user.currentUser);
-  console.log("headerstate", name)
 
   const handleLogoutClick = () => {
     dispatch(handleLogout(() => {
       navigate('/login')
     }));
   }
+
+  // const handleOrgClick = () => {
+  //   dispatch({type: "RESET_CURRENT_BOARD"});
+  // }
   
   if(name){ 
     return (
-      <nav className="navbar">
+      <nav className="navbar navbar-dark bg-primary">
         <div className="container-fluid">
           <div className="navbar-brand">
-            <Link to="/" style={linkStyle}>{name.organization.orgName}</Link>
-            &apos;s Boards
+            <HeaderDropDown name={name.organization.orgName} />
+            {/* <Link 
+              to="/"
+              onClick={handleOrgClick}
+              style={linkStyle}>
+              {name.organization.orgName}
+            </Link>
+            &apos;s Boards */}
             </div>
+          {/* <ul className="navbar-nav">
+            <li className="nav-item"></li>
+          </ul> */}
           <button type="button" onClick={handleLogoutClick}>Logout</button>
 
         </div>
@@ -39,9 +52,9 @@ const Header = () => {
   }
 };
 
-const linkStyle = {
-  textDecoration: "none",
-  color: "inherit",
-};
+// const linkStyle = {
+//   textDecoration: "none",
+//   color: "inherit",
+// };
 
 export default Header;
