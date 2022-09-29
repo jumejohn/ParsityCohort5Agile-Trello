@@ -1,4 +1,5 @@
 import { FETCH_USER } from "../actions/UserFetch";
+import { HANDLE_LOGOUT } from '../actions/Logout';
 
 const initialState = {currentUser: null }
 
@@ -8,7 +9,8 @@ const reducerUser = (state = initialState, action) => {
         console.log("user", action.payload)
             return {
             currentUser: action.payload,}
-
+        case HANDLE_LOGOUT:
+            return initialState;
         default:
             return state;
   }
