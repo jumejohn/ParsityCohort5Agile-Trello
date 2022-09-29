@@ -25,7 +25,7 @@ router
       if(err) return next(err)
       res.status(200).json(newBoard)
     })
-  });
+  })
 
 
 // DELETE board by id
