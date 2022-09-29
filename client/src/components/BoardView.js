@@ -5,74 +5,78 @@ import { fetchBoard } from "../actions/BoardFetch";
 import List from "./List";
 
 // temporary front end example
-const boards = [
-  {
-    _id: "1",
-    boardName: "Test Board",
-    lists: [
-      {
-        _id: "a",
-        listName: "To do",
-        cards: [
-          {
-            cardTitle: "Wash dishes",
-          },
-          {
-            cardTitle: "Clean room",
-          },
-          {
-            cardTitle: "Water backyard",
-          }
-        ],
-      },
-      {
-        _id: "b",
-        listName: "Completed",
-        cards: [
-          {
-            cardTitle: "Brush teeth",
-          },
-          {
-            cardTitle: "Walk the dog",
-          }
-        ],
-      },
-      {
-        _id: "c",
-        listName: "Hopes and Dreams",
-        cards: [
-          {
-            cardTitle: "Become an astronaut",
-          }
-        ],
-      },
-      {
-        _id: "d",
-        listName: "Empty List",
-        cards: [],
-      }
-    ],
-  }
-]
+// const boards = [
+//   {
+//     _id: "1",
+//     boardName: "Test Board",
+//     lists: [
+//       {
+//         _id: "a",
+//         listName: "To do",
+//         cards: [
+//           {
+//             cardTitle: "Wash dishes",
+//           },
+//           {
+//             cardTitle: "Clean room",
+//           },
+//           {
+//             cardTitle: "Water backyard",
+//           }
+//         ],
+//       },
+//       {
+//         _id: "b",
+//         listName: "Completed",
+//         cards: [
+//           {
+//             cardTitle: "Brush teeth",
+//           },
+//           {
+//             cardTitle: "Walk the dog",
+//           }
+//         ],
+//       },
+//       {
+//         _id: "c",
+//         listName: "Hopes and Dreams",
+//         cards: [
+//           {
+//             cardTitle: "Become an astronaut",
+//           }
+//         ],
+//       },
+//       {
+//         _id: "d",
+//         listName: "Empty List",
+//         cards: [],
+//       }
+//     ],
+//   }
+// ]
 
 const BoardView = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   let { boardId } = useParams();
-  let validBoard = boards.find(board => board._id == boardId);
-  if (!validBoard) {
-    navigate("/b")
-  }
+  const name = useSelector(state => state.rootReducer.currentBoard.boardName);
+  const lists = useSelector(state => state.rootReducer.currentBoard.lists);
 
   useEffect(() => {
       // console.log("useEffect is firing");
-      dispatch(fetchBoard("6333499197311dc26cfff7a0"))
+      dispatch(fetchBoard(boardId))
+        .then(() => {
+          console.log("baa")
+          if (!name) {
+            console.log("no such board!")
+            navigate("/b")
+          }
+        })
+        .catch((err) => console.log(err))
     }
   , []);
 
-  const name = useSelector(state => state.rootReducer.currentBoard.boardName);
-  const lists = useSelector(state => state.rootReducer.currentBoard.lists);
-  lists.map(list => console.log("list.cards", list.cards));
+  // lists.map(list => console.log("list.cards", list.cards));
   // let name = validBoard.boardName;
   // let lists = validBoard.lists;
 
