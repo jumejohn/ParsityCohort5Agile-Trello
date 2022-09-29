@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
+// import { addListState } from "../actions/AddListState";
 import { fetchBoard } from "../actions/BoardFetch";
+import AddListBtn from "./AddListBtn";
 import List from "./List";
 
 const BoardView = () => {
@@ -23,6 +25,10 @@ const BoardView = () => {
       }
     , []);
 
+  // const handleClick = () => {
+  //   dispatch(addListState);
+  // }
+
   return (
     <div className="container-fluid">
       <div className="row"><h3>{name}</h3></div>
@@ -31,13 +37,14 @@ const BoardView = () => {
         {
           lists.map(list => (<List key={list._id} cards={list.cards} name={list.listName} />))
         }
-        <div className="col-3">
+        {/* <div className="col-3">
           <div className="card bg-black">
             <div className="card-footer d-grid">
-              <button className="btn btn-secondary" type="button">Add a list</button>
+              <button className="btn btn-secondary" onClick={handleClick} type="button">Add a list</button>
             </div>
           </div>
-        </div>
+        </div> */}
+        <AddListBtn />
       </div>
     </div>
   )
