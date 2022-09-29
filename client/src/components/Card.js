@@ -20,7 +20,7 @@ const Card = () => {
   return cards.map((card) => {
     return (
       <div className="card" key={card.cardTitle}>
-        <div className="card-body">{card.cardTitle}</div>
+          <button className="card-body">{card.cardTitle}</button>
       </div>
     );
   });
