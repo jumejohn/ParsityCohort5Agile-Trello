@@ -43,12 +43,11 @@ const Header = () => {
             <li className="nav-item"></li>
           </ul> */}
           <button type="button" onClick={handleLogoutClick}>Logout</button>
-
         </div>
       </nav>
-    )}
-  else {
-    <></>
+    );
+  } else {
+    <></>;
   }
 };
 

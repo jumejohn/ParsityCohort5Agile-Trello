@@ -1,15 +1,14 @@
 import axios from "axios";
-import { LOAD_CARD } from "./types";
 
-const config = {
-  headers: {
-    Authorization: "Bearer " + localStorage.getItem("token"),
-  },
-};
-export const loadCard = () => (dispatch) => {
+export const LOAD_CARD = "LOAD_CARD";
 
-  axios.get(`http://localhost:8000/card`, config).then(function (response) {
-    dispatch({ type: LOAD_CARD, payload: response.data });
-    console.log(response.data);
-  });
+export const loadCard = (cardID) => (dispatch) => {
+  const token = localStorage.token;
+  axios
+    .get(`http://localhost:8000/cards/${cardID}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    .then(function (response) {
+      dispatch({ type: LOAD_CARD, payload: response.data });
+    });
 };

@@ -3,27 +3,31 @@ import { loadCard } from "../actions/LoadCard";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 
-const cards = [
-  {
-    cardTitle: "Clean Room",
-  },
-  {
-    cardTitle: "Wash Dishes",
-  },
-];
-
 const Card = () => {
-    const currentUser = useSelector((state) => state.userID);
-    //useEffect(useDispatch(loadCard(currentUser)));
-    //const card = useSelector((state) => state.cards);
-    console.log("cardstate", currentUser);
-  return cards.map((card) => {
+  const dispatch = useDispatch();
+  const thisCard = localStorage.card;
+  useEffect(() => {
+    dispatch(loadCard(thisCard));
+  }, []);
+  const currentCard = useSelector(
+    (state) => state.rootReducer.currentCard || null
+  );
+  console.log("currentCard", currentCard);
+  if (currentCard) {
     return (
-      <div className="card" key={card.cardTitle}>
-          <button className="card-body">{card.cardTitle}</button>
+      <div className="card">
+        <div className="card-body">
+          <h5 className="card-title">{currentCard.cardTitle}</h5>
+          <h6 className="card-subtitle mb-2 text-muted">
+            {currentCard.cardLabel}
+          </h6>
+          <p className="card-text">{currentCard.cardDescription}</p>
+        </div>
       </div>
     );
-  });
+  } else {
+    <></>;
+  }
 };
 
 export default Card;
