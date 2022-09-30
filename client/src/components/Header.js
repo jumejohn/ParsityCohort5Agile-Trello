@@ -31,17 +31,7 @@ const Header = () => {
         <div className="container-fluid">
           <div className="navbar-brand">
             <HeaderDropDown name={name.organization.orgName} />
-            {/* <Link 
-              to="/"
-              onClick={handleOrgClick}
-              style={linkStyle}>
-              {name.organization.orgName}
-            </Link>
-            &apos;s Boards */}
-            </div>
-          {/* <ul className="navbar-nav">
-            <li className="nav-item"></li>
-          </ul> */}
+          </div>
           <button type="button" onClick={handleLogoutClick}>Logout</button>
         </div>
       </nav>
