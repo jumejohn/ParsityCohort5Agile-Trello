@@ -54,18 +54,18 @@ router
       })
   })
 
-  .post('/', requireAuth, function (req, res, next) {
-    const { listName, cards } = req.body;
-    const newList = new List({ listName, cards }).save((err) => {
-      if (err) {
-        res.status(400).send(err)
-        return next(err);
-      } else {
-      console.log(newList);
-      res.status(200).json(newList);
-      }
-    });
-  })
+  // .post('/', requireAuth, function (req, res, next) {
+  //   const { listName, cards } = req.body;
+  //   const newList = new List({ listName, cards }).save((err) => {
+  //     if (err) {
+  //       res.status(400).send(err)
+  //       return next(err);
+  //     } else {
+  //     console.log(newList);
+  //     res.status(200).json(newList);
+  //     }
+  //   });
+  // })
 
   .put('/:listId', requireAuth, async function (req, res, next) {
     const listId = req.params.listId;

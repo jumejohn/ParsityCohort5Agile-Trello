@@ -9,14 +9,16 @@ const requireAuth = passport.authenticate('jwt', { session: false });
 router
   .get('/:cardId', requireAuth, function (req, res, next) {
     const cardId = req.params.cardId;
-    Card.findById(cardId).exec((err, card) => {
-      if (err) {
-        res.status(400).send(err)
-        return next(err);
-      } else {
-        res.status(200).send(card).end();
-      }
-    });
+    Card.findById(cardId)
+      .populate('cardComments cardActivity')
+      .exec((err, card) => {
+        if (err) {
+          res.status(400).send(err)
+          return next(err);
+        } else {
+          res.status(200).send(card).end();
+        }
+      });
   })
 
   .delete('/:cardId', requireAuth, async function (req, res, next) {
@@ -39,8 +41,8 @@ router
 
   // POST add new card
   .post('/', requireAuth, async function(req, res, next){
-    const { listId, cardTitle, cardLabel, cardDescription } = req.body
-    const listWithNewCard = await new Card({ cardTitle, cardLabel, cardDescription }).save((err, card) => {
+    const { listId, cardTitle, cardLabel, cardDescription, cardComments, cardActivity } = req.body
+    const listWithNewCard = await new Card({ cardTitle, cardLabel, cardDescription, cardComments, cardActivity }).save((err, card) => {
       if(err) return next(err)
       updatedList = List.findOneAndUpdate(
         { _id: listId},
