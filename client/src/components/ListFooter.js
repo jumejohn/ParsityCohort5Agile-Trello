@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import PropTypes from "prop-types";
 import { createCard } from "../actions/CreateCard";
+import ClickDetectWrapper from "./ClickDetectWrapper";
 
 const ListFooter = (props) => {
   const dispatch = useDispatch();
@@ -11,17 +12,12 @@ const ListFooter = (props) => {
   const [tempCardIsOpen, setTempCardIsOpen] = useState(false);
   const toggleTempCardIsOpen = () => {
     setTempCardIsOpen(!tempCardIsOpen);
-  }
-
-  const handleClick = () => {
     reset();
-    toggleTempCardIsOpen();
   }
 
   const onSubmit = (data) => {
     if (!data.cardTitle) {
       toggleTempCardIsOpen();
-      reset();
       return;
     }
     dispatch(createCard(data.cardTitle, props.listId));
@@ -30,25 +26,27 @@ const ListFooter = (props) => {
 
   if (tempCardIsOpen) {
     return (
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="mb-2">
-          <textarea 
-            className="form-control" 
-            placeholder="Enter a title for this card..."
-            {...register("cardTitle")}
-          />
-        </div>
-        <div className="d-flex align-items-center">
-          <button className="btn btn-light" type="submit">Add card</button>
-          <button onClick={handleClick} className="btn-close btn-close-white ms-auto" type="button" aria-label="Close" /> 
-        </div>
-      </form>
+      <ClickDetectWrapper callback={toggleTempCardIsOpen}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="mb-2">
+            <textarea 
+              className="form-control" 
+              placeholder="Enter a title for this card..."
+              {...register("cardTitle")}
+            />
+          </div>
+          <div className="d-flex align-items-center">
+            <button className="btn btn-light" type="submit">Add card</button>
+            <button onClick={toggleTempCardIsOpen} className="btn-close btn-close-white ms-auto" type="button" aria-label="Close" /> 
+          </div>
+        </form>
+      </ClickDetectWrapper>
     )
   }
 
   // by default
   return (
-    <button className="btn btn-secondary" type="button" onClick={handleClick}>
+    <button className="btn btn-secondary" type="button" onClick={toggleTempCardIsOpen}>
             Add a card
     </button>
   )
