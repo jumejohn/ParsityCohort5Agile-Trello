@@ -40,7 +40,7 @@ const List = (props) => {
   // If the list rendering is a "temporary" list that will be added to the board
   if (!name) {
     return (
-      <div className="col-3" style={{"z-index": "-1"}}>
+      <div className="col-3">
         <div className="card bg-black">
           <form onSubmit={handleSubmit(onNewListSubmit)}>
             <div className="card-body">
@@ -60,7 +60,7 @@ const List = (props) => {
 
   // This is what renders for normal lists
   return (
-    <div className="col-3" style={{"z-index": "-1"}}>
+    <div className="col-3">
       <div className="card bg-black">
         <div className="card-body">
           <h3 className="card-title text-white">{name}</h3>

@@ -18,7 +18,7 @@ const HeaderDropDown = (props) => {
     return (
       <div className="dropdown">
         <button className="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">{props.name}&apos;s Boards</button>
-        <ul className="dropdown-menu">
+        <ul className="dropdown-menu" style={{"zIndex": "1000"}}>
           {boards.map((board, i) => {
             let boardLink = `/b/${board._id}`;
             let itemClass = "dropdown-item";
