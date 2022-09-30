@@ -1,6 +1,8 @@
 import { ADD_LIST_STATE } from "../actions/AddListState";
 import { FETCH_BOARD } from "../actions/BoardFetch";
 import { CREATE_LIST } from "../actions/CreateList";
+import { DELETE_LIST } from "../actions/DeleteList";
+import { EDIT_LIST_TITLE } from "../actions/EditListTitle";
 import { HANDLE_LOGOUT } from "../actions/Logout";
 const initialState = {
   boardName: "",
@@ -32,9 +34,25 @@ const reducerBoard = (state = initialState, action) => {
         ...state,
         lists: newLists2,
       }
-    case HANDLE_LOGOUT:
-      return initialState;
+    case DELETE_LIST:
+      let listToRemoveIndex = state.lists.findIndex((list) => list._id == action.payload);
+      let newLists3 = [...state.lists];
+      newLists3.splice(listToRemoveIndex, 1);
+      return {
+        ...state,
+        lists: newLists3,
+      }
+    case EDIT_LIST_TITLE:
+      let newLists4 = [...state.lists];
+      let listToUpdateIndex = newLists4.findIndex(list => list._id == action.payload._id);
+      newLists4[listToUpdateIndex] = action.payload;
+      return {
+        ...state,
+        lists: newLists4,
+      }
     case "RESET_CURRENT_BOARD":
+      return initialState;
+    case HANDLE_LOGOUT:
       return initialState;
     default:
       return state;

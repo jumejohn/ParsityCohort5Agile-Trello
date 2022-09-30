@@ -5,12 +5,15 @@ import Modal from "react-modal";
 import PropTypes from "prop-types";
 import Card from "./Card";
 import { createList } from "../actions/CreateList";
+import { deleteList } from "../actions/DeleteList";
+import ListTitle from "./ListTitle";
 // import { loadCard } from "../actions/LoadCard";
 
 const List = (props) => {
   const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
 
+  // Modal stuff
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const handleClick = (e) => {
     setModalIsOpenToTrue();
@@ -27,10 +30,11 @@ const List = (props) => {
     dispatch({ type: "CANCEL_ADD_LIST" });
   }
 
+  const handleDeleteClick = () => {
+    dispatch(deleteList(props.listId));
+  };
+
   const onNewListSubmit = (data) => {
-    // newListTitle = data.newListTitle
-    // Here we need to dispatch List creator
-    console.log(data)
     dispatch(createList(data.newListTitle, props.boardId))
   }
 
@@ -63,7 +67,10 @@ const List = (props) => {
     <div className="col-3">
       <div className="card bg-black">
         <div className="card-body">
-          <h3 className="card-title text-white">{name}</h3>
+          <h3 className="card-title text-white d-flex gap-2 align-items-center">
+            <ListTitle name={name} listId={props.listId} listCards={cards}/>
+            <button className="btn-close btn-close-white ms-auto" onClick={handleDeleteClick} type="button" aria-label="Close" /> 
+          </h3>
           <ul className="list-group gap-2">
             {cards.map((card, i) => {
               return (
@@ -98,6 +105,7 @@ List.propTypes = {
   cards: PropTypes.array,
   name: PropTypes.string.isRequired,
   boardId: PropTypes.string.isRequired,
+  listId: PropTypes.string.isRequired,
 };
 
 export default List;
