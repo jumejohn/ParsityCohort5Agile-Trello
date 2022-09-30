@@ -5,7 +5,7 @@ const HeaderBuffer = () => {
   return (
     <div
       style={{
-        "height": "130px",
+        "height": "150px",
         "width": "0px",
       }}
     />
