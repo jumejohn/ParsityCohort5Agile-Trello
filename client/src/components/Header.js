@@ -27,7 +27,7 @@ const Header = () => {
   
   if(name){ 
     return (
-      <nav className="navbar navbar-dark bg-primary">
+      <nav className="navbar navbar-dark bg-primary container-fluid" style={{"position": "fixed", "zIndex": "1"}}>
         <div className="container-fluid">
           <div className="navbar-brand">
             <HeaderDropDown name={name.organization.orgName} />

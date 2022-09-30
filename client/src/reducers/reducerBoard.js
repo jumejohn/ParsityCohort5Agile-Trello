@@ -1,5 +1,6 @@
 import { ADD_LIST_STATE } from "../actions/AddListState";
 import { FETCH_BOARD } from "../actions/BoardFetch";
+import { CREATE_LIST } from "../actions/CreateList";
 import { HANDLE_LOGOUT } from "../actions/Logout";
 const initialState = {
   boardName: "",
@@ -15,6 +16,21 @@ const reducerBoard = (state = initialState, action) => {
       return {
         ...state,
         lists: [...state.lists, action.payload]
+      }
+    case "CANCEL_ADD_LIST":
+      let newLists = [...state.lists];
+      newLists.pop();
+      return {
+        ...state,
+        lists: newLists,
+      }
+    case CREATE_LIST:
+      let newLists2 = [...state.lists];
+      newLists2.pop();
+      newLists2.push(action.payload);
+      return {
+        ...state,
+        lists: newLists2,
       }
     case HANDLE_LOGOUT:
       return initialState;

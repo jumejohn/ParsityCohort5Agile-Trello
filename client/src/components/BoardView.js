@@ -35,7 +35,7 @@ const BoardView = () => {
       
       <div className="row d-flex flex-nowrap">
         {
-          lists.map(list => (<List key={list._id} cards={list.cards} name={list.listName} />))
+          lists.map(list => (<List key={list._id} cards={list.cards} name={list.listName} boardId={boardId} />))
         }
         {/* <div className="col-3">
           <div className="card bg-black">
