@@ -27,7 +27,7 @@ const CardOnList = (props) => {
 
   return (
     <div
-      className="d-flex align-items-center"
+      className="d-flex align-items-start"
       style={{ "backgroundColor": "white" }}
       onMouseEnter={() => setButtonsAreShown(true)}
       onMouseLeave={() => setButtonsAreShown(false)}
@@ -40,7 +40,10 @@ const CardOnList = (props) => {
         {props.cardTitle}
       </button>
       {buttonsAreShown && (
+        <div className="btn-group">
+        <button className="btn"><i className="fa fa-pencil"/></button>
         <button className="btn-close col-1" onClick={handleDeleteClick} type="button" aria-label="Delete Card" />
+        </div>
       )}
       <Modal isOpen={modalIsOpen}>
         <button onClick={handleCloseModalClick}>x</button>
