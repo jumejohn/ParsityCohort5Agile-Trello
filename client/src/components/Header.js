@@ -20,10 +20,6 @@ const Header = () => {
       navigate('/login')
     }));
   }
-
-  // const handleOrgClick = () => {
-  //   dispatch({type: "RESET_CURRENT_BOARD"});
-  // }
   
   if(name){ 
     return (
@@ -40,10 +36,5 @@ const Header = () => {
     <></>;
   }
 };
-
-// const linkStyle = {
-//   textDecoration: "none",
-//   color: "inherit",
-// };
 
 export default Header;
