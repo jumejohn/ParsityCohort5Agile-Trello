@@ -84,7 +84,7 @@ const Login = () => {
                     <h5>Username:</h5>
                     <input
                       {...register("username")}
-                      placeholder="username"
+                      value="username"
                       className="input_field"
                     />
                   </label>
@@ -95,7 +95,7 @@ const Login = () => {
                     <input
                       type={"password"}
                       {...register("password")}
-                      placeholder="password"
+                      value="password"
                       className="input_field"
                     />
                   </label>
