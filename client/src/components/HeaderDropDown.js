@@ -1,9 +1,10 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import PropTypes from "prop-types";
-
+import { useNavigate } from "react-router-dom";
 const HeaderDropDown = (props) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   const isViewingBoard = useSelector(state => state.rootReducer.currentBoard.boardName);
   const boards = useSelector(state => state.rootReducer.user.currentUser.organization.orgBoards);
 
@@ -13,6 +14,7 @@ const HeaderDropDown = (props) => {
 
     const handleClick = () => {
       dispatch({type: "RESET_CURRENT_BOARD"});
+      navigate('/')
     }
 
     return (
@@ -29,7 +31,7 @@ const HeaderDropDown = (props) => {
               </li>
             )})}
           <li><hr className="dropdown-divider" /></li>
-          <li><a className="dropdown-item" href="/" onClick={handleClick}>Back to Workspace</a></li>
+          <li><a className="dropdown-item" onClick={handleClick}>Back to Workspace</a></li>
         </ul>
       </div>
     )

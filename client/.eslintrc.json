@@ -10,6 +10,6 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  // "plugins": ["react", "wesbos"],
+  "plugins": ["react"],
   "rules": {}
 }
