@@ -5,3 +5,21 @@
 .btn {
   margin-top: 0;
 }
+
+.scroll-component {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.list-item {
+  list-style-type: none;
+}
+/* .scroll-content {
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+} */
