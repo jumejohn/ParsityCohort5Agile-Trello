@@ -32,6 +32,7 @@ const jwtOptions = {
 };
 
 const jwtLogin = new JwtStrategy(jwtOptions, (payload, done) => {
+  // console.log('payload!!: ', payload);
   User.findById(payload.sub)
     .populate({
       path: 'organization',
@@ -45,7 +46,6 @@ const jwtLogin = new JwtStrategy(jwtOptions, (payload, done) => {
       }
 
       if (user) {
-        console.log('UUUser: ', user);
         done(null, user);
       } else {
         done(null, false);
