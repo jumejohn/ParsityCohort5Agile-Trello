@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useForm } from "react-hook-form";
 import PropTypes from "prop-types";
 import { createList } from "../actions/CreateList";
 import { deleteList } from "../actions/DeleteList";
@@ -10,6 +11,7 @@ import ClickDetectWrapper from "./ClickDetectWrapper";
 
 const List = (props) => {
   const dispatch = useDispatch();
+  const { register, handleSubmit } = useForm();
 
   const handleCancelClick = () => {
     dispatch({ type: "CANCEL_ADD_LIST" });
