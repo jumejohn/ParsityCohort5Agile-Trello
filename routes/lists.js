@@ -74,8 +74,9 @@ router
     const filter = { _id: listId };
     const updateList = await List.findOneAndUpdate(filter, update, {
       new: true,
-    });
-    res.send(updateList).populate('cards');
+    })
+    .populate('cards');
+    res.send(updateList)
     res.status(200);
   });
 

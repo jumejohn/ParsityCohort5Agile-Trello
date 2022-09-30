@@ -6,12 +6,14 @@ import PropTypes from "prop-types";
 import Card from "./Card";
 import { createList } from "../actions/CreateList";
 import { deleteList } from "../actions/DeleteList";
+import ListTitle from "./ListTitle";
 // import { loadCard } from "../actions/LoadCard";
 
 const List = (props) => {
   const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
 
+  // Modal stuff
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const handleClick = (e) => {
     setModalIsOpenToTrue();
@@ -65,8 +67,8 @@ const List = (props) => {
     <div className="col-3">
       <div className="card bg-black">
         <div className="card-body">
-          <h3 className="card-title text-white d-flex">
-            {name}
+          <h3 className="card-title text-white d-flex gap-2 align-items-center">
+            <ListTitle name={name} listId={props.listId} listCards={cards}/>
             <button className="btn-close btn-close-white ms-auto" onClick={handleDeleteClick} type="button" aria-label="Close" /> 
           </h3>
           <ul className="list-group gap-2">
