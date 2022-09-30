@@ -7,7 +7,7 @@ import { editListTitle } from "../actions/EditListTitle";
 const ListTitle = (props) => {
   const dispatch = useDispatch();
 
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
 
   const [titleIsEditing, setTitleIsEditing] = useState(false);
   const toggleTitleIsEditing = () => {
@@ -18,6 +18,7 @@ const ListTitle = (props) => {
     // do not dispatch if edit field hasn't changed or is empty
     if (data.titleEditField == props.name || !data.titleEditField) {
       toggleTitleIsEditing();
+      reset();
       return;
     }
     dispatch(editListTitle(data.titleEditField, props.listId, props.listCards));

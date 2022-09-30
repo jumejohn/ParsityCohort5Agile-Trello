@@ -1,5 +1,6 @@
 import { ADD_LIST_STATE } from "../actions/AddListState";
 import { FETCH_BOARD } from "../actions/BoardFetch";
+import { CREATE_CARD } from "../actions/CreateCard";
 import { CREATE_LIST } from "../actions/CreateList";
 import { DELETE_LIST } from "../actions/DeleteList";
 import { EDIT_LIST_TITLE } from "../actions/EditListTitle";
@@ -49,6 +50,14 @@ const reducerBoard = (state = initialState, action) => {
       return {
         ...state,
         lists: newLists4,
+      }
+    case CREATE_CARD:
+      let newLists5 = [...state.lists];
+      let listToAddCardIndex = newLists5.findIndex(list => list._id == action.payload._id);
+      newLists5[listToAddCardIndex] = action.payload;
+      return {
+        ...state,
+        lists: newLists5,
       }
     case "RESET_CURRENT_BOARD":
       return initialState;

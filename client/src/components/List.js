@@ -7,6 +7,7 @@ import Card from "./Card";
 import { createList } from "../actions/CreateList";
 import { deleteList } from "../actions/DeleteList";
 import ListTitle from "./ListTitle";
+import ListFooter from "./ListFooter";
 // import { loadCard } from "../actions/LoadCard";
 
 const List = (props) => {
@@ -66,13 +67,20 @@ const List = (props) => {
   return (
     <div className="col-3">
       <div className="card bg-black">
-        <div className="card-body">
+        <div className="card-body" style={{"paddingBottom": "0"}}>
           <h3 className="card-title text-white d-flex gap-2 align-items-center">
             <ListTitle name={name} listId={props.listId} listCards={cards}/>
             <button className="btn-close btn-close-white ms-auto" onClick={handleDeleteClick} type="button" aria-label="Close" /> 
           </h3>
           <ul className="list-group gap-2">
-            {cards.map((card, i) => {
+            {cards.map((card) => {
+              if (!card._id) {
+                return (
+                  <form key="tempCard">
+                    <input className="form-control" placeholder="Enter a title for this card..." />
+                  </form>
+                )
+              }
               return (
                 <div key={card._id}>
                   <button
@@ -92,9 +100,7 @@ const List = (props) => {
           </ul>
         </div>
         <div className="card-footer d-grid">
-          <button className="btn btn-secondary" type="button">
-            Add a card
-          </button>
+          <ListFooter listId={props.listId}/>
         </div>
       </div>
     </div>
