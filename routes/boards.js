@@ -44,15 +44,15 @@ router
 
 
   // POST add new board
-  .post('/', requireAuth, function (req, res, next) {
-    const { boardName, organization, users } = req.body;
-    const newBoard = new Board({ boardName, organization, users }).save(
-      (err) => {
-        if (err) return next(err);
-        res.status(200).json(newBoard);
-      }
-    );
-  })
+  // .post('/', requireAuth, function (req, res, next) {
+  //   const { boardName, organization, users } = req.body;
+  //   const newBoard = new Board({ boardName, organization, users }).save(
+  //     (err) => {
+  //       if (err) return next(err);
+  //       res.status(200).json(newBoard);
+  //     }
+  //   );
+  // })
 
   // DELETE board by id
   .delete('/:boardId', requireAuth, function (req, res, next) {
