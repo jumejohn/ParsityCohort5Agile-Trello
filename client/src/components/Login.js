@@ -1,9 +1,9 @@
 import React from "react";
-
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { handleLogin } from "../actions/Login";
 import { useNavigate } from "react-router-dom";
+import "../css/Login.css";
 
 // hardcoded users for now
 const users = [
@@ -53,9 +53,11 @@ const Login = () => {
 
   const onSubmit = (data) => {
     console.log(data);
-    dispatch(handleLogin(data, () => {
-      navigate('/')
-    }));
+    dispatch(
+      handleLogin(data, () => {
+        navigate("/");
+      })
+    );
   };
   // For now, we will search the users array, then dispatch the action
   // Later, we can use axios to send a request to the server, then dispatch
@@ -69,14 +71,46 @@ const Login = () => {
   //State can now be used on next components, but isn't necessary here.
   if (!localStorage.token) {
     return (
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <input {...register("username")} />
-        <input type={"password"} {...register("password")} />
-        <input type="submit" />
-      </form>
+      <>
+        <header>
+          <h1>Cohort 5 Agile Project Board</h1>
+        </header>
+        <div>
+          <div className="jumbotron">
+            <div className="container">
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <div>
+                  <label>
+                    <h5>Username:</h5>
+                    <input
+                      {...register("username")}
+                      value="username"
+                      className="input_field"
+                    />
+                  </label>
+                </div>
+                <div>
+                  <label>
+                    <h5>Password:</h5>
+                    <input
+                      type={"password"}
+                      {...register("password")}
+                      value="password"
+                      className="input_field"
+                    />
+                  </label>
+                </div>
+                <div>
+                  <input type="submit" className="submit_button" />
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </>
     );
   } else {
-    useNavigate('/');
+    useNavigate("/");
   }
 };
 
