@@ -72,16 +72,16 @@ const Login = () => {
   if (!localStorage.token) {
     return (
       <>
-        <header>
-          <h1>Cohort 5 Agile Project Board</h1>
+        <header className="input_header">
+          <h1 className="input_h1">Cohort 5 Agile Project Board</h1>
         </header>
-        <div>
-          <div className="jumbotron">
-            <div className="container">
+        <div className="input_div">
+          <div className="input_jumbotron">
+            <div className="input_container">
               <form onSubmit={handleSubmit(onSubmit)}>
-                <div>
-                  <label>
-                    <h5>Username:</h5>
+                <div className="input_div">
+                  <label className="input_label">
+                    <h5 className="input_h5">Username:</h5>
                     <input
                       {...register("username")}
                       placeholder="username"
@@ -89,8 +89,8 @@ const Login = () => {
                     />
                   </label>
                 </div>
-                <div>
-                  <label>
+                <div className="input_div">
+                  <label className="input_label">
                     <h5>Password:</h5>
                     <input
                       type={"password"}
@@ -100,8 +100,8 @@ const Login = () => {
                     />
                   </label>
                 </div>
-                <div>
-                  <input type="submit" className="submit_button" />
+                <div className="input_div">
+                  <input type="submit" className="input_submit_button" />
                 </div>
               </form>
             </div>
