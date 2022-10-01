@@ -1,7 +1,7 @@
 import axios from "axios";
-
+import { useNavigate } from "react-router-dom";
 export const FETCH_USER = "FETCH_USER";
-export const fetchUser = (token) => (dispatch) => {
+export const fetchUser = (token) => async (dispatch) => {
   const url = `/auth/current_user`;
 
   axios
@@ -12,5 +12,9 @@ export const fetchUser = (token) => (dispatch) => {
         type: FETCH_USER,
         payload: response.data,
       });
+    })
+    .catch((error) => {
+      localStorage.clear();
+      window.location.href = "/login";
     });
 };

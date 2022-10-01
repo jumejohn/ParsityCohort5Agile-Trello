@@ -24,6 +24,7 @@ router.get('/:orgId', requireAuth, function (req, res, next) {
 router.get('/:orgId/boards', requireAuth, function (req, res, next) {
   const id = req.params.orgId
   Organization.findById(id)
+  .populate({path: 'orgBoards', populate: {path:'lists'}})
   .exec((err, org) => {
     if(err){
       res.status(400).send(err)
