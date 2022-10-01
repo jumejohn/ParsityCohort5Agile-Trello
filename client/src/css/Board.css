@@ -1,6 +1,5 @@
 * {
   transition: all 0.3s ease-out;
-
 }
 
 h3 {
@@ -78,5 +77,59 @@ p {
 }
 
 .card2:hover:before {
+  transform: scale(2.15);
+}
+
+.card2__remove {
+  display: block;
+  top: 0px;
+  position: relative;
+  max-width: 262px;
+  min-width: 400px;
+  background-color: #c40000;
+  border-radius: 4px;
+  padding: 32px 24px;
+  margin: 12px;
+  text-decoration: none;
+  z-index: 0;
+  overflow: hidden;
+  border: 1px solid #f2f8f9;
+}
+.card2__remove:hover {
+  transition: all 0.2s ease-out;
+  box-shadow: 0px 4px 8px rgba(38, 38, 38, 0.2);
+  top: -4px;
+  border: 1px solid #cccccc;
+  background-color: white;
+}
+
+.card2__remove:hover:before {
+  transform: scale(2.15);
+}
+
+.card2__add {
+  display: block;
+  top: 0px;
+  position: relative;
+  max-width: 262px;
+  min-width: 400px;
+  background-color: #0064fa;
+  border-radius: 4px;
+  padding: 32px 24px;
+  margin: 12px;
+  text-decoration: none;
+  z-index: 0;
+  overflow: hidden;
+  border: 1px solid #f2f8f9;
+}
+.card2__add:hover {
+  transition: all 0.2s ease-out;
+  box-shadow: 0px 4px 8px rgba(38, 38, 38, 0.2);
+  top: -4px;
+  border: 1px solid #cccccc;
+  background-color: white;
+}
+
+.card2__add:hover:before {
   transform: scale(2.15);
 }
