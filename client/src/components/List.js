@@ -62,7 +62,14 @@ const List = (props) => {
             <button className="btn-close btn-close-white col-1" onClick={handleDeleteClick} type="button" aria-label="Close" /> 
           </div>
           <ul className="list-group gap-2">
-            {cards.map((card) => <CardOnList key={card._id} cardId={card._id} cardTitle={card.cardTitle} listId={props.listId} />)}
+            {cards.map((card) => <CardOnList 
+              key={card._id} 
+              cardId={card._id} 
+              cardTitle={card.cardTitle} 
+              cardLabel={card.cardLabel}
+              cardDescription={card.cardDescription} 
+              listId={props.listId} 
+            />)}
           </ul>
         </div>
         <div className="card-footer d-grid">

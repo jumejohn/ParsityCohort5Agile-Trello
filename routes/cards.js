@@ -19,19 +19,22 @@ router
     });
   })
 
-  .delete('/:cardId', requireAuth, function (req, res, next) {
+  .delete('/:cardId', requireAuth, async function (req, res, next) {
     const cardId = req.params.cardId;
-    Card.findByIdAndDelete(cardId).exec((err) => {
-      if (err){
+    const { listId } = req.body;
+    const listWithRemovedCard = await Card.findByIdAndDelete(cardId).exec((err) => {
+      if (err) {
         res.status(400).send(err)
         return next(err);
-      } else {
-      res
-        .send('Card has been successfully removed from the database')
-        .status(204)
-        .end();
       }
-    });
+      updatedList = List.findOne({ _id: listId })
+        .populate('cards')
+        .exec((err, list) => {
+          if (err) return next(err)
+          console.log(list);
+          res.status(200).send(list).end();
+        })
+    })
   })
 
   // POST add new card
@@ -52,35 +55,41 @@ router
     })
   })
 
-  .post('/', requireAuth, function (req, res, next) {
-    const { cardTitle, cardLabel, cardDescription } = req.body;
-    const newCard = new Card({ cardTitle, cardLabel, cardDescription }).save(
-      (err) => {
-        if (err){
-          res.status(400).send(err)
-          return next(err);
-        } else {
-        res.status(200).json(newCard);
-        res.end();
-        }
-      }
-    );
-  })
+  // .post('/', requireAuth, function (req, res, next) {
+  //   const { cardTitle, cardLabel, cardDescription } = req.body;
+  //   const newCard = new Card({ cardTitle, cardLabel, cardDescription }).save(
+  //     (err) => {
+  //       if (err){
+  //         res.status(400).send(err)
+  //         return next(err);
+  //       } else {
+  //       res.status(200).json(newCard);
+  //       res.end();
+  //       }
+  //     }
+  //   );
+  // })
 
   .put('/:cardId', requireAuth, async function (req, res, next) {
     const cardId = req.params.cardId;
-    const { cardTitle, cardLabel, cardDescription } = req.body;
+    const { listId, cardTitle, cardLabel, cardDescription } = req.body;
     const update = {
       cardTitle: cardTitle,
       cardLabel: cardLabel,
       cardDescription: cardDescription,
     };
     const filter = { _id: cardId };
-    const updateCard = await Card.findOneAndUpdate(filter, update, {
+    const listWithUpdatedCard = await Card.findOneAndUpdate(filter, update, {
       new: true,
-    });
-    res.send(updateCard);
-    res.status(200);
+    }).exec((err) => {
+      if (err) return next(err)
+      updatedList = List.findOne({ _id: listId })
+        .populate('cards')
+        .exec((err, list) => {
+          if (err) return next(err)
+          res.status(200).send(list).end();
+        })
+    })
   });
 
 module.exports = router;

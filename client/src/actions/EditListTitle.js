@@ -1,6 +1,5 @@
 import axios from "axios";
 
-export const EDIT_LIST_TITLE = "EDIT_LIST_TITLE";
 export const editListTitle = (newTitle, listId, cards) => (dispatch) => {
   const token = localStorage.token;
   axios({
@@ -14,6 +13,6 @@ export const editListTitle = (newTitle, listId, cards) => (dispatch) => {
   })
     .then((response) => {
       console.log(response);
-      dispatch({type: EDIT_LIST_TITLE, payload: response.data});
+      dispatch({type: "UPDATE_LIST", payload: response.data});
     })
 }

@@ -26,7 +26,7 @@ const Header = () => {
 
   if (name) {
     return (
-      <nav className="navbar navbar-dark bg-primary container-fluid">
+      <nav className="navbar navbar-dark bg-primary container-fluid" style={{"position": "fixed", "left": "0"}}>
         <div className="container-fluid">
           <div className="navbar-brand">
             {/* proposed adding in a logo or picture of some kind */}
