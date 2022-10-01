@@ -2,9 +2,7 @@ import { ADD_LIST_STATE } from "../actions/AddListState";
 import { FETCH_BOARD } from "../actions/BoardFetch";
 import { CREATE_CARD } from "../actions/CreateCard";
 import { CREATE_LIST } from "../actions/CreateList";
-import { DELETE_CARD } from "../actions/DeleteCard";
 import { DELETE_LIST } from "../actions/DeleteList";
-import { EDIT_LIST_TITLE } from "../actions/EditListTitle";
 import { HANDLE_LOGOUT } from "../actions/Logout";
 const initialState = {
   boardName: "",
@@ -44,7 +42,8 @@ const reducerBoard = (state = initialState, action) => {
         ...state,
         lists: newLists3,
       }
-    case EDIT_LIST_TITLE:
+    // dispatched by editListTitle, deleteCard, quickEditCard action creators
+    case "UPDATE_LIST":
       let newLists4 = [...state.lists];
       let listToUpdateIndex = newLists4.findIndex(list => list._id == action.payload._id);
       newLists4[listToUpdateIndex] = action.payload;
@@ -60,19 +59,22 @@ const reducerBoard = (state = initialState, action) => {
         ...state,
         lists: newLists5,
       }
-    case DELETE_CARD:
-      let listToRemoveCardIndex = state.lists.findIndex(list => list._id == action.payload.listId);
-      let newCards = [...state.lists[listToRemoveCardIndex].cards]
-      let cardToRemoveIndex = state.lists[listToRemoveCardIndex].cards.findIndex(card => card._id == action.payload.cardId);
-      newCards.splice(cardToRemoveIndex, 1);
-      return {
-        ...state,
-        lists: [
-          ...state.lists.slice(0, listToRemoveCardIndex),
-          state.lists[listToRemoveCardIndex] = { ...state.lists[listToRemoveCardIndex], cards: newCards },
-          ...state.lists.slice(listToRemoveCardIndex+1)
-        ],
-      }
+    // case DELETE_CARD:
+    //   let newLists6 = [...state.lists];
+    //   let listToRemoveCardIndex = newLists6.findIndex(list => list._index == action.payload._id);
+    //   newLists6[listToRemoveCardIndex] = action.payload;
+    //   return {
+    //     ...state,
+    //     lists: newLists6,
+    //   }
+    // case QUICK_EDIT_CARD:
+    //   let newLists7 = [...state.lists];
+    //   let listToUpdateCardIndex = newLists7.findIndex(list => list._id == action.payload._id);
+    //   newLists7[listToUpdateCardIndex] = action.payload;
+      // return {
+      //   ...state,
+      //   lists
+      // }
     case "RESET_CURRENT_BOARD":
       return initialState;
     case HANDLE_LOGOUT:
