@@ -134,11 +134,13 @@ const Display = () => {
       <section className="container">
         <section className="row row-cols-3 boards__section gy-5 gx-2 justify-content-center">
           {renderBoards()}
-          <button className="btn btn-primary card2__add" onClick={openModal}>
-            Add New Board
-          </button>
-          <button className="btn btn-danger card2__remove" onClick={openRemoveModal}>
-            Remove a Board
+          <button className="card2__add" onClick={openModal}>
+            <h3 className="board__btn">Add New Board</h3>
+              <p className="small"></p>
+              
+            </button>
+          <button className="btn-danger card2__remove" onClick={openRemoveModal}>
+          <h3 className="board__btn">Remove a Board</h3>
           </button>
         </section>
         <Modal

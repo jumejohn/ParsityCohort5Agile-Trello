@@ -86,7 +86,7 @@ p {
   position: relative;
   max-width: 262px;
   min-width: 400px;
-  background-color: #c40000;
+  background-color: #fecb2e;
   border-radius: 4px;
   padding: 32px 24px;
   margin: 12px;
@@ -100,7 +100,7 @@ p {
   box-shadow: 0px 4px 8px rgba(38, 38, 38, 0.2);
   top: -4px;
   border: 1px solid #cccccc;
-  background-color: white;
+  background-color: #fee92e;
 }
 
 .card2__remove:hover:before {
@@ -113,7 +113,7 @@ p {
   position: relative;
   max-width: 262px;
   min-width: 400px;
-  background-color: #0064fa;
+  background-color: #55c2da;
   border-radius: 4px;
   padding: 32px 24px;
   margin: 12px;
@@ -127,9 +127,14 @@ p {
   box-shadow: 0px 4px 8px rgba(38, 38, 38, 0.2);
   top: -4px;
   border: 1px solid #cccccc;
-  background-color: white;
+  background-color: #5fdbf7;
 }
 
 .card2__add:hover:before {
   transform: scale(2.15);
+}
+
+.board__btn {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
 }
