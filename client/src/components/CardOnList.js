@@ -8,11 +8,11 @@ import { deleteCard } from "../actions/DeleteCard";
 const CardOnList = (props) => {
   const dispatch = useDispatch();
   // On Hover to make accessory buttons show
-  const [buttonsAreShown, setButtonsAreShown] = useState(false); 
+  const [buttonsAreShown, setButtonsAreShown] = useState(false);
 
   const handleDeleteClick = () => {
     dispatch(deleteCard(props.cardId, props.listId));
-  }
+  };
 
   // Modal stuff
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -28,7 +28,7 @@ const CardOnList = (props) => {
   return (
     <div
       className="d-flex align-items-center"
-      style={{ "backgroundColor": "white" }}
+      style={{ backgroundColor: "white" }}
       onMouseEnter={() => setButtonsAreShown(true)}
       onMouseLeave={() => setButtonsAreShown(false)}
     >
@@ -40,15 +40,30 @@ const CardOnList = (props) => {
         {props.cardTitle}
       </button>
       {buttonsAreShown && (
-        <button className="btn-close col-1" onClick={handleDeleteClick} type="button" aria-label="Delete Card" />
+        <button
+          className="btn-close col-1"
+          onClick={handleDeleteClick}
+          type="button"
+          aria-label="Delete Card"
+        />
       )}
-      <Modal isOpen={modalIsOpen}>
-        <button onClick={handleCloseModalClick}>x</button>
-        <Card />
-      </Modal>
+      <div>
+        <Modal isOpen={modalIsOpen} style={{ marginTop: "60px" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              marginTop: "20px",
+            }}
+          >
+            <button onClick={handleCloseModalClick}>x</button>
+          </div>
+          <Card />
+        </Modal>
+      </div>
     </div>
   );
-}
+};
 
 export default CardOnList;
 
@@ -56,4 +71,4 @@ CardOnList.propTypes = {
   cardId: PropTypes.string.isRequired,
   cardTitle: PropTypes.string.isRequired,
   listId: PropTypes.string.isRequired,
-}
+};
