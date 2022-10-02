@@ -27,41 +27,37 @@ const removeModalStyles = {
 const Display = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [title, setTitle] = useState("");
-  // const [boards, setBoards] = useState([])
+  const [boards, setBoards] = useState([])
   const [removeModalIsOpen, setRemoveIsOpen] = useState(false)
   const user = useSelector((state) => state.rootReducer.user.currentUser);
 
 
-  // const fetchBoardData = () => {
-  //   const url = `/organization/${user.organization._id}/boards`;
-  //   const token = localStorage.token;
-  //   const config = {
-  //     method: "get",
-  //     url,
-  //     headers: { Authorization: `Bearer ${token}` }
-  //   };
+  const fetchBoardData = () => {
+    const url = `/organization/${user.organization._id}/boards`;
+    const token = localStorage.token;
+    const config = {
+      method: "get",
+      url,
+      headers: { Authorization: `Bearer ${token}` }
+    };
 
-  //   axios(config).then((data) => {
-  //     setBoards(data)
-  //   })
-  // }
+    axios(config).then((data) => {
+      setBoards(data.data.orgBoards)
+    })
+  }
 
 
-  // useEffect(() => {
-  //   if(user){
-  //     fetchBoardData()
-  //   }
-  // }, [])
+  useEffect(() => {
+    if(user && boards.length === 0){
+      fetchBoardData()
+    }
+  }, [user])
 
   const navigate = useNavigate();
   function openModal() {
     setIsOpen(true);
   }
 
-  function afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    console.log("done!");
-  }
 
   function closeModal() {
     setIsOpen(false);
@@ -69,10 +65,6 @@ const Display = () => {
 
   function openRemoveModal() {
     setRemoveIsOpen(true)
-  }
-
-  function afterOpenRemoveModal() {
-    console.log('done!')
   }
 
   function closeRemoveModal() {
@@ -101,13 +93,6 @@ const Display = () => {
       .catch((err) => console.log("ERROR", err));
   };
 
-  // refactor this and replace with user data above
-  const boardsData = useSelector((state) => {
-    if (state.rootReducer.user.currentUser) {
-      return state.rootReducer.user.currentUser.organization.orgBoards;
-    }
-  });
-
   const removeBoard = (id) => {
     const url = `/boards/${id}`;
     const token = localStorage.token;
@@ -125,13 +110,12 @@ const Display = () => {
 
   const renderBoardList = () => {
     if(user){
-      const list = user.organization.orgBoards.map((board) => {
+      const list = boards.map((board) => {
         return (
           <li key={board._id} className="list-item row mb-2">
             <span className="col-md-6">{board.boardName}</span>
             <button type="button" className="btn btn-danger col-md-4" onClick={() => removeBoard(board._id)}>Remove</button>
           </li>
-
         )
       })
       return list
@@ -139,34 +123,35 @@ const Display = () => {
   }
 
   const renderBoards = () => {
-    const boardsArray = boardsData.map((board, i) => {
-      return <Board key={i} boardId={board._id}></Board>;
+    const boardsArray = boards.map((board, i) => {
+      return <Board key={i} boardId={board._id} boardName={board.boardName} numLists={board.lists.length}></Board>;
     });
 
     return boardsArray;
   };
-  if (boardsData) {
+  if (user) {
     return (
       <section className="container">
-        <section className="row row-cols-3 boards__section gy-5 justify-content-center">
+        <section className="row row-cols-3 boards__section gy-5 gx-2 justify-content-center">
           {renderBoards()}
-          <button className="btn btn-primary" onClick={openModal}>
-            Add New Board
-          </button>
-          <button className="btn btn-danger" onClick={openRemoveModal}>
-            Remove a Board
+          <button className="card2__add" onClick={openModal}>
+            <h3 className="board__btn">Add New Board</h3>
+              <p className="small"></p>
+              
+            </button>
+          <button className="btn-danger card2__remove" onClick={openRemoveModal}>
+          <h3 className="board__btn">Remove a Board</h3>
           </button>
         </section>
         <Modal
           isOpen={removeModalIsOpen}
-          onAfterOpen={afterOpenRemoveModal}
           onRequestClose={closeRemoveModal}
           contentLabel="Remove board modal"
           style={removeModalStyles}
         >
           <div className="scroll-component">
             <div className="scroll-content">
-              <button onClick={closeModal}>Close</button>
+              <button onClick={closeRemoveModal}>Close</button>
               <h2>Remove a Board</h2>
               <ul>{renderBoardList()}</ul>
             </div>
@@ -174,7 +159,6 @@ const Display = () => {
         </Modal>
         <Modal
           isOpen={modalIsOpen}
-          onAfterOpen={afterOpenModal}
           onRequestClose={closeModal}
           style={addModalStyles}
           contentLabel="Example Modal"
@@ -190,7 +174,7 @@ const Display = () => {
       </section>
     );
   } else {
-    <div>LOADING</div>;
+    return <div className="d-flex justify-content-center">Loading boards...</div>;
   }
 };
 Modal.setAppElement("#root");
