@@ -33,7 +33,6 @@ router
         .populate('cards')
         .exec((err, list) => {
           if (err) return next(err)
-          console.log(list);
           res.status(200).send(list).end();
         })
     })
