@@ -1,17 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 import Modal from "react-modal";
 import Card from "./Card";
 import { deleteCard } from "../actions/DeleteCard";
+import CardQuickEditModal from "./CardQuickEditModal";
 
 const CardOnList = (props) => {
   const dispatch = useDispatch();
-  // On Hover to make accessory buttons show
+
+  // Utilizing useRef hook to get position of card element
+  const ref = useRef();
+  const currentRef = ref.current;
+  // const x = myRef.current.offsetLeft;
+  // const y = myRef.current.offsetTop;
+
   const [buttonsAreShown, setButtonsAreShown] = useState(false);
 
   const handleDeleteClick = () => {
     dispatch(deleteCard(props.cardId, props.listId));
+  };
+
+  // Modal stuff for quick edits
+  const [editModalIsOpen, setEditModalIsOpen] = useState(false);
+  const handleEditClick = () => {
+    let parentBCR = returnParentBCR();
+    setEditModalIsOpen(true);
+  };
+  const closeEditModal = () => {
+    setEditModalIsOpen(false);
+    setButtonsAreShown(false);
+  };
+
+  const returnParentBCR = () => {
+    let { left, top, width } = currentRef.getBoundingClientRect();
+
+    return {
+      left: left,
+      top: top,
+      width: width,
+    };
   };
 
   // Modal stuff
@@ -27,10 +55,11 @@ const CardOnList = (props) => {
 
   return (
     <div
-      className="d-flex align-items-center"
+      className="d-flex align-items-start"
       style={{ backgroundColor: "white" }}
       onMouseEnter={() => setButtonsAreShown(true)}
       onMouseLeave={() => setButtonsAreShown(false)}
+      ref={ref}
     >
       <button
         value={props.cardId}
@@ -40,11 +69,37 @@ const CardOnList = (props) => {
         {props.cardTitle}
       </button>
       {buttonsAreShown && (
-        <button
-          className="btn-close col-1"
-          onClick={handleDeleteClick}
-          type="button"
-          aria-label="Delete Card"
+        <div className="btn-group">
+          <button
+            className="btn"
+            style={{ padding: "0.15rem 0.3rem" }}
+            onClick={handleEditClick}
+            type="button"
+            aria-label="Edit Card Title"
+          >
+            <i className="fa fa-pencil fa-2x" />
+          </button>
+          <button
+            className="btn"
+            style={{ padding: "0.15rem 0.3rem" }}
+            onClick={handleDeleteClick}
+            type="button"
+            aria-label="Delete Card"
+          >
+            <i className="fa fa-times-circle-o fa-2x" />
+          </button>
+        </div>
+      )}
+      {editModalIsOpen && (
+        <CardQuickEditModal
+          isOpen={editModalIsOpen}
+          cardId={props.cardId}
+          listId={props.listId}
+          cardTitle={props.cardTitle}
+          cardLabel={props.cardLabel}
+          cardDescription={props.cardDescription}
+          closeModal={closeEditModal}
+          getBCR={returnParentBCR}
         />
       )}
       <div>
@@ -70,5 +125,7 @@ export default CardOnList;
 CardOnList.propTypes = {
   cardId: PropTypes.string.isRequired,
   cardTitle: PropTypes.string.isRequired,
+  cardLabel: PropTypes.string,
+  cardDescription: PropTypes.string,
   listId: PropTypes.string.isRequired,
 };

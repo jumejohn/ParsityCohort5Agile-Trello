@@ -3,7 +3,8 @@ import { loadCard } from "../actions/LoadCard";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-
+import { postComment } from "../actions/PostComment";
+import CommentsDiplay from "./CardCommentDisplay";
 const Card = () => {
   const dispatch = useDispatch();
   const thisCard = localStorage.card;
@@ -17,10 +18,11 @@ const Card = () => {
   const currentUser = useSelector(
     (state) => state.rootReducer.user.currentUser.username || null
   );
+
   console.log("card-user", currentUser);
   console.log("currentCard", currentCard);
-  const onSubmit = (data) => {
-    postComment(data);
+  const onSubmit = (data, currentCard) => {
+    postComment(data, currentCard);
     reset({ comment: "" });
   };
 
@@ -33,6 +35,9 @@ const Card = () => {
             {currentCard.cardLabel}
           </h6>
           <p className="card-text">{currentCard.cardDescription}</p>
+          <ul>
+            <CommentsDiplay />
+          </ul>
         </div>
         <div className="container">
           <form onSubmit={handleSubmit(onSubmit)}>

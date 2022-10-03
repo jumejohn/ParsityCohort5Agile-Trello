@@ -69,7 +69,7 @@ const Login = () => {
 
   //Changed this from a conditional depending on state to just looking for a token in the localStorage.
   //State can now be used on next components, but isn't necessary here.
-  if (!localStorage.token) {
+
     return (
       <>
         <header className="input_header">
@@ -109,9 +109,6 @@ const Login = () => {
         </div>
       </>
     );
-  } else {
-    useNavigate("/");
-  }
 };
 
 export default Login;
