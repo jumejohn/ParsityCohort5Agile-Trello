@@ -5,6 +5,7 @@ import Modal from "react-modal";
 import Card from "./Card";
 import { deleteCard } from "../actions/DeleteCard";
 import CardQuickEditModal from "./CardQuickEditModal";
+import AreYouSure from "./AreYouSure";
 
 const CardOnList = (props) => {
   const dispatch = useDispatch();
@@ -16,8 +17,16 @@ const CardOnList = (props) => {
   
   const [buttonsAreShown, setButtonsAreShown] = useState(false);
 
-  const handleDeleteClick = () => {
-    dispatch(deleteCard(props.cardId, props.listId));
+  // Modal stuff for deleting cards
+  const [areYouSureIsOpen, setAreYouSureIsOpen] = useState(false);
+  const toggleAreYouSureIsOpen = () => {
+    setAreYouSureIsOpen(!areYouSureIsOpen);
+    setButtonsAreShown(false);
+  }
+
+  const handleDeleteConfirm = () => {
+    dispatch(deleteCard(props.cardId, props.listId));    
+    toggleAreYouSureIsOpen();
   }
 
   // Modal stuff for quick edits
@@ -72,7 +81,7 @@ const CardOnList = (props) => {
           <button className="btn" style={{"padding": "0.15rem 0.3rem"}} onClick={handleEditClick} type="button" aria-label="Edit Card Title">
             <i className="fa fa-pencil fa-2x"/>
           </button>
-          <button className="btn" style={{"padding": "0.15rem 0.3rem"}} onClick={handleDeleteClick} type="button" aria-label="Delete Card">
+          <button className="btn" style={{"padding": "0.15rem 0.3rem"}} onClick={toggleAreYouSureIsOpen} type="button" aria-label="Delete Card">
             <i className="fa fa-times-circle-o fa-2x" />
           </button>
         </div>
@@ -87,6 +96,9 @@ const CardOnList = (props) => {
           cardDescription={props.cardDescription} 
           closeModal={closeEditModal} 
           getBCR={returnParentBCR}/>
+      )}
+      {areYouSureIsOpen && (
+        <AreYouSure name={"this card"} isOpen={areYouSureIsOpen} onClose={toggleAreYouSureIsOpen} onConfirm={handleDeleteConfirm} />
       )}
       <Modal isOpen={modalIsOpen}>
         <button onClick={handleCloseModalClick}>x</button>
