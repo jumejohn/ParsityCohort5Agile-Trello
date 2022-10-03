@@ -12,18 +12,17 @@ const Card = () => {
     dispatch(loadCard(thisCard));
   }, []);
   const { reset, register, handleSubmit } = useForm();
-  const currentCard = useSelector(
-    (state) => state.rootReducer.currentCard || null
-  );
+  const currentCard =
+    useSelector((state) => state.rootReducer.currentCard) || null;
   const currentUser = useSelector(
     (state) => state.rootReducer.user.currentUser.username || null
   );
-
   console.log("card-user", currentUser);
   console.log("currentCard", currentCard);
-  const onSubmit = (data, currentCard) => {
-    postComment(data, currentCard);
-    reset({ comment: "" });
+  const onSubmit = (data) => {
+    dispatch(postComment(data, currentCard));
+    reset("comment");
+    loadCard(thisCard);
   };
 
   if (currentCard) {

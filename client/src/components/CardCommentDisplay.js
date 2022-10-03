@@ -4,9 +4,9 @@ const currentCard = localStorage.card;
 
 const CommentsDiplay = () => {
   const currentComments = useSelector(
-    (state) => state.rootReducer.user.currentUser.cardComments || null
+    (state) => state.rootReducer.currentCard.cardComments
   );
-  console.log(currentComments);
+  console.log("cardCommentDisplaY", currentComments);
 
   if (currentCard) {
     if (currentComments) {

@@ -1,29 +1,24 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useForm } from "react-hook-form";
 import PropTypes from "prop-types";
-import { createList } from "../actions/CreateList";
 import { deleteList } from "../actions/DeleteList";
 import ListTitle from "./ListTitle";
 import ListFooter from "./ListFooter";
 import CardOnList from "./CardOnList";
-import ClickDetectWrapper from "./ClickDetectWrapper";
+import AreYouSure from "./AreYouSure";
 
 const List = (props) => {
   const dispatch = useDispatch();
-  const { register, handleSubmit } = useForm();
 
-  const handleCancelClick = () => {
-    dispatch({ type: "CANCEL_ADD_LIST" });
-    console.log("cancelled!")
+  const [areYouSureIsOpen, setAreYouSureIsOpen] = useState(false);
+
+  const toggleAreYouSureIsOpen = () => {
+    setAreYouSureIsOpen(!areYouSureIsOpen);
   }
 
-  const handleDeleteClick = () => {
+  const handleDeleteConfirm = () => {
     dispatch(deleteList(props.listId));
-  };
-
-  const onNewListSubmit = (data) => {
-    dispatch(createList(data.newListTitle, props.boardId))
+    toggleAreYouSureIsOpen();
   }
 
   let cards = props.cards;
@@ -35,23 +30,28 @@ const List = (props) => {
         <div className="card-body" style={{"paddingBottom": "0"}}>
           <div className="card-title text-white row d-flex align-items-center">
             <div className="col-11"><ListTitle name={name} listId={props.listId} listCards={cards} /></div>
-            <button className="btn-close btn-close-white col-1" onClick={handleDeleteClick} type="button" aria-label="Close" /> 
+            <button className="btn-close btn-close-white col-1" onClick={toggleAreYouSureIsOpen} type="button" aria-label="Close" /> 
           </div>
-          <ul className="list-group gap-2">
-            {cards.map((card) => <CardOnList 
-              key={card._id} 
-              cardId={card._id} 
-              cardTitle={card.cardTitle} 
-              cardLabel={card.cardLabel}
-              cardDescription={card.cardDescription} 
-              listId={props.listId} 
-            />)}
-          </ul>
+          <div className="" style={{ "overflowY": "auto" }}>
+            <ul className="list-group gap-2">
+              {cards.map((card) => <CardOnList 
+                key={card._id} 
+                cardId={card._id} 
+                cardTitle={card.cardTitle} 
+                cardLabel={card.cardLabel}
+                cardDescription={card.cardDescription} 
+                listId={props.listId} 
+              />)}
+            </ul>
+          </div>
         </div>
         <div className="card-footer d-grid">
           <ListFooter listId={props.listId}/>
         </div>
       </div>
+      {areYouSureIsOpen && (
+        <AreYouSure name={name} isOpen={areYouSureIsOpen} onClose={toggleAreYouSureIsOpen} onConfirm={handleDeleteConfirm}/>
+      )}
     </div>
   );
 };

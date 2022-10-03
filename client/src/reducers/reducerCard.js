@@ -1,5 +1,6 @@
 import { LOAD_CARD } from "../actions/LoadCard";
 import { HANDLE_LOGOUT } from "../actions/Logout";
+import { LOAD_COMMENTS } from "../actions/PostComment";
 
 const initialState = { _id: "" };
 const reducerCard = (state = initialState, action) => {
