@@ -30,3 +30,10 @@ const AreYouSure = (props) => {
 }
 
 export default AreYouSure;
+
+AreYouSure.propTypes = () => {
+  name = PropTypes.string,
+  isOpen = PropTypes.bool,
+  onClose = PropTypes.func,
+  onConfirm = PropTypes.func,
+}
