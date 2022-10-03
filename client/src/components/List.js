@@ -29,30 +29,6 @@ const List = (props) => {
   let cards = props.cards;
   let name = props.name;
 
-  // If the list rendering is a "temporary" list that will be added to the board
-  if (!name) {
-    return (
-      <ClickDetectWrapper callback={handleCancelClick}>
-        <div className="col-3">
-          <div className="card bg-black">
-            <form onSubmit={handleSubmit(onNewListSubmit)}>
-              <div className="card-body">
-                <input className="form-control" placeholder="Enter list title..." {...register("newListTitle")}/>
-              </div>
-              <div className="card-footer d-flex align-items-center gap-2">
-                <button className="btn btn-secondary" type="submit">
-                  Add List
-                </button>
-                <button className="btn-close btn-close-white" onClick={handleCancelClick} type="button" aria-label="Close" />
-              </div>
-            </form>
-          </div>
-        </div>
-      </ClickDetectWrapper>
-    )
-  }
-
-  // This is what renders for normal lists
   return (
     <div className="col-3">
       <div className="card bg-black">
