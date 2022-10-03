@@ -32,7 +32,7 @@ const BoardView = () => {
         {
           lists.map(list => (<List key={list._id} cards={list.cards} name={list.listName} listId={list._id} boardId={boardId} />))
         }
-        <AddListBtn />
+        <AddListBtn boardId={boardId}/>
       </div>
     </div>
   )
