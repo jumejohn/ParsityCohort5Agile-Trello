@@ -21,8 +21,8 @@ const Card = () => {
   console.log("currentCard", currentCard);
   const onSubmit = (data) => {
     dispatch(postComment(data, currentCard));
-    reset("comment");
-    loadCard(thisCard);
+    // reset("comment");
+    // loadCard(thisCard);
   };
 
   if (currentCard) {
@@ -49,11 +49,11 @@ const Card = () => {
               className="form-control-plaintext"
               id="currentUser"
               value={currentUser}
-              {...register("User")}
+              {...register("user")}
             />
             <div className="mb-3">
               <label htmlFor="commentTextArea" className="form-label">
-                Comment
+                Comment:
               </label>
               <textarea
                 className="form-control"

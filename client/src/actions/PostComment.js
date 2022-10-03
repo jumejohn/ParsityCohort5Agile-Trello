@@ -1,5 +1,5 @@
 import axios from "axios";
-import { LOAD_CARD } from "./LoadCard";
+export const CREATE_COMMENT = "CREATE_COMMENT";
 
 export const postComment = (comment, currentCard) => (dispatch) => {
   console.log("action currentCard", currentCard);
@@ -7,15 +7,15 @@ export const postComment = (comment, currentCard) => (dispatch) => {
   const comments = currentCard.cardComments;
   console.log("postcommentscurrentCard", comments);
   comments.push(comment);
-  console.log("currentCard comments", comments);
+  console.log("after push comment", comments);
   const cardId = currentCard._id;
   axios({
     method: "put",
     url: `/cards/${cardId}`,
     headers: { Authorization: `Bearer ${token}` },
-    data: { ...currentCard, cardComments: comment },
+    data: { cardComments: comment },
   }).then((response) => {
-    console.log(response);
-    dispatch({ type: UPDATE_CARD, payload: response.data });
+    console.log("this response", response);
+    dispatch({ type: CREATE_COMMENT, payload: response.data });
   });
 };
