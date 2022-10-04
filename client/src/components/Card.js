@@ -9,6 +9,7 @@ const Card = () => {
   const dispatch = useDispatch();
   const thisCard = localStorage.card;
   useEffect(() => {
+    //load the card that is clicked
     dispatch(loadCard(thisCard));
   }, []);
   const { reset, register, handleSubmit } = useForm();
@@ -21,7 +22,7 @@ const Card = () => {
   console.log("currentCard", currentCard);
   const onSubmit = (data) => {
     dispatch(postComment(data, currentCard));
-    // reset("comment");
+    reset("comment");
     // loadCard(thisCard);
   };
 
