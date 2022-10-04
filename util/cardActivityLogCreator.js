@@ -7,9 +7,9 @@ const createComment = (user, comment) => {
   return newComment;
 };
 
-const createActivityLog = (username, list) => {
+const createActivityLog = (username, action, list) => {
   const time = new Date();
-  const logEntry = `User ${username} saved to ${list} at ${time}`;
+  const logEntry = `${username} ${action} ${list || ''} at ${time}`;
 
   return logEntry;
 };

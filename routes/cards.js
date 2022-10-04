@@ -81,7 +81,7 @@ router
     List.findById(listId).exec((err, list) => {
       if (err) return next(err);
 
-      const activtyLog = createActivityLog(username, list.listName);
+      const activtyLog = createActivityLog(username, 'saved to', list.listName);
       const comment = createComment(username, cardComment);
       console.log(activtyLog);
 
@@ -133,7 +133,8 @@ router
     const { username, commentText} = req.body
     const newComment = createComment(username, commentText)
     const filter = { _id: cardId}
-    Card.findOneAndUpdate(filter).updateOne({$push: {cardComments: newComment}})
+    const activtyLog = createActivityLog(username, 'created');
+    Card.findOneAndUpdate(filter).updateOne({$push: {cardComments: newComment}}).updateOne({ $push: { cardActivity: activtyLog } })
       .exec((err) => {
         if(err){
           res.status(400).send(err)
@@ -154,8 +155,9 @@ router
     const cardId = req.params.cardId
     const commentId = req.params.commentId
     const { username, commentText} = req.body
+    const activtyLog = createActivityLog(username, 'updated');
+    Card.findById(cardId).updateOne({ $push: { cardActivity: activtyLog } }).exec()
     const card = await Card.findById(cardId);
-    // console.log(card)
     card.cardComments.map((com) => {
         if(com._id == commentId){
           com.commentText = commentText
