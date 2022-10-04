@@ -8,14 +8,7 @@ const reducerCard = (state = initialState, action) => {
     case LOAD_CARD:
       console.log("current reducer Card:", action.payload);
       return action.payload;
-    case CREATE_COMMENT:
-      console.log("create comment reducer", action.payload);
-      let comments = [...state.cardComments];
-      comments.push(action.payload);
-      return {
-        ...state,
-        cardComments: comments,
-      };
+
     case HANDLE_LOGOUT:
       return initialState;
     default:

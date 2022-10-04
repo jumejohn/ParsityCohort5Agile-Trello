@@ -23,7 +23,7 @@ const Card = () => {
   const onSubmit = (data) => {
     dispatch(postComment(data, currentCard));
     reset("comment");
-    // loadCard(thisCard);
+    loadCard(thisCard);
   };
 
   if (currentCard) {

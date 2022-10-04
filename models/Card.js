@@ -8,6 +8,7 @@ const CardSchema = new Schema({
   cardComments: {
     type: Array,
     required: false,
+    default: {},
   },
 });
 

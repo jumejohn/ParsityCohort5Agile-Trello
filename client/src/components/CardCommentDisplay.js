@@ -6,18 +6,14 @@ const CommentsDiplay = () => {
   const currentComments = useSelector(
     (state) => state.rootReducer.currentCard.cardComments
   );
-  console.log("cardCommentDisplaY", currentComments);
+  console.log("cardCommentDisplay", currentComments);
 
-  if (currentCard) {
-    if (currentComments) {
-      currentComments.map((comment) => {
-        return <li>{comment}</li>;
-      });
-    } else {
-      return <p>comments</p>;
-    }
+  if (currentComments) {
+    currentComments.map((comment) => {
+      return <li>{comment}</li>;
+    });
   } else {
-    null;
+    return <p>comments</p>;
   }
 };
 

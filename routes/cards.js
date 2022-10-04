@@ -97,7 +97,7 @@ router
       cardTitle: cardTitle,
       cardLabel: cardLabel,
       cardDescription: cardDescription,
-      cardComments: [],
+      cardComments: [cardComments],
     };
     const filter = { _id: cardId };
     const listWithUpdatedCard = await Card.findOneAndUpdate(filter, update, {
