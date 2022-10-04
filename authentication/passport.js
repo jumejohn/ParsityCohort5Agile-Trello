@@ -45,7 +45,7 @@ const jwtLogin = new JwtStrategy(jwtOptions, (payload, done) => {
       }
 
       if (user) {
-        console.log('UUUser: ', user);
+        // console.log('UUUser: ', user);
         done(null, user);
       } else {
         done(null, false);
