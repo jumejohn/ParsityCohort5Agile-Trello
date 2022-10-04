@@ -10,6 +10,7 @@ const {
   createActivityLog,
   createComment,
 } = require('../util/cardActivityLogCreator');
+const { ObjectId } = require('mongodb');
 
 router
   .get('/:cardId', requireAuth, function (req, res, next) {
@@ -66,21 +67,6 @@ router
     });
   })
 
-  // .post('/', requireAuth, function (req, res, next) {
-  //   const { cardTitle, cardLabel, cardDescription } = req.body;
-  //   const newCard = new Card({ cardTitle, cardLabel, cardDescription }).save(
-  //     (err) => {
-  //       if (err){
-  //         res.status(400).send(err)
-  //         return next(err);
-  //       } else {
-  //       res.status(200).json(newCard);
-  //       res.end();
-  //       }
-  //     }
-  //   );
-  // })
-
   .put('/:cardId', requireAuth, async function (req, res, next) {
     const cardId = req.params.cardId;
     const {
@@ -92,41 +78,42 @@ router
       username,
     } = req.body;
 
-    // User.findById(userId).exec((err, user) => {
-    //   if (err) return next(err);
-    // });
-    const activtyLog = createActivityLog(username, listId);
-    const comment = createComment(username, cardComment);
-    console.log(activtyLog);
+    List.findById(listId).exec((err, list) => {
+      if (err) return next(err);
 
-    const update = {
-      cardTitle: cardTitle,
-      cardLabel: cardLabel,
-      cardDescription: cardDescription,
-    };
+      const activtyLog = createActivityLog(username, list.listName);
+      const comment = createComment(username, cardComment);
+      console.log(activtyLog);
 
-    const filter = { _id: cardId };
-    Card.findOneAndUpdate(filter, update, {
-      new: true,
-    })
-      .updateOne({ $push: { cardComments: comment } })
-      .updateOne({ $push: { cardActivity: activtyLog } })
-      .exec((err) => {
-        if (err) {
-          res.status(400).send(err);
-          return next(err);
-        } else {
-          updatedList = List.findOne({ _id: listId })
-            .populate('cards')
-            .exec((err, list) => {
-              if (err) return next(err);
-              res.status(200).send(list);
-            });
-        }
-      });
+      const update = {
+        cardTitle: cardTitle,
+        cardLabel: cardLabel,
+        cardDescription: cardDescription,
+      };
+
+      const filter = { _id: cardId };
+      Card.findOneAndUpdate(filter, update, {
+        new: true,
+      })
+        .updateOne({ $push: { cardComments: comment } })
+        .updateOne({ $push: { cardActivity: activtyLog } })
+        .exec((err) => {
+          if (err) {
+            res.status(400).send(err);
+            return next(err);
+          } else {
+            updatedList = List.findOne({ _id: listId })
+              .populate('cards')
+              .exec((err, list) => {
+                if (err) return next(err);
+                res.status(200).send(list);
+              });
+          }
+        });
+    });
   })
 
-  .delete('/:cardId/:commentId', requireAuth, async function (req, res, next) {
+  .delete('/:cardId/comment/:commentId', requireAuth, async function (req, res, next) {
     const cardId = req.params.cardId;
     const commentId = req.params.commentId;
     const card = await Card.findById(cardId);
@@ -139,6 +126,44 @@ router
     card.cardComments = newCommentArray;
     await card.save();
     res.send(card).status(204).end();
-  });
+  })
+
+  .post('/:cardId/comment', requireAuth, async function (req, res, next) {
+    const cardId = req.params.cardId
+    const { username, commentText} = req.body
+    const newComment = createComment(username, commentText)
+    const filter = { _id: cardId}
+    Card.findOneAndUpdate(filter).updateOne({$push: {cardComments: newComment}})
+      .exec((err) => {
+        if(err){
+          res.status(400).send(err)
+          return next(err)
+        } else {
+          updatedCard = Card.findOne({ _id: cardId}).exec((err, card) => {
+            if(err){
+              return next(err)
+            } else {
+              res.status(200).send(card)
+            }
+          })
+        }
+      })
+  })
+
+  .put('/:cardId/comment/:commentId', requireAuth, async function (req, res, next) {
+    const cardId = req.params.cardId
+    const commentId = req.params.commentId
+    const { username, commentText} = req.body
+    const card = await Card.findById(cardId);
+    // console.log(card)
+    card.cardComments.map((com) => {
+        if(com._id == commentId){
+          com.commentText = commentText
+        }
+
+      })
+      await card.save()
+      res.send(card).status(204)
+    })
 
 module.exports = router;

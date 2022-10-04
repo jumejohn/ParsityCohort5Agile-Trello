@@ -7,19 +7,9 @@ const createComment = (user, comment) => {
   return newComment;
 };
 
-const createActivityLog = (username, listId) => {
+const createActivityLog = (username, list) => {
   const time = new Date();
-  // const user = userId
-  const newList = listId;
-
-  // List.findById(listId).exec((err, list) => {
-  //   if (err) return next(err);
-
-  //   console.log(list);
-  //   let newList = list.listName;
-  //   // console.log(logEntry);
-  // });
-  const logEntry = `User ${username} saved to ${newList} at ${time}`;
+  const logEntry = `User ${username} saved to ${list} at ${time}`;
 
   return logEntry;
 };
