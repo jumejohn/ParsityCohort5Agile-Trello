@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { postComment } from "../actions/PostComment";
 import CommentsDiplay from "./CardCommentDisplay";
+
 const Card = () => {
   const dispatch = useDispatch();
   const thisCard = localStorage.card;
@@ -37,7 +38,7 @@ const Card = () => {
           <p className="card-text">{currentCard.cardDescription}</p>
         </div>
         <div className="container">
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form className="input-group" onSubmit={handleSubmit(onSubmit)}>
             <label htmlFor="currentUser" className="form-label">
               User:
             </label>
@@ -66,6 +67,8 @@ const Card = () => {
               </button>
             </div>
           </form>
+        </div>
+        <div>
           <CommentsDiplay />
         </div>
       </div>
