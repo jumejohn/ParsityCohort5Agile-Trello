@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import PropTypes from "prop-types";
@@ -6,6 +6,17 @@ import Modal from "react-modal";
 import { quickEditCard } from "../actions/QuickEditCard";
 
 const CardQuickEditModal = (props) => {
+  // To get position of parent
+  let BCR = props.getBCR();
+  
+  // For dynamic positioning
+  const [modalTop, setModalTop] = useState(BCR.top);
+  useEffect(() => {
+    if (window.innerHeight - BCR.top < 100) {
+      setModalTop(window.innerHeight - 100);
+    }
+  })
+
   const dispatch = useDispatch();
   const { register, handleSubmit, reset } = useForm();
   const onSubmit = (data) => {
@@ -21,9 +32,6 @@ const CardQuickEditModal = (props) => {
     props.closeModal();
   }
 
-  // To get position of parent
-  let BCR = props.getBCR();
-
   return (
     <Modal 
       isOpen={props.isOpen}
@@ -32,10 +40,12 @@ const CardQuickEditModal = (props) => {
         "content": {
           "background": "none",
           "border": "none",
-          "top": BCR.top,
+          "top": modalTop,
           "left": BCR.left,
           "width": BCR.width,
           "padding": 0,
+          "display": "block",
+          "height": "fit-content",
         }
       }}
     >
