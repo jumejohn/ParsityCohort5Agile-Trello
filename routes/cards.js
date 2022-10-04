@@ -4,7 +4,9 @@ const Card = require('../models/Card');
 const passport = require('passport');
 const passportService = require('../authentication/passport');
 const List = require('../models/List');
+const User = require('../models/User')
 const requireAuth = passport.authenticate('jwt', { session: false });
+const {createActivityLog, createComment} = require('../util/cardActivityLogCreator')
 
 router
   .get('/:cardId', requireAuth, function (req, res, next) {
@@ -56,40 +58,41 @@ router
     })
   })
 
-  // .post('/', requireAuth, function (req, res, next) {
-  //   const { cardTitle, cardLabel, cardDescription } = req.body;
-  //   const newCard = new Card({ cardTitle, cardLabel, cardDescription }).save(
-  //     (err) => {
-  //       if (err){
-  //         res.status(400).send(err)
-  //         return next(err);
-  //       } else {
-  //       res.status(200).json(newCard);
-  //       res.end();
-  //       }
-  //     }
-  //   );
-  // })
-
   .put('/:cardId', requireAuth, async function (req, res, next) {
     const cardId = req.params.cardId;
-    const { listId, cardTitle, cardLabel, cardDescription } = req.body;
-    const update = {
-      cardTitle: cardTitle,
-      cardLabel: cardLabel,
-      cardDescription: cardDescription,
-    };
-    const filter = { _id: cardId };
-    const listWithUpdatedCard = await Card.findOneAndUpdate(filter, update, {
+    const { listId, cardTitle, cardLabel, cardDescription, cardComment, userId } = req.body;
+    const user = User.findById(userId).exec((err, user)=> {
+      if (err) return next (err)
+      return user
+    })
+      const activtyLog = createActivityLog(user, listId)
+      const comment = createComment(userId, cardComment)
+      
+      const update = {
+        cardTitle: cardTitle,
+        cardLabel: cardLabel,
+        cardDescription: cardDescription,
+      };
+      
+      const filter = { _id: cardId };
+      Card
+    .findOneAndUpdate(filter, update, {
       new: true,
-    }).exec((err) => {
-      if (err) return next(err)
-      updatedList = List.findOne({ _id: listId })
+    })
+    .updateOne({$push: {cardComments: comment}})
+    .updateOne({$push: {cardActivity: activtyLog}})
+    .exec((err) => {
+      if (err) {
+        res.status(400).send(err)
+        return next(err)
+      } else {
+        updatedList = List.findOne({ _id: listId })
         .populate('cards')
         .exec((err, list) => {
           if (err) return next(err)
           res.status(200).send(list).end();
         })
+      }
     })
   });
 
