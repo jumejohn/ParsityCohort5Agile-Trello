@@ -59,6 +59,11 @@ const reducerBoard = (state = initialState, action) => {
         ...state,
         lists: newLists5,
       }
+    case "UPDATE_LIST_ORDER":
+      return {
+        ...state,
+        lists: action.payload
+      }
     // case DELETE_CARD:
     //   let newLists6 = [...state.lists];
     //   let listToRemoveCardIndex = newLists6.findIndex(list => list._index == action.payload._id);

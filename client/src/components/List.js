@@ -8,8 +8,18 @@ import ListTitle from "./ListTitle";
 import ListFooter from "./ListFooter";
 import CardOnList from "./CardOnList";
 import ClickDetectWrapper from "./ClickDetectWrapper";
+import {useSortable} from '@dnd-kit/sortable';
+import {CSS} from '@dnd-kit/utilities';
 
 const List = (props) => {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+  } = useSortable({id: props.id});
+
   const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
 
@@ -28,13 +38,16 @@ const List = (props) => {
 
   let cards = props.cards;
   let name = props.name;
-
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
   // If the list rendering is a "temporary" list that will be added to the board
   if (!name) {
     return (
       <ClickDetectWrapper callback={handleCancelClick}>
         <div className="col-3">
-          <div className="card bg-black">
+          <div className="card bg-black" >
             <form onSubmit={handleSubmit(onNewListSubmit)}>
               <div className="card-body">
                 <input className="form-control" placeholder="Enter list title..." {...register("newListTitle")}/>
@@ -54,7 +67,7 @@ const List = (props) => {
 
   // This is what renders for normal lists
   return (
-    <div className="col-3">
+    <div className="col-3" ref={setNodeRef} style={style} {...attributes} {...listeners}>
       <div className="card bg-black">
         <div className="card-body" style={{"paddingBottom": "0"}}>
           <div className="card-title text-white row d-flex align-items-center">
