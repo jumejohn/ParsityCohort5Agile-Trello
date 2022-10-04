@@ -1,10 +1,14 @@
 const mongoose = require('mongoose')
 
 const List = require('../models/List')
+const User = require('../models/User')
 
-const createComment = (user, comment) => {
-  const newComment = {commentText: comment, commentUser: user}
-  return newComment
+const createComment = async (userId, comment) => {
+  const user = await User.find({ _id: userId}).exec()
+    const newComment = {commentText: comment, commentUser: user}
+    return newComment
+  
+  
 }
 
 const createActivityLog = (userId, listId) => {
