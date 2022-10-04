@@ -7,8 +7,8 @@ export const postComment = (comment, currentCard) => (dispatch) => {
   const cardId = currentCard._id;
 
   axios({
-    method: "put",
-    url: `/cards/${cardId}`,
+    method: "post",
+    url: `/cards/${cardId}/comment`,
     headers: { Authorization: `Bearer ${token}` },
     data: {
       cardComments: comment,

@@ -24,7 +24,6 @@ const Card = () => {
   const onSubmit = (data) => {
     dispatch(postComment(data, currentCard));
     reset("comment");
-    loadCard(thisCard);
   };
 
   if (currentCard) {
@@ -38,25 +37,19 @@ const Card = () => {
           <p className="card-text">{currentCard.cardDescription}</p>
         </div>
         <div className="container">
-          <form className="input-group" onSubmit={handleSubmit(onSubmit)}>
-            <label htmlFor="currentUser" className="form-label">
-              User:
-            </label>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <label className="form-label">User:</label>
             <input
               type="text"
               readOnly
               className="form-control-plaintext"
-              id="currentUser"
               value={currentUser}
               {...register("commentUser")}
             />
             <div className="mb-3">
-              <label htmlFor="commentTextArea" className="form-label">
-                Comment:
-              </label>
+              <label className="form-label">Comment:</label>
               <textarea
                 className="form-control"
-                id="commentTextArea"
                 rows="3"
                 {...register("commentText")}
               ></textarea>
