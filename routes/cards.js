@@ -58,15 +58,33 @@ router
     })
   })
 
+  .delete('/:cardId/:commentId', requireAuth, async function(req, res, next) {
+    const cardId = req.params.cardId
+    const commentId = req.params.commentId
+    const card = await Card.findById(cardId)
+    let newCommentArray = []
+    card.cardComments.filter(comment => {
+      if(comment._id != commentId){
+        newCommentArray.push(comment)
+      }
+    })
+    card.cardComments = newCommentArray
+    await card.save()
+    res.send(card).status(204).end()
+  })
+
   .put('/:cardId', requireAuth, async function (req, res, next) {
     const cardId = req.params.cardId;
     const { listId, cardTitle, cardLabel, cardDescription, cardComment, userId } = req.body;
-    const user = User.findById(userId).exec((err, user)=> {
-      if (err) return next (err)
-      return user
-    })
-      const activtyLog = createActivityLog(user, listId)
-      const comment = createComment(userId, cardComment)
+    // const user = User.findById(userId).exec((err, user)=> {
+    //   if (err) return next (err)
+    //   return user
+    // })
+    const user = await User.find({ _id: userId}).exec()
+    const newComment = {commentText: cardComment, commentUser: user}
+    // return newComment
+      const activtyLog = createActivityLog(userId, listId)
+      // const comment = createComment(userId, cardComment)
       
       const update = {
         cardTitle: cardTitle,
@@ -79,7 +97,7 @@ router
     .findOneAndUpdate(filter, update, {
       new: true,
     })
-    .updateOne({$push: {cardComments: comment}})
+    .updateOne({$push: {cardComments: newComment}})
     .updateOne({$push: {cardActivity: activtyLog}})
     .exec((err) => {
       if (err) {
@@ -95,5 +113,7 @@ router
       }
     })
   });
+
+
 
 module.exports = router;
