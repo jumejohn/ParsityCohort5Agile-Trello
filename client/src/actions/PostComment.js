@@ -5,8 +5,7 @@ export const postComment = (comment, currentCard) => (dispatch) => {
   console.log("action currentCard", currentCard);
   const token = localStorage.token;
   const cardId = currentCard._id;
-  const comments = currentCard.cardComments;
-  // comments.push(comment);
+
   axios({
     method: "put",
     url: `/cards/${cardId}`,

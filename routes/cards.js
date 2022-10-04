@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 const Card = require("../models/Card");
+const Comment = require("../models/Card");
 const passport = require("passport");
 const passportService = require("../authentication/passport");
 const List = require("../models/List");
@@ -91,6 +92,7 @@ router
 
   .put("/:cardId", requireAuth, async function (req, res, next) {
     const cardId = req.params.cardId;
+
     const { listId, cardTitle, cardLabel, cardDescription, cardComments } =
       req.body;
     const update = {

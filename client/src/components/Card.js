@@ -35,9 +35,6 @@ const Card = () => {
             {currentCard.cardLabel}
           </h6>
           <p className="card-text">{currentCard.cardDescription}</p>
-          <ul>
-            <CommentsDiplay />
-          </ul>
         </div>
         <div className="container">
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -50,7 +47,7 @@ const Card = () => {
               className="form-control-plaintext"
               id="currentUser"
               value={currentUser}
-              {...register("user")}
+              {...register("commentUser")}
             />
             <div className="mb-3">
               <label htmlFor="commentTextArea" className="form-label">
@@ -60,7 +57,7 @@ const Card = () => {
                 className="form-control"
                 id="commentTextArea"
                 rows="3"
-                {...register("comment")}
+                {...register("commentText")}
               ></textarea>
             </div>
             <div className="input-group mb-3">
@@ -69,6 +66,7 @@ const Card = () => {
               </button>
             </div>
           </form>
+          <CommentsDiplay />
         </div>
       </div>
     );
