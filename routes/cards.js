@@ -135,11 +135,10 @@ router
     const cardId = req.params.cardId;
     const { username, commentText } = req.body;
     const newComment = createComment(username, commentText);
+    const activityLog = createActivityLog(username, "created");
     const filter = { _id: cardId };
-    const activtyLog = createActivityLog(username, "created");
-    Card.findOneAndUpdate(filter)
-      .updateOne({ $push: { cardComments: newComment } })
-      .updateOne({ $push: { cardActivity: activtyLog } })
+    const update = { $push: { cardComments: newComment, cardActivity: activityLog }};
+    Card.findOneAndUpdate(filter, update)
       .exec((err) => {
         if (err) {
           res.status(400).send(err);
