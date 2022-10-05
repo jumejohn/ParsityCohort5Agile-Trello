@@ -14,9 +14,9 @@ const requireAuth = passport.authenticate('jwt', {
 const requireSignin = passport.authenticate('local', { session: false });
 
 /* GET users listing. */
-router.get('/', function (req, res, next) {
-  res.send('respond with a resource');
-});
+// router.get('/', function (req, res, next) {
+//   res.send('respond with a resource');
+// });
 
 router.get('/auth/unauth', function (req, res, next) {
   res.status(401).send('Unauthorized');
