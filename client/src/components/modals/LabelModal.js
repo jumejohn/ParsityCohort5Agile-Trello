@@ -8,6 +8,7 @@ const LabelModal = (props) => {
   const dispatch = useDispatch();
 
   const handleChange = (index) => {
+    props.toggleChange(true);
     props.onChange(index);
   }
 
@@ -53,4 +54,5 @@ LabelModal.propTypes = {
   isOpen: PropTypes.bool,
   onClose: PropTypes.func,
   onChange: PropTypes.func,
+  toggleChange: PropTypes.func,
 }

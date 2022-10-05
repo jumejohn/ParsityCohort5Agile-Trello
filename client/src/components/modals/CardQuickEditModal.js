@@ -22,6 +22,7 @@ const CardQuickEditModal = (props) => {
 
   // For Label Editing Modal
   const boardLabels = useSelector(state => state.rootReducer.currentBoard.labels);
+  const [labelsChanged, setLabelsChanged] = useState(false);
   const [labelModalIsOpen, setLabelModalIsOpen] = useState(false);
   const toggleLabelModalIsOpen = () => {
     setLabelModalIsOpen(!labelModalIsOpen);
@@ -42,7 +43,7 @@ const CardQuickEditModal = (props) => {
   const dispatch = useDispatch();
   const { register, handleSubmit, reset } = useForm();
   const onSubmit = (data) => {
-    if (data.editedCardTitle == props.cardTitle) {
+    if (data.editedCardTitle == props.cardTitle && !labelsChanged) {
       closeModal();
     }
     dispatch(
@@ -50,7 +51,7 @@ const CardQuickEditModal = (props) => {
         props.cardId,
         props.listId,
         data.editedCardTitle,
-        props.cardLabel,
+        cardLabels,
         props.cardDescription,
         props.cardComments
       )
@@ -101,6 +102,7 @@ const CardQuickEditModal = (props) => {
         isOpen={labelModalIsOpen}
         onClose={toggleLabelModalIsOpen} 
         onChange={toggleCardLabels}
+        toggleChange={setLabelsChanged}
       />
     </Modal>
   );
