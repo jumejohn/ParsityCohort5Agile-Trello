@@ -86,7 +86,7 @@ const Card = () => {
                 ></textarea>
               </div>
               <div className="input-group mb-3">
-                <button type="submit" className="btn btn-primary">
+                <button type="submit" className="btn comment-submit-button">
                   Submit Comment
                 </button>
               </div>

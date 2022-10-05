@@ -55,10 +55,12 @@ const AddListBtn = (props) => {
       <div className="card list-title">
         <div className="card-footer d-grid">
           <button
-            className="btn btn-secondary"
+            className="btn card-title"
             onClick={toggleTempListIsOpen}
             type="button"
           >
+            <i className="fa fa-plus fa-1.5" />
+            <span> </span>
             Add a list
           </button>
         </div>
