@@ -4,8 +4,8 @@ import PropTypes from "prop-types";
 import Modal from "react-modal";
 import Card from "./Card";
 import { deleteCard } from "../actions/DeleteCard";
-import CardQuickEditModal from "./CardQuickEditModal";
-import AreYouSure from "./AreYouSure";
+import CardQuickEditModal from "./modals/CardQuickEditModal";
+import AreYouSure from "./modals/AreYouSure";
 
 const CardOnList = (props) => {
   const dispatch = useDispatch();
@@ -33,7 +33,6 @@ const CardOnList = (props) => {
   // Modal stuff for quick edits
   const [editModalIsOpen, setEditModalIsOpen] = useState(false);
   const handleEditClick = () => {
-    let parentBCR = returnParentBCR();
     setEditModalIsOpen(true);
   };
   const closeEditModal = () => {
@@ -132,7 +131,7 @@ export default CardOnList;
 CardOnList.propTypes = {
   cardId: PropTypes.string.isRequired,
   cardTitle: PropTypes.string.isRequired,
-  cardLabel: PropTypes.string,
+  cardLabel: PropTypes.any,
   cardDescription: PropTypes.string,
   listId: PropTypes.string.isRequired,
 };

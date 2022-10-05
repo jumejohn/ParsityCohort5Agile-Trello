@@ -5,7 +5,7 @@ import { deleteList } from "../actions/DeleteList";
 import ListTitle from "./ListTitle";
 import ListFooter from "./ListFooter";
 import CardOnList from "./CardOnList";
-import AreYouSure from "./AreYouSure";
+import AreYouSure from "./modals/AreYouSure";
 
 const List = (props) => {
   const dispatch = useDispatch();

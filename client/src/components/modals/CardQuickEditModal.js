@@ -3,7 +3,8 @@ import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import PropTypes from "prop-types";
 import Modal from "react-modal";
-import { quickEditCard } from "../actions/QuickEditCard";
+import { quickEditCard } from "../../actions/QuickEditCard";
+import LabelModal from "./LabelModal";
 
 const CardQuickEditModal = (props) => {
   // To get position of parent
@@ -14,8 +15,16 @@ const CardQuickEditModal = (props) => {
   useEffect(() => {
     if (window.innerHeight - BCR.top < 100) {
       setModalTop(window.innerHeight - 100);
+    } else {
+      setModalTop(BCR.top);
     }
   });
+
+  // For Label Editing Modal
+  const [labelModalIsOpen, setLabelModalIsOpen] = useState(false);
+  const toggleLabelModalIsOpen = () => {
+    setLabelModalIsOpen(!labelModalIsOpen);
+  }
 
   const dispatch = useDispatch();
   const { register, handleSubmit, reset } = useForm();
@@ -66,11 +75,16 @@ const CardQuickEditModal = (props) => {
             {...register("editedCardTitle")}
             style={{ height: "100%" }}
           />
-          <button className="btn btn-primary" type="submit">
-            Save
-          </button>
+          <div className="d-flex justify-content-between">
+          <button className="btn btn-primary flex-grow-0" type="submit">Save</button>
+          <button className="btn btn-dark flex-grow-0" onClick={toggleLabelModalIsOpen} type="button">Edit Labels</button>
+          </div>
         </form>
       </div>
+      <LabelModal 
+        isOpen={labelModalIsOpen}
+        onClose={toggleLabelModalIsOpen} 
+      />
     </Modal>
   );
 };
@@ -79,7 +93,7 @@ CardQuickEditModal.propTypes = {
   cardId: PropTypes.string.isRequired,
   listId: PropTypes.string.isRequired,
   cardTitle: PropTypes.string,
-  cardLabel: PropTypes.string,
+  cardLabel: PropTypes.any,
   cardDescription: PropTypes.string,
   cardComments: PropTypes.array,
   isOpen: PropTypes.bool,
