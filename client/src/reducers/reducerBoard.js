@@ -45,6 +45,9 @@ const reducerBoard = (state = initialState, action) => {
         ...state,
         lists: newLists5,
       }
+    case "UPDATE_BOARD":
+      console.log("board updated!")
+      return action.payload;
     case "RESET_CURRENT_BOARD":
       return initialState;
     case HANDLE_LOGOUT:

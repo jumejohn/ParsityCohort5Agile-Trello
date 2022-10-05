@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import Modal from "react-modal";
 import { quickEditCard } from "../../actions/QuickEditCard";
 import LabelModal from "./LabelModal";
+import LabelEditor from "./LabelEditor";
 
 const CardQuickEditModal = (props) => {
   // To get position of parent
@@ -38,6 +39,16 @@ const CardQuickEditModal = (props) => {
       newArray.push(toggledLabel);
     }
     setCardLabels(newArray);
+  }
+
+  const [labelEditorIsOpen, setLabelEditorIsOpen] = useState(false);
+  const [labelEditorType, setLabelEditorType] = useState("Edit");
+  const [labelEditorDefaults, setLabelEditorDefaults] = useState({ color: null, name: null });
+  const toggleLabelEditorIsOpen = (type, color, name) => {
+    if (type !== labelEditorType) setLabelEditorType(type);
+    setLabelEditorDefaults({ color: color, name: name });
+    setLabelEditorIsOpen(!labelEditorIsOpen);
+    toggleLabelModalIsOpen();
   }
 
   const dispatch = useDispatch();
@@ -104,6 +115,14 @@ const CardQuickEditModal = (props) => {
         onChange={toggleCardLabels}
         toggleChange={setLabelsChanged}
         cardLabels={cardLabels}
+        openLabelEditor={toggleLabelEditorIsOpen}
+      />
+      <LabelEditor
+        isOpen={labelEditorIsOpen}
+        onClose={toggleLabelEditorIsOpen}
+        type={labelEditorType}
+        defaultName={labelEditorDefaults.name}
+        defaultColor={labelEditorDefaults.color}
       />
     </Modal>
   );

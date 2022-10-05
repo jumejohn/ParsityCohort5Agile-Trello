@@ -68,14 +68,24 @@ router
   // PUT update board by id
   .put('/:boardId', requireAuth, async function (req, res, next) {
     const boardId = req.params.boardId;
-    const { boardName, users, lists } = req.body;
-    const update = { boardName: boardName, users: users, lists: lists };
+    const updateQuery = {};
+    if (req.body.boardName) updateQuery.boardName = req.body.boardName;
+    if (req.body.users) updateQuery.users = req.body.users;
+    if (req.body.lists) updateQuery.lists = req.body.lists;
+    if (req.body.labels) updateQuery.labels = req.body.labels;
+    // const { boardName, users, lists, labels } = req.body;
+    // const update = { boardName: boardName, users: users, lists: lists, labels: labels };
     const filter = { _id: boardId };
-    const updateBoard = await Board.findOneAndUpdate(filter, update, {
-      new: true,
-    });
-    res.send(updateBoard);
-    res.status(200);
+    const updatedBoard = await Board.findOneAndUpdate(filter, updateQuery, { new: true })
+      .populate('users')
+      .populate({ path: 'lists', populate: { path: 'cards' } })
+      .exec((err, board) => {
+        if (err) return next(err);
+        res
+          .status(200)
+          .send(board)
+          .end();
+      });
   });
 
 module.exports = router;
