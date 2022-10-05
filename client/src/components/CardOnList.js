@@ -62,12 +62,17 @@ const CardOnList = (props) => {
   };
 
   return (
+    <div ref={ref}>
+    <div className="row" style={{"width": "100%", "backgroundColor": "white", "margin": "0"}}>
+        {props.cardLabel.length > 0 && props.cardLabel.map((label, index) => (
+          <button className="col-3 btn" style={{"backgroundColor": label.color}}key={index} />
+        ))}
+    </div>
     <div
       className="d-flex align-items-start"
       style={{ backgroundColor: "white" }}
       onMouseEnter={() => setButtonsAreShown(true)}
       onMouseLeave={() => setButtonsAreShown(false)}
-      ref={ref}
     >
       <button
         value={props.cardId}
@@ -123,6 +128,7 @@ const CardOnList = (props) => {
         <Card />
       </Modal>
     </div>
+    </div>
   );
 };
 
@@ -131,7 +137,7 @@ export default CardOnList;
 CardOnList.propTypes = {
   cardId: PropTypes.string.isRequired,
   cardTitle: PropTypes.string.isRequired,
-  cardLabel: PropTypes.any,
+  cardLabel: PropTypes.array,
   cardDescription: PropTypes.string,
   listId: PropTypes.string.isRequired,
 };

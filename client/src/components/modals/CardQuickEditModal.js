@@ -81,9 +81,9 @@ const CardQuickEditModal = (props) => {
         },
       }}
     >
-      <div className="list-group-item" style={{ height: "100%" }}>
-        <div>{cardLabels.length > 0 && cardLabels.map((label, index) => (
-          <button key={index}>{label.color}</button>
+      <div className="list-group-item" style={{ width: "100%", backgroundColor: "white"}}>
+        <div className="row">{cardLabels.length > 0 && cardLabels.map((label, index) => (
+          <button className="col-3 btn" style={{"backgroundColor": label.color}}key={index} />
         ))}</div>
         <form onSubmit={handleSubmit(onSubmit)} style={{ minHeight: "40%" }}>
           <textarea
