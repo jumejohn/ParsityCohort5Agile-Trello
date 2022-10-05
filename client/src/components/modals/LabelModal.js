@@ -1,10 +1,15 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Modal from "react-modal";
 import PropTypes from "prop-types";
 
 const LabelModal = (props) => {
   const boardLabels = useSelector(state => state.rootReducer.currentBoard.labels);
+  const dispatch = useDispatch();
+
+  const handleChange = (index) => {
+    props.onChange(index);
+  }
 
   return (
     <Modal
@@ -30,8 +35,8 @@ const LabelModal = (props) => {
             let labelName = "\u2800";
             if (label.name) labelName = label.name;
             return (
-                <label className="list-group-item" style={{"cursor": "pointer", "width": "100%", "backgroundColor": label.color}}>
-                  <input className="form-check-input" type="checkbox"/>
+                <label key={index} className="list-group-item" style={{"cursor": "pointer", "width": "100%", "backgroundColor": label.color}}>
+                  <input className="form-check-input" type="checkbox" onChange={() => handleChange(index)} />
                   {labelName}
                 </label>
             )
@@ -47,4 +52,5 @@ export default LabelModal;
 LabelModal.propTypes = {
   isOpen: PropTypes.bool,
   onClose: PropTypes.func,
+  onChange: PropTypes.func,
 }

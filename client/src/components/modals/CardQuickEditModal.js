@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import PropTypes from "prop-types";
 import Modal from "react-modal";
@@ -21,9 +21,22 @@ const CardQuickEditModal = (props) => {
   });
 
   // For Label Editing Modal
+  const boardLabels = useSelector(state => state.rootReducer.currentBoard.labels);
   const [labelModalIsOpen, setLabelModalIsOpen] = useState(false);
   const toggleLabelModalIsOpen = () => {
     setLabelModalIsOpen(!labelModalIsOpen);
+  }
+  const [cardLabels, setCardLabels] = useState(props.cardLabel);
+  const toggleCardLabels = (labelIndex) => {
+    let newArray = [...cardLabels];
+    let toggledLabel = boardLabels[labelIndex];
+    let alreadyChecked = cardLabels.findIndex(label => label.color === toggledLabel.color);
+    if (alreadyChecked > -1) {
+      newArray.splice(alreadyChecked, 1);
+    } else {
+      newArray.push(toggledLabel);
+    }
+    setCardLabels(newArray);
   }
 
   const dispatch = useDispatch();
@@ -68,6 +81,9 @@ const CardQuickEditModal = (props) => {
       }}
     >
       <div className="list-group-item" style={{ height: "100%" }}>
+        <div>{cardLabels.length > 0 && cardLabels.map((label, index) => (
+          <button key={index}>{label.color}</button>
+        ))}</div>
         <form onSubmit={handleSubmit(onSubmit)} style={{ minHeight: "40%" }}>
           <textarea
             className="form-control"
@@ -84,6 +100,7 @@ const CardQuickEditModal = (props) => {
       <LabelModal 
         isOpen={labelModalIsOpen}
         onClose={toggleLabelModalIsOpen} 
+        onChange={toggleCardLabels}
       />
     </Modal>
   );
