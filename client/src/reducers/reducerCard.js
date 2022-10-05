@@ -1,6 +1,7 @@
 import { LOAD_CARD } from "../actions/LoadCard";
 import { HANDLE_LOGOUT } from "../actions/Logout";
 import { CREATE_COMMENT } from "../actions/PostComment";
+import { UPDATE_CARD } from "../actions/PostComment";
 
 const initialState = {};
 const reducerCard = (state = initialState, action) => {
@@ -11,6 +12,8 @@ const reducerCard = (state = initialState, action) => {
 
     case HANDLE_LOGOUT:
       return initialState;
+    case UPDATE_CARD:
+      return action.payload;
     default:
       return state;
   }

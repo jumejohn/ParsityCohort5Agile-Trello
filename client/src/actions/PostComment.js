@@ -2,7 +2,6 @@ import axios from "axios";
 export const UPDATE_CARD = "UPDATE_CARD";
 
 export const postComment = (comment, currentCard) => (dispatch) => {
-  console.log("action currentCard", currentCard);
   const token = localStorage.token;
   const cardId = currentCard._id;
 
@@ -11,7 +10,8 @@ export const postComment = (comment, currentCard) => (dispatch) => {
     url: `/cards/${cardId}/comment`,
     headers: { Authorization: `Bearer ${token}` },
     data: {
-      cardComments: comment,
+      username: comment.commentUser,
+      commentText: comment.commentText,
     },
   }).then((response) => {
     console.log("this response", response);

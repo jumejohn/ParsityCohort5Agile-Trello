@@ -19,11 +19,9 @@ const Card = () => {
   const currentUser = useSelector(
     (state) => state.rootReducer.user.currentUser.username || null
   );
-  console.log("card-user", currentUser);
-  console.log("currentCard", currentCard);
   const onSubmit = (data) => {
     dispatch(postComment(data, currentCard));
-    reset("comment");
+    reset();
   };
 
   if (currentCard) {
