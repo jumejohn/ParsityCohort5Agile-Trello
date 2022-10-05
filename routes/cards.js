@@ -1,19 +1,19 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
-const Card = require('../models/Card');
-const User = require('../models/User');
-const passport = require('passport');
-const passportService = require('../authentication/passport');
-const List = require('../models/List');
-const requireAuth = passport.authenticate('jwt', { session: false });
+const Card = require("../models/Card");
+const User = require("../models/User");
+const passport = require("passport");
+const passportService = require("../authentication/passport");
+const List = require("../models/List");
+const requireAuth = passport.authenticate("jwt", { session: false });
 const {
   createActivityLog,
   createComment,
-} = require('../util/cardActivityLogCreator');
-const { ObjectId } = require('mongodb');
+} = require("../util/cardActivityLogCreator");
+const { ObjectId } = require("mongodb");
 
 router
-  .get('/:cardId', requireAuth, function (req, res, next) {
+  .get("/:cardId", requireAuth, function (req, res, next) {
     const cardId = req.params.cardId;
     Card.findById(cardId).exec((err, card) => {
       if (err) {
@@ -24,8 +24,7 @@ router
       }
     });
   })
-
-  .delete('/:cardId', requireAuth, async function (req, res, next) {
+  .delete("/:cardId", requireAuth, async function (req, res, next) {
     const cardId = req.params.cardId;
     const { listId } = req.body;
     const listWithRemovedCard = await Card.findByIdAndDelete(cardId).exec(
@@ -35,7 +34,7 @@ router
           return next(err);
         }
         updatedList = List.findOne({ _id: listId })
-          .populate('cards')
+          .populate("cards")
           .exec((err, list) => {
             if (err) return next(err);
             console.log(list);
@@ -46,7 +45,7 @@ router
   })
 
   // POST add new card
-  .post('/', requireAuth, async function (req, res, next) {
+  .post("/", requireAuth, async function (req, res, next) {
     const { listId, cardTitle, cardLabel, cardDescription } = req.body;
     const listWithNewCard = await new Card({
       cardTitle,
@@ -59,7 +58,7 @@ router
         { $push: { cards: [card._id] } },
         { new: true }
       )
-        .populate('cards')
+        .populate("cards")
         .exec((err, list) => {
           if (err) return next(err);
           res.status(200).send(list).end();
@@ -67,7 +66,7 @@ router
     });
   })
 
-  .put('/:cardId', requireAuth, async function (req, res, next) {
+  .put("/:cardId", requireAuth, async function (req, res, next) {
     const cardId = req.params.cardId;
     const {
       listId,
@@ -81,7 +80,7 @@ router
     List.findById(listId).exec((err, list) => {
       if (err) return next(err);
 
-      const activtyLog = createActivityLog(username, 'saved to', list.listName);
+      const activtyLog = createActivityLog(username, "saved to", list.listName);
       const comment = createComment(username, cardComment);
       console.log(activtyLog);
 
@@ -103,7 +102,7 @@ router
             return next(err);
           } else {
             updatedList = List.findOne({ _id: listId })
-              .populate('cards')
+              .populate("cards")
               .exec((err, list) => {
                 if (err) return next(err);
                 res.status(200).send(list);
@@ -113,59 +112,69 @@ router
     });
   })
 
-  .delete('/:cardId/comment/:commentId', requireAuth, async function (req, res, next) {
+  .delete(
+    "/:cardId/comment/:commentId",
+    requireAuth,
+    async function (req, res, next) {
+      const cardId = req.params.cardId;
+      const commentId = req.params.commentId;
+      const card = await Card.findById(cardId);
+      let newCommentArray = [];
+      card.cardComments.filter((comment) => {
+        if (comment._id != commentId) {
+          newCommentArray.push(comment);
+        }
+      });
+      card.cardComments = newCommentArray;
+      await card.save();
+      res.send(card).status(204).end();
+    }
+  )
+
+  .post("/:cardId/comment", requireAuth, async function (req, res, next) {
     const cardId = req.params.cardId;
-    const commentId = req.params.commentId;
-    const card = await Card.findById(cardId);
-    let newCommentArray = [];
-    card.cardComments.filter((comment) => {
-      if (comment._id != commentId) {
-        newCommentArray.push(comment);
-      }
-    });
-    card.cardComments = newCommentArray;
-    await card.save();
-    res.send(card).status(204).end();
-  })
-
-  .post('/:cardId/comment', requireAuth, async function (req, res, next) {
-    const cardId = req.params.cardId
-    const { username, commentText} = req.body
-    const newComment = createComment(username, commentText)
-    const filter = { _id: cardId}
-    const activtyLog = createActivityLog(username, 'created');
-    Card.findOneAndUpdate(filter).updateOne({$push: {cardComments: newComment}}).updateOne({ $push: { cardActivity: activtyLog } })
+    const { username, commentText } = req.body;
+    const newComment = createComment(username, commentText);
+    const activityLog = createActivityLog(username, "created");
+    const filter = { _id: cardId };
+    const update = { $push: { cardComments: newComment, cardActivity: activityLog }};
+    Card.findOneAndUpdate(filter, update)
       .exec((err) => {
-        if(err){
-          res.status(400).send(err)
-          return next(err)
+        if (err) {
+          res.status(400).send(err);
+          return next(err);
         } else {
-          updatedCard = Card.findOne({ _id: cardId}).exec((err, card) => {
-            if(err){
-              return next(err)
+          updatedCard = Card.findOne({ _id: cardId }).exec((err, card) => {
+            if (err) {
+              return next(err);
             } else {
-              res.status(200).send(card)
+              res.status(200).send(card);
             }
-          })
+          });
         }
-      })
+      });
   })
 
-  .put('/:cardId/comment/:commentId', requireAuth, async function (req, res, next) {
-    const cardId = req.params.cardId
-    const commentId = req.params.commentId
-    const { username, commentText} = req.body
-    const activtyLog = createActivityLog(username, 'updated');
-    Card.findById(cardId).updateOne({ $push: { cardActivity: activtyLog } }).exec()
-    const card = await Card.findById(cardId);
-    card.cardComments.map((com) => {
-        if(com._id == commentId){
-          com.commentText = commentText
+  .put(
+    "/:cardId/comment/:commentId",
+    requireAuth,
+    async function (req, res, next) {
+      const cardId = req.params.cardId;
+      const commentId = req.params.commentId;
+      const { username, commentText } = req.body;
+      const activtyLog = createActivityLog(username, "updated");
+      Card.findById(cardId)
+        .updateOne({ $push: { cardActivity: activtyLog } })
+        .exec();
+      const card = await Card.findById(cardId);
+      card.cardComments.map((com) => {
+        if (com._id == commentId) {
+          com.commentText = commentText;
         }
-
-      })
-      await card.save()
-      res.send(card).status(204)
-    })
+      });
+      await card.save();
+      res.send(card).status(204);
+    }
+  );
 
 module.exports = router;

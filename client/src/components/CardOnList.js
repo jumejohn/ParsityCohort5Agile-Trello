@@ -9,12 +9,13 @@ import AreYouSure from "./AreYouSure";
 
 const CardOnList = (props) => {
   const dispatch = useDispatch();
+
   // Utilizing useRef hook to get position of card element
   const ref = useRef();
   const currentRef = ref.current;
   // const x = myRef.current.offsetLeft;
   // const y = myRef.current.offsetTop;
-  
+
   const [buttonsAreShown, setButtonsAreShown] = useState(false);
 
   // Modal stuff for deleting cards
@@ -22,12 +23,12 @@ const CardOnList = (props) => {
   const toggleAreYouSureIsOpen = () => {
     setAreYouSureIsOpen(!areYouSureIsOpen);
     setButtonsAreShown(false);
-  }
+  };
 
   const handleDeleteConfirm = () => {
-    dispatch(deleteCard(props.cardId, props.listId));    
+    dispatch(deleteCard(props.cardId, props.listId));
     toggleAreYouSureIsOpen();
-  }
+  };
 
   // Modal stuff for quick edits
   const [editModalIsOpen, setEditModalIsOpen] = useState(false);
@@ -38,17 +39,17 @@ const CardOnList = (props) => {
   const closeEditModal = () => {
     setEditModalIsOpen(false);
     setButtonsAreShown(false);
-  }
+  };
 
   const returnParentBCR = () => {
     let { left, top, width } = currentRef.getBoundingClientRect();
-    
+
     return {
       left: left,
       top: top,
       width: width,
     };
-  }
+  };
 
   // Modal stuff
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -64,7 +65,7 @@ const CardOnList = (props) => {
   return (
     <div
       className="d-flex align-items-start"
-      style={{ "backgroundColor": "white" }}
+      style={{ backgroundColor: "white" }}
       onMouseEnter={() => setButtonsAreShown(true)}
       onMouseLeave={() => setButtonsAreShown(false)}
       ref={ref}
@@ -78,27 +79,45 @@ const CardOnList = (props) => {
       </button>
       {buttonsAreShown && (
         <div className="btn-group">
-          <button className="btn" style={{"padding": "0.15rem 0.3rem"}} onClick={handleEditClick} type="button" aria-label="Edit Card Title">
-            <i className="fa fa-pencil fa-2x"/>
+          <button
+            className="btn"
+            style={{ padding: "0.15rem 0.3rem" }}
+            onClick={handleEditClick}
+            type="button"
+            aria-label="Edit Card Title"
+          >
+            <i className="fa fa-pencil fa-2x" />
           </button>
-          <button className="btn" style={{"padding": "0.15rem 0.3rem"}} onClick={toggleAreYouSureIsOpen} type="button" aria-label="Delete Card">
+          <button
+            className="btn"
+            style={{ padding: "0.15rem 0.3rem" }}
+            onClick={toggleAreYouSureIsOpen}
+            type="button"
+            aria-label="Delete Card"
+          >
             <i className="fa fa-times-circle-o fa-2x" />
           </button>
         </div>
       )}
       {editModalIsOpen && (
-        <CardQuickEditModal 
+        <CardQuickEditModal
           isOpen={editModalIsOpen}
           cardId={props.cardId}
           listId={props.listId}
           cardTitle={props.cardTitle}
           cardLabel={props.cardLabel}
-          cardDescription={props.cardDescription} 
-          closeModal={closeEditModal} 
-          getBCR={returnParentBCR}/>
+          cardDescription={props.cardDescription}
+          closeModal={closeEditModal}
+          getBCR={returnParentBCR}
+        />
       )}
       {areYouSureIsOpen && (
-        <AreYouSure name={"this card"} isOpen={areYouSureIsOpen} onClose={toggleAreYouSureIsOpen} onConfirm={handleDeleteConfirm} />
+        <AreYouSure
+          name={"this card"}
+          isOpen={areYouSureIsOpen}
+          onClose={toggleAreYouSureIsOpen}
+          onConfirm={handleDeleteConfirm}
+        />
       )}
       <Modal isOpen={modalIsOpen}>
         <button onClick={handleCloseModalClick}>x</button>
@@ -106,7 +125,7 @@ const CardOnList = (props) => {
       </Modal>
     </div>
   );
-}
+};
 
 export default CardOnList;
 
@@ -116,4 +135,4 @@ CardOnList.propTypes = {
   cardLabel: PropTypes.string,
   cardDescription: PropTypes.string,
   listId: PropTypes.string.isRequired,
-}
+};

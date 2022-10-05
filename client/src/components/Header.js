@@ -30,13 +30,13 @@ const Header = () => {
         <div className="container-fluid">
           <div className="navbar-brand">
             {/* proposed adding in a logo or picture of some kind */}
-
+            {/*
             <a href="/">
               <img
                 src="https://parsity.io/static/parsity-logo-black-3812d8c67256fa0c0285a0589ae81165.png"
                 width="200"
               />
-            </a>
+            </a> */}
 
             <HeaderDropDown name={name.organization.orgName} />
           </div>
