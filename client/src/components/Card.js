@@ -8,6 +8,7 @@ import CommentsDiplay from "./CardCommentDisplay";
 import CardModalTitle from "./CardModalTitle";
 import CardActivity from "./CardActivity";
 import "../css/Card.css";
+import CardModalDescription from "./CardModalDescription";
 
 const Card = () => {
   const dispatch = useDispatch();
@@ -53,7 +54,9 @@ const Card = () => {
                 />
               ))}
           </div>
-          <p className="card-text">{currentCard.cardDescription}</p>
+          <div className="card-text">
+            <CardModalDescription />
+          </div>
         </div>
         <>
           <div>

@@ -55,6 +55,7 @@ const CardOnList = (props) => {
   const handleCardClick = (e) => {
     setButtonsAreShown(false);
     setModalIsOpen(true);
+    console.log("this should be cardId", e.target.value)
     localStorage.setItem("card", e.target.value);
   };
   const handleCloseModalClick = () => {
