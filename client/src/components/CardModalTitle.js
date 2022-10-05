@@ -2,57 +2,57 @@ import { useSelector } from "react-redux";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
-import ClickDetectWrapper from "./ClickDetectWrapper";
+import { editCardModalTitle } from "../actions/EditCardModalTitle";
 
 const CardModalTitle = () => {
-  const dispatch = useDispatch();
-
-  const { register, handleSubmit, reset } = useForm();
-
-  const [titleIsEditing, setTitleIsEditing] = useState(false);
-  const toggleTitleIsEditing = () => {
-    setTitleIsEditing(!titleIsEditing);
-    reset();
-  };
-  const currentUser = useSelector(
-    (state) => state.rootReducer.user.currentUser.username || null
+  const [isShow, setIsShow] = React.useState(true);
+  const currentCard = useSelector(
+    (state) => state.rootReducer.currentCard || null
   );
-  const currentCard =
-    useSelector((state) => state.rootReducer.currentCard) || null;
+  const currentUser = useSelector(
+    (state) => state.rootReducer.user.currentUser.username
+  );
+  console.log(currentUser);
+  console.log("cardModalTitle", currentCard);
+  const dispatch = useDispatch();
+  const { reset, register, handleSubmit } = useForm();
 
-  const editSubmit = (data, event) => {
-    if (data.titleEditField == currentCard.cardTitle || !data.titleEditField) {
-      toggleTitleIsEditing();
-      return;
-    }
-    dispatch(
-      editCardModalTitle(data.titleEditField, currentCard._id, currentUser)
-    );
-    toggleTitleIsEditing();
+  const handleClick = () => {
+    setIsShow(!isShow);
+  };
 
-    if (titleIsEditing) {
-      return (
-        <ClickDetectWrapper callback={toggleTitleIsEditing}>
-          <form onSubmit={handleSubmit(editSubmit)}>
-            <input
-              className="form-control"
-              defaultValue={currentCard.cardTitle}
-              {...register("titleEditField")}
-            />
-          </form>
-        </ClickDetectWrapper>
-      );
-    }
+  const onSubmit = (data) => {
+    dispatch(editCardModalTitle(data, currentUser));
+    reset();
+    setIsShow(!isShow);
   };
 
   return (
-    <button
-      onClick={toggleTitleIsEditing}
-      className="btn btn-outline-light"
-      style={{ backgroudColor: "transparent" }}
-    >
-      {currentCard.cardTitle}
-    </button>
+    <>
+      <div>
+        {isShow ? (
+          <button id="activityShow" onClick={handleClick}>
+            {currentCard.cardTitle}
+          </button>
+        ) : (
+          <div>
+            <div className="mb-3">
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <textarea
+                  className="form-control"
+                  rows="1"
+                  {...register("cardTitle")}
+                  defaultValue={currentCard.cardTitle}
+                ></textarea>
+                <button type="submit" className="btn btn-primary">
+                  Update Title
+                </button>
+              </form>
+            </div>
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 

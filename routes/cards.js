@@ -133,24 +133,30 @@ router
 
   .put("/:cardId/updatetitle", requireAuth, async function (req, res, next) {
     const cardId = req.params.cardId;
-    const { username, newCardTitle } = req.body;
+    const { cardTitle, username } = req.body;
     const activityLog = createActivityLog(username, "changed");
+    console.log("this one", cardTitle);
+    console.log("this one name", username);
+
     const filter = { _id: cardId };
-    const update = { cardTitle: newCardTitle, cardActivity: activityLog };
-    Card.findOneAndUpdate(filter, update).exec((err) => {
-      if (err) {
-        res.status(400).send(err);
-        return next(err);
-      } else {
-        updatedCard = Card.findOne({ _id: cardId }).exec((err, card) => {
-          if (err) {
-            return next(err);
-          } else {
-            res.status(200).send(card);
-          }
-        });
-      }
-    });
+    const update = { cardTitle: cardTitle };
+    Card.findOneAndUpdate(filter, update, { new: true })
+      // .updateOne({ $set: { cardTitle: newCardTitle } })
+      // .updateOne({ $push: { cardActivity: activityLog } })
+      .exec((err) => {
+        if (err) {
+          res.status(400).send(err);
+          return next(err);
+        } else {
+          updatedCard = Card.findOne({ _id: cardId }).exec((err, card) => {
+            if (err) {
+              return next(err);
+            } else {
+              res.status(200).send(card);
+            }
+          });
+        }
+      });
   })
   .post("/:cardId/comment", requireAuth, async function (req, res, next) {
     const cardId = req.params.cardId;
