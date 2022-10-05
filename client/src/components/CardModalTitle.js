@@ -2,10 +2,9 @@ import { useSelector } from "react-redux";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
-import PropTypes from "prop-types";
 import ClickDetectWrapper from "./ClickDetectWrapper";
 
-const CardModalTitle = (props) => {
+const CardModalTitle = () => {
   const dispatch = useDispatch();
 
   const { register, handleSubmit, reset } = useForm();
@@ -18,14 +17,16 @@ const CardModalTitle = (props) => {
   const currentUser = useSelector(
     (state) => state.rootReducer.user.currentUser.username || null
   );
+  const currentCard =
+    useSelector((state) => state.rootReducer.currentCard) || null;
 
   const editSubmit = (data, event) => {
-    if (data.titleEditField == props.name || !data.titleEditField) {
+    if (data.titleEditField == currentCard.cardTitle || !data.titleEditField) {
       toggleTitleIsEditing();
       return;
     }
     dispatch(
-      editCardModalTitle(data.titleEditField, props.cardId, currentUser)
+      editCardModalTitle(data.titleEditField, currentCard._id, currentUser)
     );
     toggleTitleIsEditing();
 
@@ -35,7 +36,7 @@ const CardModalTitle = (props) => {
           <form onSubmit={handleSubmit(editSubmit)}>
             <input
               className="form-control"
-              defaultValue={props.name}
+              defaultValue={currentCard.cardTitle}
               {...register("titleEditField")}
             />
           </form>
@@ -50,14 +51,9 @@ const CardModalTitle = (props) => {
       className="btn btn-outline-light"
       style={{ backgroudColor: "transparent" }}
     >
-      {props.name}
+      {currentCard.cardTitle}
     </button>
   );
 };
 
 export default CardModalTitle;
-
-CardModalTitle.propTypes = {
-  name: PropTypes.string.isRequired,
-  cardId: PropTypes.string.isRequired,
-};
