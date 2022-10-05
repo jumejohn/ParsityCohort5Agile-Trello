@@ -4,6 +4,17 @@ const Schema = mongoose.Schema;
 const OrganizationSchema = require('./Organization');
 
 const UserSchema = new Schema({
+  google: {
+    id: {
+      type: String,
+    },
+    name: {
+      type: String,
+    },
+    email: {
+      type: String,
+    },
+  },
   username: { type: String, required: true, unique: true },
   firstname: { type: String, required: true },
   lastname: { type: String, required: true },
