@@ -131,28 +131,50 @@ router
     }
   )
 
+  .put("/:cardId/updatetitle", requireAuth, async function (req, res, next) {
+    const cardId = req.params.cardId;
+    const { username, newCardTitle } = req.body;
+    const activityLog = createActivityLog(username, "changed");
+    const filter = { _id: cardId };
+    const update = { cardTitle: newCardTitle, cardActivity: activityLog };
+    Card.findOneAndUpdate(filter, update).exec((err) => {
+      if (err) {
+        res.status(400).send(err);
+        return next(err);
+      } else {
+        updatedCard = Card.findOne({ _id: cardId }).exec((err, card) => {
+          if (err) {
+            return next(err);
+          } else {
+            res.status(200).send(card);
+          }
+        });
+      }
+    });
+  })
   .post("/:cardId/comment", requireAuth, async function (req, res, next) {
     const cardId = req.params.cardId;
     const { username, commentText } = req.body;
     const newComment = createComment(username, commentText);
     const activityLog = createActivityLog(username, "created");
     const filter = { _id: cardId };
-    const update = { $push: { cardComments: newComment, cardActivity: activityLog }};
-    Card.findOneAndUpdate(filter, update)
-      .exec((err) => {
-        if (err) {
-          res.status(400).send(err);
-          return next(err);
-        } else {
-          updatedCard = Card.findOne({ _id: cardId }).exec((err, card) => {
-            if (err) {
-              return next(err);
-            } else {
-              res.status(200).send(card);
-            }
-          });
-        }
-      });
+    const update = {
+      $push: { cardComments: newComment, cardActivity: activityLog },
+    };
+    Card.findOneAndUpdate(filter, update).exec((err) => {
+      if (err) {
+        res.status(400).send(err);
+        return next(err);
+      } else {
+        updatedCard = Card.findOne({ _id: cardId }).exec((err, card) => {
+          if (err) {
+            return next(err);
+          } else {
+            res.status(200).send(card);
+          }
+        });
+      }
+    });
   })
 
   .put(

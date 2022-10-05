@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { postComment } from "../actions/PostComment";
 import CommentsDiplay from "./CardCommentDisplay";
+import CardModalTitle from "./CardModalTitle";
 
 const Card = () => {
   const dispatch = useDispatch();
@@ -28,7 +29,9 @@ const Card = () => {
     return (
       <div className="card">
         <div className="card-body">
-          <h5 className="card-title">{currentCard.cardTitle}</h5>
+          <h5 className="card-title">
+            <CardModalTitle />
+          </h5>
           <h6 className="card-subtitle mb-2 text-muted">
             {currentCard.cardLabel}
           </h6>
