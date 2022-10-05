@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { postComment } from "../actions/PostComment";
 import CommentsDiplay from "./CardCommentDisplay";
+import CardModalTitle from "./CardModalTitle";
 import CardActivity from "./CardActivity";
 
 const Card = () => {
@@ -34,7 +35,9 @@ const Card = () => {
     return (
       <div className="card">
         <div className="card-body">
-          <h5 className="card-title">{currentCard.cardTitle}</h5>
+          <h5 className="card-title">
+            <CardModalTitle />
+          </h5>
           <div className="row" style={{"width": "100%", "backgroundColor": "white", "margin": "0"}}>
             <div>Labels:</div>
             {currentCard.cardLabel.length > 0 && currentCard.cardLabel.map((label, index) => (

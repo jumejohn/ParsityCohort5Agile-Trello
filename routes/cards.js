@@ -131,14 +131,18 @@ router
     }
   )
 
-  .post("/:cardId/comment", requireAuth, async function (req, res, next) {
+  .put("/:cardId/updatetitle", requireAuth, async function (req, res, next) {
     const cardId = req.params.cardId;
-    const { username, commentText } = req.body;
-    const newComment = createComment(username, commentText);
-    const activityLog = createActivityLog(username, "created");
+    const { cardTitle, username } = req.body;
+    const activityLog = createActivityLog(username, "changed");
+    console.log("this one", cardTitle);
+    console.log("this one name", username);
+
     const filter = { _id: cardId };
-    const update = { $push: { cardComments: newComment, cardActivity: activityLog }};
-    Card.findOneAndUpdate(filter, update)
+    const update = { cardTitle: cardTitle };
+    Card.findOneAndUpdate(filter, update, { new: true })
+      // .updateOne({ $set: { cardTitle: newCardTitle } })
+      // .updateOne({ $push: { cardActivity: activityLog } })
       .exec((err) => {
         if (err) {
           res.status(400).send(err);
@@ -153,6 +157,30 @@ router
           });
         }
       });
+  })
+  .post("/:cardId/comment", requireAuth, async function (req, res, next) {
+    const cardId = req.params.cardId;
+    const { username, commentText } = req.body;
+    const newComment = createComment(username, commentText);
+    const activityLog = createActivityLog(username, "created");
+    const filter = { _id: cardId };
+    const update = {
+      $push: { cardComments: newComment, cardActivity: activityLog },
+    };
+    Card.findOneAndUpdate(filter, update).exec((err) => {
+      if (err) {
+        res.status(400).send(err);
+        return next(err);
+      } else {
+        updatedCard = Card.findOne({ _id: cardId }).exec((err, card) => {
+          if (err) {
+            return next(err);
+          } else {
+            res.status(200).send(card);
+          }
+        });
+      }
+    });
   })
 
   .put(
