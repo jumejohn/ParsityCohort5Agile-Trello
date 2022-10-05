@@ -5,9 +5,23 @@ import Modal from "react-modal";
 import Card from "./Card";
 import { deleteCard } from "../actions/DeleteCard";
 import CardQuickEditModal from "./CardQuickEditModal";
-
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 const CardOnList = (props) => {
   const dispatch = useDispatch();
+
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition
+  } = useSortable({
+    id: props.id
+  });
+  const style = { transform: CSS.Transform.toString(transform), transition };
+
+
   // Utilizing useRef hook to get position of card element
   const ref = useRef();
   const currentRef = ref.current;
@@ -55,10 +69,11 @@ const CardOnList = (props) => {
   return (
     <div
       className="d-flex align-items-start"
-      style={{ "backgroundColor": "white" }}
+      // style={{ "backgroundColor": "white" }}
       onMouseEnter={() => setButtonsAreShown(true)}
       onMouseLeave={() => setButtonsAreShown(false)}
-      ref={ref}
+      // ref={ref}
+      ref={setNodeRef} style={style} {...listeners} {...attributes}
     >
       <button
         value={props.cardId}

@@ -8,9 +8,14 @@ import ListTitle from "./ListTitle";
 import ListFooter from "./ListFooter";
 import CardOnList from "./CardOnList";
 import ClickDetectWrapper from "./ClickDetectWrapper";
-import {useSortable} from '@dnd-kit/sortable';
 import {CSS} from '@dnd-kit/utilities';
-
+import {
+  useSortable,
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
 const List = (props) => {
   const {
     attributes,
@@ -74,6 +79,10 @@ const List = (props) => {
             <div className="col-11"><ListTitle name={name} listId={props.listId} listCards={cards} /></div>
             <button className="btn-close btn-close-white col-1" onClick={handleDeleteClick} type="button" aria-label="Close" /> 
           </div>
+          <SortableContext 
+        items={cards.map(card => card._id)}
+        strategy={verticalListSortingStrategy}
+      >
           <ul className="list-group gap-2">
             {cards.map((card) => <CardOnList 
               key={card._id} 
@@ -84,6 +93,8 @@ const List = (props) => {
               listId={props.listId} 
             />)}
           </ul>
+        </SortableContext>
+
         </div>
         <div className="card-footer d-grid">
           <ListFooter listId={props.listId}/>

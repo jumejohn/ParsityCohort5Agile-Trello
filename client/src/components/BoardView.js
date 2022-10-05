@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { fetchBoard } from "../actions/BoardFetch";
 import AddListBtn from "./AddListBtn";
 import List from "./List";
+
 import {
   DndContext, 
   closestCenter,
@@ -12,6 +13,7 @@ import {
   useSensor,
   useSensors,
 } from '@dnd-kit/core';
+
 import {
   arrayMove,
   SortableContext,
