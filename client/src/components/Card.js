@@ -1,7 +1,7 @@
 import React from "react";
 import { loadCard } from "../actions/LoadCard";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { postComment } from "../actions/PostComment";
 import CommentsDiplay from "./CardCommentDisplay";
@@ -24,6 +24,11 @@ const Card = () => {
     dispatch(postComment(data, currentCard));
     reset();
   };
+  const [isShow, setIsShow] = React.useState(false);
+
+  const handleClick = () => {
+    setIsShow(!isShow);
+  };
 
   if (currentCard) {
     return (
@@ -35,37 +40,54 @@ const Card = () => {
           </h6>
           <p className="card-text">{currentCard.cardDescription}</p>
         </div>
-        <div className="container">
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <label className="form-label">User:</label>
-            <input
-              type="text"
-              readOnly
-              className="form-control-plaintext"
-              value={currentUser}
-              {...register("commentUser")}
-            />
-            <div className="mb-3">
-              <label className="form-label">Comment:</label>
-              <textarea
-                className="form-control"
-                rows="3"
-                {...register("commentText")}
-              ></textarea>
-            </div>
-            <div className="input-group mb-3">
-              <button type="submit" className="btn btn-primary">
-                Submit Comment
+        <>
+          <div>
+            {isShow ? (
+              <button id="activityShow" onClick={handleClick}>
+                Hide Activity
               </button>
-            </div>
-          </form>
-        </div>
-        <div>
-          <CommentsDiplay />
-        </div>
-        <div>
-          <CardActivity />
-        </div>
+            ) : (
+              <button id="activityShow" onClick={handleClick}>
+                Show Activity
+              </button>
+            )}
+          </div>
+          <div className="container">
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <label className="form-label">User:</label>
+              <input
+                type="text"
+                readOnly
+                className="form-control-plaintext"
+                value={currentUser}
+                {...register("commentUser")}
+              />
+              <div className="mb-3">
+                <label className="form-label">Comment:</label>
+                <textarea
+                  className="form-control"
+                  rows="3"
+                  {...register("commentText")}
+                ></textarea>
+              </div>
+              <div className="input-group mb-3">
+                <button type="submit" className="btn btn-primary">
+                  Submit Comment
+                </button>
+              </div>
+            </form>
+          </div>
+          <div>
+            <CommentsDiplay />
+          </div>
+          <div>
+            {isShow ? (
+              <CardActivity>show/hide CardActivity</CardActivity>
+            ) : (
+              <></>
+            )}
+          </div>
+        </>
       </div>
     );
   } else {
