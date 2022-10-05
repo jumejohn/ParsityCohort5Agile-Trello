@@ -63,71 +63,78 @@ const CardOnList = (props) => {
 
   return (
     <div ref={ref}>
-    <div className="row" style={{"width": "100%", "backgroundColor": "white", "margin": "0"}}>
-        {props.cardLabel.length > 0 && props.cardLabel.map((label, index) => (
-          <button className="col-3 btn" style={{"backgroundColor": label.color}}key={index} />
-        ))}
-    </div>
-    <div
-      className="d-flex align-items-start"
-      style={{ backgroundColor: "white" }}
-      onMouseEnter={() => setButtonsAreShown(true)}
-      onMouseLeave={() => setButtonsAreShown(false)}
-    >
-      <button
-        value={props.cardId}
-        onClick={handleCardClick}
-        className="list-group-item list-group-item-action"
+      <div
+        className="row"
+        style={{ width: "100%", backgroundColor: "white", margin: "0" }}
       >
-        {props.cardTitle}
-      </button>
-      {buttonsAreShown && (
-        <div className="btn-group">
-          <button
-            className="btn"
-            style={{ padding: "0.15rem 0.3rem" }}
-            onClick={handleEditClick}
-            type="button"
-            aria-label="Edit Card Title"
-          >
-            <i className="fa fa-pencil fa-2x" />
-          </button>
-          <button
-            className="btn"
-            style={{ padding: "0.15rem 0.3rem" }}
-            onClick={toggleAreYouSureIsOpen}
-            type="button"
-            aria-label="Delete Card"
-          >
-            <i className="fa fa-times-circle-o fa-2x" />
-          </button>
-        </div>
-      )}
-      {editModalIsOpen && (
-        <CardQuickEditModal
-          isOpen={editModalIsOpen}
-          cardId={props.cardId}
-          listId={props.listId}
-          cardTitle={props.cardTitle}
-          cardLabel={props.cardLabel}
-          cardDescription={props.cardDescription}
-          closeModal={closeEditModal}
-          getBCR={returnParentBCR}
-        />
-      )}
-      {areYouSureIsOpen && (
-        <AreYouSure
-          name={"this card"}
-          isOpen={areYouSureIsOpen}
-          onClose={toggleAreYouSureIsOpen}
-          onConfirm={handleDeleteConfirm}
-        />
-      )}
-      <Modal isOpen={modalIsOpen}>
-        <button onClick={handleCloseModalClick}>x</button>
-        <Card />
-      </Modal>
-    </div>
+        {props.cardLabel.length > 0 &&
+          props.cardLabel.map((label, index) => (
+            <button
+              className="col-3 btn"
+              style={{ backgroundColor: label.color }}
+              key={index}
+            />
+          ))}
+      </div>
+      <div
+        className="d-flex align-items-start"
+        onMouseEnter={() => setButtonsAreShown(true)}
+        onMouseLeave={() => setButtonsAreShown(false)}
+      >
+        <button
+          value={props.cardId}
+          onClick={handleCardClick}
+          className="list-group-item list-group-item-action"
+        >
+          {props.cardTitle}
+        </button>
+        {buttonsAreShown && (
+          <div className="btn-group">
+            <button
+              className="btn"
+              style={{ padding: "0.15rem 0.3rem" }}
+              onClick={handleEditClick}
+              type="button"
+              aria-label="Edit Card Title"
+            >
+              <i className="fa fa-pencil fa-2x" />
+            </button>
+            <button
+              className="btn"
+              style={{ padding: "0.15rem 0.3rem" }}
+              onClick={toggleAreYouSureIsOpen}
+              type="button"
+              aria-label="Delete Card"
+            >
+              <i className="fa fa-times-circle-o fa-2x" />
+            </button>
+          </div>
+        )}
+        {editModalIsOpen && (
+          <CardQuickEditModal
+            isOpen={editModalIsOpen}
+            cardId={props.cardId}
+            listId={props.listId}
+            cardTitle={props.cardTitle}
+            cardLabel={props.cardLabel}
+            cardDescription={props.cardDescription}
+            closeModal={closeEditModal}
+            getBCR={returnParentBCR}
+          />
+        )}
+        {areYouSureIsOpen && (
+          <AreYouSure
+            name={"this card"}
+            isOpen={areYouSureIsOpen}
+            onClose={toggleAreYouSureIsOpen}
+            onConfirm={handleDeleteConfirm}
+          />
+        )}
+        <Modal isOpen={modalIsOpen}>
+          <button onClick={handleCloseModalClick}>x</button>
+          <Card />
+        </Modal>
+      </div>
     </div>
   );
 };

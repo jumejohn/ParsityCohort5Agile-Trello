@@ -16,6 +16,12 @@ p {
   line-height: 20px;
   color: #666666;
 }
+.board-name{
+  font-family: courier, sans;
+  font-size: large;
+  font-weight: 700;
+  padding-bottom: 20px;
+}
 
 .go-corner {
   display: flex;
