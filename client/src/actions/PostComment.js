@@ -11,7 +11,8 @@ export const postComment = (comment, currentCard) => (dispatch) => {
     url: `/cards/${cardId}/comment`,
     headers: { Authorization: `Bearer ${token}` },
     data: {
-      cardComments: comment,
+      // cardComments:
+      comment,
     },
   }).then((response) => {
     console.log("this response", response);
