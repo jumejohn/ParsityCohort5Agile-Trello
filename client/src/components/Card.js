@@ -30,7 +30,7 @@ const Card = () => {
     setIsShow(!isShow);
   };
 
-  if (currentCard) {
+  if (Object.keys(currentCard).length > 0) {
     return (
       <div className="card">
         <div className="card-body">
