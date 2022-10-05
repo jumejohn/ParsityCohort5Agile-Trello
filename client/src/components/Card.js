@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { postComment } from "../actions/PostComment";
 import CommentsDiplay from "./CardCommentDisplay";
+import CardActivity from "./CardActivity";
 
 const Card = () => {
   const dispatch = useDispatch();
@@ -61,6 +62,9 @@ const Card = () => {
         </div>
         <div>
           <CommentsDiplay />
+        </div>
+        <div>
+          <CardActivity />
         </div>
       </div>
     );
