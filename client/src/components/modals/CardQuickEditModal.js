@@ -103,6 +103,7 @@ const CardQuickEditModal = (props) => {
         onClose={toggleLabelModalIsOpen} 
         onChange={toggleCardLabels}
         toggleChange={setLabelsChanged}
+        cardLabels={cardLabels}
       />
     </Modal>
   );
@@ -112,7 +113,7 @@ CardQuickEditModal.propTypes = {
   cardId: PropTypes.string.isRequired,
   listId: PropTypes.string.isRequired,
   cardTitle: PropTypes.string,
-  cardLabel: PropTypes.any,
+  cardLabel: PropTypes.array,
   cardDescription: PropTypes.string,
   cardComments: PropTypes.array,
   isOpen: PropTypes.bool,

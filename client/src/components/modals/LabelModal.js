@@ -35,9 +35,11 @@ const LabelModal = (props) => {
           {boardLabels.map((label, index) => {
             let labelName = "\u2800";
             if (label.name) labelName = label.name;
+            let isChecked = false;
+            if (props.cardLabels.some(cardLabel => cardLabel.color === label.color)) isChecked=true;
             return (
                 <label key={index} className="list-group-item" style={{"cursor": "pointer", "width": "100%", "backgroundColor": label.color}}>
-                  <input className="form-check-input" type="checkbox" onChange={() => handleChange(index)} />
+                  <input className="form-check-input" type="checkbox" onChange={() => handleChange(index)} checked={isChecked} />
                   {labelName}
                 </label>
             )
@@ -55,4 +57,5 @@ LabelModal.propTypes = {
   onClose: PropTypes.func,
   onChange: PropTypes.func,
   toggleChange: PropTypes.func,
+  cardLabels: PropTypes.array,
 }
