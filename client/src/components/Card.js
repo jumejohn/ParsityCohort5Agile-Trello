@@ -30,14 +30,17 @@ const Card = () => {
     setIsShow(!isShow);
   };
 
-  if (currentCard) {
+  if (Object.keys(currentCard).length > 0) {
     return (
       <div className="card">
         <div className="card-body">
           <h5 className="card-title">{currentCard.cardTitle}</h5>
-          <h6 className="card-subtitle mb-2 text-muted">
-            {currentCard.cardLabel}
-          </h6>
+          <div className="row" style={{"width": "100%", "backgroundColor": "white", "margin": "0"}}>
+            <div>Labels:</div>
+            {currentCard.cardLabel.length > 0 && currentCard.cardLabel.map((label, index) => (
+              <button className="col-3 btn" style={{"backgroundColor": label.color}}key={index} />
+            ))}
+          </div>
           <p className="card-text">{currentCard.cardDescription}</p>
         </div>
         <>

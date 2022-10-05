@@ -10,6 +10,7 @@ export const createCard = (cardTitle, listId) => (dispatch) => {
     data: {
       cardTitle: cardTitle,
       listId: listId,
+      cardLabel: [],
     },
   })
     .then((response) => {
