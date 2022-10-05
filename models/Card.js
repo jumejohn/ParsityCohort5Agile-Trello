@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const CardSchema = new Schema({
   cardTitle: { type: String, required: true },
-  cardLabel: { type: String, required: false },
+  cardLabel: [],
   cardDescription: { type: String, required: false },
   cardComments: [
     {
