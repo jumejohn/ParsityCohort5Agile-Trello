@@ -132,7 +132,7 @@ const CardOnList = (props) => {
         )}
         <Modal isOpen={modalIsOpen}>
           <button onClick={handleCloseModalClick}>x</button>
-          <Card />
+          <Card className="card-modal" />
         </Modal>
       </div>
     </div>

@@ -7,6 +7,7 @@ import { postComment } from "../actions/PostComment";
 import CommentsDiplay from "./CardCommentDisplay";
 import CardModalTitle from "./CardModalTitle";
 import CardActivity from "./CardActivity";
+import "../css/Card.css";
 
 const Card = () => {
   const dispatch = useDispatch();
@@ -35,14 +36,22 @@ const Card = () => {
     return (
       <div className="card">
         <div className="card-body">
-          <h5 className="card-title">
+          <h5 className="card-title-modal">
             <CardModalTitle />
           </h5>
-          <div className="row" style={{"width": "100%", "backgroundColor": "white", "margin": "0"}}>
+          <div
+            className="row"
+            style={{ width: "100%", backgroundColor: "white", margin: "0" }}
+          >
             <div>Labels:</div>
-            {currentCard.cardLabel.length > 0 && currentCard.cardLabel.map((label, index) => (
-              <button className="col-3 btn" style={{"backgroundColor": label.color}}key={index} />
-            ))}
+            {currentCard.cardLabel.length > 0 &&
+              currentCard.cardLabel.map((label, index) => (
+                <button
+                  className="col-3 btn"
+                  style={{ backgroundColor: label.color }}
+                  key={index}
+                />
+              ))}
           </div>
           <p className="card-text">{currentCard.cardDescription}</p>
         </div>
@@ -83,9 +92,9 @@ const Card = () => {
               </div>
             </form>
           </div>
-          <div>
+          <table className="comment-table">
             <CommentsDiplay />
-          </div>
+          </table>
           <div>
             {isShow ? (
               <CardActivity>show/hide CardActivity</CardActivity>

@@ -31,7 +31,11 @@ const CardModalTitle = () => {
     <>
       <div>
         {isShow ? (
-          <button id="activityShow" onClick={handleClick}>
+          <button
+            className="btn modal-title"
+            id="activityShow"
+            onClick={handleClick}
+          >
             {currentCard.cardTitle}
           </button>
         ) : (
