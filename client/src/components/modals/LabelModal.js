@@ -38,9 +38,17 @@ const LabelModal = (props) => {
             let isChecked = false;
             if (props.cardLabels.some(cardLabel => cardLabel.color === label.color)) isChecked=true;
             return (
-                <label key={index} className="list-group-item" style={{"cursor": "pointer", "width": "100%", "backgroundColor": label.color}}>
-                  <input className="form-check-input" type="checkbox" onChange={() => handleChange(index)} checked={isChecked} />
+                <label key={index} className="list-group-item d-flex" style={{"cursor": "pointer", "width": "100%", "backgroundColor": label.color}}>
+                  <input className="form-check-input flex-grow-0" type="checkbox" onChange={() => handleChange(index)} checked={isChecked} />
                   {labelName}
+                  <button 
+                    className="btn ms-auto flex-grow-0" 
+                    style={{ padding: "0.15rem 0.3rem" }} 
+                    type="button" 
+                    onClick={() => props.openLabelEditor("Edit", label.color, label.name)}
+                  >
+                    <i className="fa fa-pencil" />
+                  </button>
                 </label>
             )
           })}
@@ -58,4 +66,5 @@ LabelModal.propTypes = {
   onChange: PropTypes.func,
   toggleChange: PropTypes.func,
   cardLabels: PropTypes.array,
+  openLabelEditor: PropTypes.func,
 }
