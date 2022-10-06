@@ -26,25 +26,28 @@
     border: 1px solid #cccccc;
     transform: scale(1.025);
 }
+
 /* Card Title Section */
 .modal-title{
     font-size: large;
     font-weight: 600;
 }
 
+/* Label Section */
+.label-button{
+    border-radius: 0%;
+}
 /* Card Descritption Section */
 .description{
     padding: 20px;
     text-align: left;
-
 }
 
 /* Comment Section */
-
 .comment-username{
     border-bottom: #666666 1px solid;
-
 }
+
 .comment-user{
     font-size: medium;
     font-weight: 700;
@@ -59,3 +62,6 @@
     text-indent: 35px;
     padding-bottom: 10px;
 }
+
+/* Activity Section */
+/* activity Button */

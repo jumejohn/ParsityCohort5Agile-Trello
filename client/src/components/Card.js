@@ -48,7 +48,7 @@ const Card = () => {
             {currentCard.cardLabel.length > 0 &&
               currentCard.cardLabel.map((label, index) => (
                 <button
-                  className="col-3 btn"
+                  className="col-3 btn label-button"
                   style={{ backgroundColor: label.color }}
                   key={index}
                 />

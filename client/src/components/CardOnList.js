@@ -55,7 +55,7 @@ const CardOnList = (props) => {
   const handleCardClick = (e) => {
     setButtonsAreShown(false);
     setModalIsOpen(true);
-    console.log("this should be cardId", e.target.value)
+    console.log("this should be cardId", e.target.value);
     localStorage.setItem("card", e.target.value);
   };
   const handleCloseModalClick = () => {
@@ -71,7 +71,7 @@ const CardOnList = (props) => {
         {props.cardLabel.length > 0 &&
           props.cardLabel.map((label, index) => (
             <button
-              className="col-3 btn"
+              className="col-3 btn label-button"
               style={{ backgroundColor: label.color }}
               key={index}
             />
