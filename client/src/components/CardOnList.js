@@ -144,7 +144,7 @@ const CardOnList = (props) => {
           }}
         >
           <button onClick={handleCloseModalClick}>x</button>
-          <Card className="card-modal" />
+          <Card className="card-modal" listId={props.listId}/>
         </Modal>
       </div>
     </div>
