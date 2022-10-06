@@ -114,12 +114,13 @@ const LabelEditor = (props) => {
           </div>
           <hr style={{ margin: "8px 0px" }} />
           <div className="d-flex">
-            <button className="btn submit-button d-flex-grow-0" type="submit">
-              Save
+            <button className="btn btn-primary d-flex-grow-0" type="submit" disabled={!isDirty || !isValid}>
+              {(props.type === "Edit") && <span>Edit</span>}
+              {(props.type === "Create") && <span>Add</span>}
             </button>
-            <button className="btn submit-button danger d-flex-grow-0 ms-auto">
-              Delete
-
+            <button className="btn btn-danger d-flex-grow-0 ms-auto" onClick={handleDeleteClick}>
+              {(props.type === "Edit") && <span>Delete</span>}
+              {(props.type === "Create") && <span>Cancel</span>}
             </button>
           </div>
         </form>
