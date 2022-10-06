@@ -12,6 +12,7 @@ import "../css/Card.css";
 import CardModalDescription from "./CardModalDescription";
 import LabelModal from "./modals/LabelModal";
 import { editCardLabels } from "../actions/EditCardLabels";
+import LabelEditor from "./modals/LabelEditor";
 
 const Card = (props) => {
   const dispatch = useDispatch();
@@ -49,6 +50,18 @@ const Card = (props) => {
     (alreadyChecked > -1) ? newArray.splice(alreadyChecked, 1) : newArray.push(toggledLabel);
     dispatch(editCardLabels(props.listId, currentCard._id, newArray));
   }
+  // For label editor modal
+  const [labelEditorIsOpen, setLabelEditorIsOpen] = useState(false);
+  const [labelEditorType, setLabelEditorType] = useState("Edit");
+  const [labelEditorDefaults, setLabelEditorDefaults] = useState({ color: null, name: null })
+  const toggleLabelEditorIsOpen = () => {
+    setLabelEditorIsOpen(!labelEditorIsOpen);
+  }
+  const openLabelEditor = (type, color, name) => {
+    if (type !== labelEditorType) setLabelEditorType(type);
+    setLabelEditorDefaults({ color: color, name: name });
+    toggleLabelEditorIsOpen();
+  }
 
   if (Object.keys(currentCard).length > 0) {
     return (
@@ -83,7 +96,16 @@ const Card = (props) => {
                   onChange={handleLabelChange}
                   // toggleChange={() => console.log("ToggleChange")}
                   cardLabels={currentCard.cardLabel}
-                  openLabelEditor={() => console.log("openLabelEditor")}
+                  openLabelEditor={openLabelEditor}
+                />
+              )}
+              {labelEditorIsOpen && (
+                <LabelEditor
+                  isOpen={labelEditorIsOpen}
+                  onClose={toggleLabelEditorIsOpen}
+                  type={labelEditorType}
+                  defaultName={labelEditorDefaults.name}
+                  defaultColor={labelEditorDefaults.color}
                 />
               )}
           </div>
