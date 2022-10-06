@@ -6,6 +6,7 @@
 .card{
     background-color: #f2f8f9;
     font-family: courier, sans;
+    font-weight: 500;
     letter-spacing: -1px;
     box-shadow: rgb(0 0 0) -10px 8px 0px;
     overflow:auto;
@@ -36,6 +37,7 @@
 /* Label Section */
 .label-button{
     border-radius: 0%;
+    border: 1px solid #666666;
 }
 /* Card Descritption Section */
 .description{
@@ -44,8 +46,19 @@
 }
 
 /* Comment Section */
+.comment-form{
+    margin: 10px;
+    padding: 20px;
+}
 .comment-username{
     border-bottom: #666666 1px solid;
+}
+
+.comment-title{
+    font-size: medium;
+    font-weight: 700;
+    padding: 5px;
+    margin: 0;
 }
 
 .comment-user{
@@ -65,3 +78,7 @@
 
 /* Activity Section */
 /* activity Button */
+.activity-button{
+    margin: 20px;
+
+}

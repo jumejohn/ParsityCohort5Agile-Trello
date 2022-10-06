@@ -61,27 +61,35 @@ const Card = () => {
         <>
           <div>
             {isShow ? (
-              <button id="activityShow" onClick={handleClick}>
+              <button
+                id="activityShow"
+                className="submit-button activity-button"
+                onClick={handleClick}
+              >
                 Hide Activity
               </button>
             ) : (
-              <button id="activityShow" onClick={handleClick}>
+              <button
+                id="activityShow"
+                className="submit-button activity-button"
+                onClick={handleClick}
+              >
                 Show Activity
               </button>
             )}
           </div>
-          <div className="container">
+          <div className="container comment-form">
             <form onSubmit={handleSubmit(onSubmit)}>
-              <label className="form-label">User:</label>
+              <label className="form-label comment-title">User:</label>
               <input
                 type="text"
                 readOnly
-                className="form-control-plaintext"
+                className="form-control-plaintext comment-title"
                 value={currentUser}
                 {...register("commentUser")}
               />
               <div className="mb-3">
-                <label className="form-label">Comment:</label>
+                <label className="form-label comment-title">Comment:</label>
                 <textarea
                   className="form-control"
                   rows="3"
