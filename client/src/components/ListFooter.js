@@ -35,13 +35,13 @@ const ListFooter = (props) => {
               {...register("cardTitle")}
             />
           </div>
-          <div className="d-flex align-items-center">
-            <button className="btn btn-light" type="submit">
+          <div className="d-flex align-items-center add-items">
+            <button className="btn submit-button" type="submit">
               Add card
             </button>
             <button
               onClick={toggleTempCardIsOpen}
-              className="btn-close btn-close-white ms-auto"
+              className="btn-close submit-button ms-auto"
               type="button"
               aria-label="Close"
             />

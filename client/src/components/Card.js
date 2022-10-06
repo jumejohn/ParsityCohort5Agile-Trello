@@ -106,7 +106,7 @@ const Card = () => {
           <table className="comment-table">
             <CommentsDiplay />
           </table>
-          <div>
+          <div className="activity-log">
             {isShow ? (
               <CardActivity>show/hide CardActivity</CardActivity>
             ) : (

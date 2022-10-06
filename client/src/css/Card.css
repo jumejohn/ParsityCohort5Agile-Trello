@@ -28,6 +28,23 @@
     transform: scale(1.025);
 }
 
+.danger{
+    color: red;
+    font-weight: 700;
+    z-index: 100;
+}
+
+.add-items{
+    margin-bottom: 10px;
+}
+
+.save-button{
+    margin-left: 25px;
+    margin-bottom: 10px;
+}
+.edit-button{
+    margin-bottom: 10px;
+}
 /* Card Title Section */
 .modal-title{
     font-size: large;
@@ -38,6 +55,14 @@
 .label-button{
     border-radius: 0%;
     border: 1px solid #666666;
+}
+.label-input{
+    border-radius: 0%;
+}
+.check-input{
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
 }
 /* Card Descritption Section */
 .description{
@@ -80,5 +105,11 @@
 /* activity Button */
 .activity-button{
     margin: 20px;
+}
+
+.activity-log{
+    margin: 20px;
+    padding: 40px;
+    font-weight: 700;
 
 }
