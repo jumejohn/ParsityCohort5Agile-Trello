@@ -5,7 +5,7 @@ import { deleteComment } from "../actions/DeleteComment";
 const currentCard = localStorage.card;
 
 const CommentsDiplay = () => {
-  const dispatch = useDispatch;
+  const dispatch = useDispatch();
   const currentComments = useSelector(
     (state) => state.rootReducer.currentCard.cardComments
   );
@@ -16,7 +16,7 @@ const CommentsDiplay = () => {
   }, []);
   const handleClick = (e) => {
     console.log("commentId", e.target.id);
-    deleteComment(e.target.id, currentCard);
+    dispatch(deleteComment(e.target.id, currentCard));
     // renderComments();
   };
   const renderComments = () => {
