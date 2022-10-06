@@ -51,12 +51,15 @@ const CardQuickEditModal = (props) => {
     color: null,
     name: null,
   });
-  const toggleLabelEditorIsOpen = (type, color, name) => {
-    if (type !== labelEditorType) setLabelEditorType(type);
-    setLabelEditorDefaults({ color: color, name: name });
+  const toggleLabelEditorIsOpen = () => {
     setLabelEditorIsOpen(!labelEditorIsOpen);
     toggleLabelModalIsOpen();
-  };
+  }
+  const openLabelEditor = (type, color, name) => {
+    if (type !== labelEditorType) setLabelEditorType(type);
+    setLabelEditorDefaults({ color: color, name: name });
+    toggleLabelEditorIsOpen();
+  }
 
   const dispatch = useDispatch();
   const { register, handleSubmit, reset } = useForm();
