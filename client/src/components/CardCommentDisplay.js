@@ -1,9 +1,11 @@
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteComment } from "../actions/DeleteComment";
 
 const currentCard = localStorage.card;
 
 const CommentsDiplay = () => {
+  const dispatch = useDispatch();
   const currentComments = useSelector(
     (state) => state.rootReducer.currentCard.cardComments
   );
@@ -12,6 +14,11 @@ const CommentsDiplay = () => {
     //load the card that is clicked
     renderComments();
   }, []);
+  const handleClick = (e) => {
+    console.log("commentId", e.target.id);
+    dispatch(deleteComment(e.target.id, currentCard));
+    // renderComments();
+  };
   const renderComments = () => {
     if (currentComments) {
       const displayedComments = currentComments.map((comment) => {
@@ -22,6 +29,16 @@ const CommentsDiplay = () => {
                 <strong className="comment-username">
                   {comment.commentUser} says:
                 </strong>
+              </td>
+              <td>
+                <button
+                  id={comment._id}
+                  onClick={(e) => handleClick(e)}
+                  className="btn submit-button ms-auto"
+                  type="button"
+                >
+                  Delete Comment
+                </button>
               </td>
             </tr>
             <tr className="comment-text">
