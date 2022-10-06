@@ -30,7 +30,7 @@ const ListFooter = (props) => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-2">
             <textarea
-              className="form-control"
+              className="form-control label-input"
               placeholder="Enter a title for this card..."
               {...register("cardTitle")}
             />

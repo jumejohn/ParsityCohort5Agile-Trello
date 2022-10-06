@@ -107,7 +107,7 @@ const CardQuickEditModal = (props) => {
           {cardLabels.length > 0 &&
             cardLabels.map((label, index) => (
               <button
-                className="col-3 btn"
+                className="col-3 btn label-button"
                 style={{ backgroundColor: label.color }}
                 key={index}
               />
