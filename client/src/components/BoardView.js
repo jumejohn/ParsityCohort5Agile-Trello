@@ -165,7 +165,6 @@ const BoardView = () => {
         strategy: MeasuringStrategy.Always,
       },
     }}
-    onDragCancel={onDragCancel}
     onDragStart={({ active }) => {
       setActiveId(active.id);
       setClonedItems(lists);
@@ -234,8 +233,7 @@ const BoardView = () => {
           const activeIndex = containers.indexOf(active.id);
           const overIndex = containers.indexOf(over.id);
           const newOrder = arrayMove(containers, activeIndex, overIndex);
-          dispatch({type: "MOVE_LIST", payload: newOrder}) 
-
+          dispatch({type: "MOVE_LIST", payload: {newOrder, oldLists: items}}) 
       }
 
       const activeContainer = findContainer(active.id);
@@ -257,12 +255,11 @@ const BoardView = () => {
       if (overContainer) {
         const activeIndex = lists[activeContainer].indexOf(active.id);
         const overIndex = lists[overContainer].indexOf(overId);
-
         if (activeIndex !== overIndex) {
           const updatedLists = {
-            ...currentLists,
+            ...lists,
             [overContainer]: arrayMove(
-              currentLists[overContainer],
+              lists[overContainer],
               activeIndex,
               overIndex
             ),

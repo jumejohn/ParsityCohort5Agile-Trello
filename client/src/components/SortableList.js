@@ -22,24 +22,25 @@ export function SortableList({boardId, cards, listId, name, children}) {
 
   return (
     <div
-      {...attributes}
-      {...listeners}
+    ref={setNodeRef}
+      
       style={{
         ...style,
         transition,
         transform: CSS.Translate.toString(transform),
-        opacity: isDragging ? 0.5 : undefined,
+        opacity: isDragging ? 0.8 : undefined,
       }}
       className="col-3">
-      <button  ref={setNodeRef}>
-          handle
-      </button>
+
       <List
         cards={cards}
         name={name}
         listId={listId}
         boardId={boardId}
+        listeners={listeners}
+        attributes={attributes}
       >
+
         {children}
       </List>
     </div>

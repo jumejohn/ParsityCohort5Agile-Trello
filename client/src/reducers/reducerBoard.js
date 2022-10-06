@@ -52,6 +52,16 @@ const reducerBoard = (state = initialState, action) => {
       return initialState;
     case HANDLE_LOGOUT:
       return initialState;
+    case "MOVE_LIST":
+      const order = action.payload.newOrder
+      const oldLists = action.payload.oldLists
+      
+      const newLists = order.map(id => {
+        return oldLists.find(list => list._id == id)
+      })
+      return {
+        ...state, lists: newLists
+      }
     default:
       return state;
   }

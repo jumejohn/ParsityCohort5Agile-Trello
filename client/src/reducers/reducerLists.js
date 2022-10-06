@@ -62,7 +62,7 @@ const reducerLists = (state = initialState, action) => {
     case "MOVE_LIST":
       return {
         ...state,
-        order: action.payload
+        order: action.payload.newOrder
       }
     default:
       return state;

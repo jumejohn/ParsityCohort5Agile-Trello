@@ -27,9 +27,9 @@ const List = (props) => {
   return (
     <>
       <div className="card bg-black">
-        <div className="card-body" style={{"paddingBottom": "0"}}>
-          <div className="card-title text-white row d-flex align-items-center">
-            <div className="col-11"><ListTitle name={name} listId={props.listId} listCards={cards} /></div>
+        <div className="card-body" style={{"paddingBottom": "0"}} >
+          <div className="card-title text-white row d-flex align-items-center" >
+            <div className="col-11 d-flex align-items-center justify-content-between" ><ListTitle name={name} listId={props.listId} listCards={cards} /> <i className="fa fa-bars stretch-2 fa-2x ml-auto" aria-hidden="true"   {...props.attributes}{...props.listeners}/></div>
             <button className="btn-close btn-close-white col-1" onClick={toggleAreYouSureIsOpen} type="button" aria-label="Close" /> 
           </div>
           <div className="" style={{ "overflowY": "auto" }}>
