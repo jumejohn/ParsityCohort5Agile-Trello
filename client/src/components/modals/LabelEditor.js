@@ -51,6 +51,17 @@ const LabelEditor = (props) => {
     // reset();
   };
 
+  const handleDeleteClick = () => {
+    if (props.type === "Create") {
+      props.onClose();
+      reset();
+      return;
+    }
+    const newLabels = [...boardLabels];
+    newLabels.splice(currentLabelIndex,1);
+    dispatch(editLabels(boardId, newLabels));
+    props.onClose();
+  }
 
   return (
     <Modal
