@@ -26,7 +26,7 @@ const BoardView = () => {
   return (
     <div className="container-fluid">
       <div className="row">
-        <h3>{name}</h3>
+        <h3 className="board-name">{name}</h3>
       </div>
 
       <div className="row d-flex flex-nowrap">

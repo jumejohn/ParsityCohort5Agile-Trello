@@ -31,7 +31,11 @@ const CardModalTitle = () => {
     <>
       <div>
         {isShow ? (
-          <button id="activityShow" onClick={handleClick}>
+          <button
+            className="btn modal-title"
+            id="activityShow"
+            onClick={handleClick}
+          >
             {currentCard.cardTitle}
           </button>
         ) : (
@@ -44,12 +48,14 @@ const CardModalTitle = () => {
                   {...register("cardTitle")}
                   defaultValue={currentCard.cardTitle}
                 ></textarea>
-                <button type="submit" className="btn btn-primary">
+                <button type="submit" className="btn submit-button">
                   Update Title
                 </button>
+                <span> </span>
+                <span> </span>
                 <button
                   onClick={handleClick}
-                  className="btn-close submit-button ms-auto"
+                  className="btn-close submit-button  close-button"
                   type="button"
                   aria-label="Close"
                 />

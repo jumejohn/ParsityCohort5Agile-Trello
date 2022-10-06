@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import PropTypes from "prop-types";
@@ -13,7 +13,7 @@ const ListFooter = (props) => {
   const toggleTempCardIsOpen = () => {
     setTempCardIsOpen(!tempCardIsOpen);
     reset();
-  }
+  };
 
   const onSubmit = (data) => {
     if (!data.cardTitle) {
@@ -22,38 +22,46 @@ const ListFooter = (props) => {
     }
     dispatch(createCard(data.cardTitle, props.listId));
     toggleTempCardIsOpen();
-  }
+  };
 
   if (tempCardIsOpen) {
     return (
       <ClickDetectWrapper callback={toggleTempCardIsOpen}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-2">
-            <textarea 
-              className="form-control" 
+            <textarea
+              className="form-control label-input"
               placeholder="Enter a title for this card..."
               {...register("cardTitle")}
             />
           </div>
-          <div className="d-flex align-items-center">
-            <button className="btn btn-light" type="submit">Add card</button>
-            <button onClick={toggleTempCardIsOpen} className="btn-close btn-close-white ms-auto" type="button" aria-label="Close" /> 
+          <div className="d-flex align-items-center add-items">
+            <button className="btn submit-button" type="submit">
+              Add card
+            </button>
+            <button
+              onClick={toggleTempCardIsOpen}
+              className="btn-close submit-button ms-auto"
+              type="button"
+              aria-label="Close"
+            />
           </div>
         </form>
       </ClickDetectWrapper>
-    )
+    );
   }
 
   // by default
   return (
-    <button className="btn btn-secondary" type="button" onClick={toggleTempCardIsOpen}>
-            Add a card
+    <button className="btn " type="button" onClick={toggleTempCardIsOpen}>
+      <i className="fa fa-plus fa-1.5" />
+      <span> </span>Add a card
     </button>
-  )
-}
+  );
+};
 
 export default ListFooter;
 
 ListFooter.propTypes = {
   listId: PropTypes.string.isRequired,
-}
+};

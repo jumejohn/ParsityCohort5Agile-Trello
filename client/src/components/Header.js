@@ -26,7 +26,10 @@ const Header = () => {
 
   if (name) {
     return (
-      <nav className="navbar navbar-dark bg-primary container-fluid" style={{"position": "fixed", "left": "0"}}>
+      <nav
+        className="navbar container-fluid"
+        style={{ position: "fixed", left: "0" }}
+      >
         <div className="container-fluid">
           <div className="navbar-brand">
             {/* proposed adding in a logo or picture of some kind */}
@@ -40,7 +43,7 @@ const Header = () => {
 
             <HeaderDropDown name={name.organization.orgName} />
           </div>
-          <button type="button" onClick={handleLogoutClick}>
+          <button className="logout" type="button" onClick={handleLogoutClick}>
             Logout
           </button>
         </div>

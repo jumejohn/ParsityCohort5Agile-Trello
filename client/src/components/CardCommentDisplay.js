@@ -16,10 +16,18 @@ const CommentsDiplay = () => {
     if (currentComments) {
       const displayedComments = currentComments.map((comment) => {
         return (
-          <p key={comment._id}>
-            <strong>{comment.commentUser}:</strong>
-            <br /> {comment.commentText}
-          </p>
+          <tbody key={comment._id}>
+            <tr className="comment-user">
+              <td>
+                <strong className="comment-username">
+                  {comment.commentUser} says:
+                </strong>
+              </td>
+            </tr>
+            <tr className="comment-text">
+              <td>{comment.commentText}</td>
+            </tr>
+          </tbody>
         );
       });
       return displayedComments;
