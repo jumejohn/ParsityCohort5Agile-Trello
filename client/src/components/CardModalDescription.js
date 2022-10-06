@@ -31,8 +31,8 @@ const CardModalDescription = () => {
     <>
       <div>
         {isShow ? (
-          <button id="activityShow" onClick={handleClick}>
-            {cardDetails}
+          <button id="activityShow" className="btn" onClick={handleClick}>
+            <span className="description"> {cardDetails} </span>
           </button>
         ) : (
           <div>
@@ -44,7 +44,7 @@ const CardModalDescription = () => {
                   {...register("cardDescription")}
                   defaultValue={currentCard.cardDescription}
                 ></textarea>
-                <button type="submit" className="btn btn-primary">
+                <button type="submit" className="btn submit-button">
                   Update Description
                 </button>
               </form>

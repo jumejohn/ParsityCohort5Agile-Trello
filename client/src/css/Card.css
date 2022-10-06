@@ -1,10 +1,7 @@
+/* General Card properties */
 .card-modal{
     margin: 30px;
     padding: 25px;
-}
-.modal-title{
-    font-size: large;
-    font-weight: 600;
 }
 .card{
     background-color: #f2f8f9;
@@ -14,19 +11,36 @@
     overflow:auto;
     border-radius: 0%;
 }
-.comment-submit-button{
+.submit-button{
     font-family: courier, sans;
     letter-spacing: -1px;
+    background-color: white;
     box-shadow: rgb(0 0 0) -10px 8px 0px;
     border-radius: 0%;
+    border: #666666 solid 1px;
 }
-.comment-submit-button:hover{
+.submit-button:hover{
     transition: all 0.2s ease-out;
     box-shadow: 0px 4px 8px rgba(38, 38, 38, 0.2);
     top: -4px;
     border: 1px solid #cccccc;
     transform: scale(1.025);
 }
+/* Card Title Section */
+.modal-title{
+    font-size: large;
+    font-weight: 600;
+}
+
+/* Card Descritption Section */
+.description{
+    padding: 20px;
+    text-align: left;
+
+}
+
+/* Comment Section */
+
 .comment-username{
     border-bottom: #666666 1px solid;
 

@@ -54,7 +54,7 @@ const Card = () => {
                 />
               ))}
           </div>
-          <div className="card-text">
+          <div className="card-text description">
             <CardModalDescription />
           </div>
         </div>
@@ -89,7 +89,7 @@ const Card = () => {
                 ></textarea>
               </div>
               <div className="input-group mb-3">
-                <button type="submit" className="btn comment-submit-button">
+                <button type="submit" className="btn submit-button">
                   Submit Comment
                 </button>
               </div>

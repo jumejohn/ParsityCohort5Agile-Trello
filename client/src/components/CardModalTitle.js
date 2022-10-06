@@ -48,7 +48,7 @@ const CardModalTitle = () => {
                   {...register("cardTitle")}
                   defaultValue={currentCard.cardTitle}
                 ></textarea>
-                <button type="submit" className="btn btn-primary">
+                <button type="submit" className="btn submit-button">
                   Update Title
                 </button>
               </form>
