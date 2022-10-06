@@ -2,6 +2,7 @@
 .card-modal{
     margin: 30px;
     padding: 25px;
+    width: 80%;
 }
 .card{
     background-color: #f2f8f9;
@@ -44,6 +45,11 @@
 }
 .edit-button{
     margin-bottom: 10px;
+}
+
+.close-button{
+    margin-left: 20px;
+    z-index:-1;
 }
 /* Card Title Section */
 .modal-title{

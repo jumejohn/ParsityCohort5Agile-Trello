@@ -51,9 +51,11 @@ const CardModalTitle = () => {
                 <button type="submit" className="btn submit-button">
                   Update Title
                 </button>
+                <span> </span>
+                <span> </span>
                 <button
                   onClick={handleClick}
-                  className="btn-close submit-button ms-auto"
+                  className="btn-close submit-button  close-button"
                   type="button"
                   aria-label="Close"
                 />

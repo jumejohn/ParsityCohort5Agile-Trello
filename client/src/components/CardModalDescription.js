@@ -47,9 +47,11 @@ const CardModalDescription = () => {
                 <button type="submit" className="btn submit-button">
                   Update Description
                 </button>
+                <span> </span>
+                <span> </span>
                 <button
                   onClick={handleClick}
-                  className="btn-close submit-button ms-auto"
+                  className="btn-close submit-button ms-auto close-button"
                   type="button"
                   aria-label="Close"
                 />

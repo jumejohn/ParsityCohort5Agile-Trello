@@ -131,7 +131,18 @@ const CardOnList = (props) => {
             onConfirm={handleDeleteConfirm}
           />
         )}
-        <Modal isOpen={modalIsOpen}>
+        <Modal
+          isOpen={modalIsOpen}
+          style={{
+            content: {
+              width: "75%",
+              position: "fixed",
+              width: "75%",
+              zIndex: "100",
+              margin: "0 auto",
+            },
+          }}
+        >
           <button onClick={handleCloseModalClick}>x</button>
           <Card className="card-modal" />
         </Modal>
