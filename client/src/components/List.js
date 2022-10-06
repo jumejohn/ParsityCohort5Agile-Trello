@@ -25,7 +25,7 @@ const List = (props) => {
   let name = props.name;
 
   return (
-    <div className="col-3">
+    <>
       <div className="card bg-black">
         <div className="card-body" style={{"paddingBottom": "0"}}>
           <div className="card-title text-white row d-flex align-items-center">
@@ -52,7 +52,7 @@ const List = (props) => {
       {areYouSureIsOpen && (
         <AreYouSure name={name} isOpen={areYouSureIsOpen} onClose={toggleAreYouSureIsOpen} onConfirm={handleDeleteConfirm}/>
       )}
-    </div>
+    </>
   );
 };
 

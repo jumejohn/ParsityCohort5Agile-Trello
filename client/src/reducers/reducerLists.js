@@ -1,8 +1,9 @@
+
 import _ from "lodash"
 
 const initialState = {
-  boardName: "",
-  lists: [],
+  order: [],
+  normalized: {}
 }
 const reducerLists = (state = initialState, action) => {
   switch (action.type) {
@@ -47,6 +48,21 @@ const reducerLists = (state = initialState, action) => {
       return {
         order: newListOrder,
         normalized: newNormalizedData
+      }
+    case "RESET_LIST":
+      return {
+        ...state,
+        normalized: action.payload
+      }
+    case "MOVE_CARD":
+      return {
+        ...state,
+        normalized: action.payload
+      }
+    case "MOVE_LIST":
+      return {
+        ...state,
+        order: action.payload
       }
     default:
       return state;
