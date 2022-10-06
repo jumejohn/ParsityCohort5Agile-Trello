@@ -7,7 +7,7 @@ const CommentsDiplay = () => {
   const currentComments = useSelector(
     (state) => state.rootReducer.currentCard.cardComments
   );
-  console.log("cardCommentDisplay", currentComments);
+  // console.log("cardCommentDisplay", currentComments);
   useEffect(() => {
     //load the card that is clicked
     renderComments();
