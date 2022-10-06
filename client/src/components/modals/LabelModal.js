@@ -11,7 +11,7 @@ const LabelModal = (props) => {
   const dispatch = useDispatch();
 
   const handleChange = (index) => {
-    props.toggleChange(true);
+    if (props.toggleChange) props.toggleChange(true);
     props.onChange(index);
   };
 
