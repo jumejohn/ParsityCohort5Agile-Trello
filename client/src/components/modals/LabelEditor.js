@@ -49,6 +49,7 @@ const LabelEditor = (props) => {
     }
     dispatch(editLabels(boardId, newLabels));
     // reset();
+    props.onClose();
   };
 
   const handleDeleteClick = () => {
@@ -112,6 +113,7 @@ const LabelEditor = (props) => {
                     className="btn-check label-input"
                     autoComplete="off"
                     defaultChecked={isSelected}
+                    disabled={isDisabled}
                   />
                   <label
                     className="btn label-button"
