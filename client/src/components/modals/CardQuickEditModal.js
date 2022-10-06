@@ -143,15 +143,15 @@ const CardQuickEditModal = (props) => {
         onChange={toggleCardLabels}
         toggleChange={setLabelsChanged}
         cardLabels={cardLabels}
-        openLabelEditor={toggleLabelEditorIsOpen}
+        openLabelEditor={openLabelEditor}
       />
-      <LabelEditor
+      {labelEditorIsOpen && (<LabelEditor
         isOpen={labelEditorIsOpen}
         onClose={toggleLabelEditorIsOpen}
         type={labelEditorType}
         defaultName={labelEditorDefaults.name}
         defaultColor={labelEditorDefaults.color}
-      />
+      />)}
     </Modal>
   );
 };

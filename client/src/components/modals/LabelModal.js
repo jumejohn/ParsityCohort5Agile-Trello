@@ -76,6 +76,9 @@ const LabelModal = (props) => {
             );
           })}
         </div>
+        <div className="card-footer" style={{"padding": "0"}}>
+          <button className="btn" style={{"width": "100%"}} onClick={() => props.openLabelEditor("Create")}>Create new label</button>
+        </div>
       </div>
     </Modal>
   );

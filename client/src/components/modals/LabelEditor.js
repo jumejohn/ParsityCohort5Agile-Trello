@@ -37,21 +37,28 @@ const LabelEditor = (props) => {
     (label) => label.color === props.defaultColor
   );
 
-  const { register, handleSubmit, reset, handleChange } = useForm();
+  const { register, handleSubmit, reset, formState: { isDirty, isValid } } = useForm();
   const onSubmit = (data) => {
     const newLabel = { color: data.color };
     data.name.length ? (newLabel.name = data.name) : (newLabel.name = null);
     let newLabels = [...boardLabels];
-    newLabels[currentLabelIndex] = newLabel;
-    console.log(newLabels);
+    if (props.type === "Create") {
+      newLabels.push(newLabel);
+    } else {
+      newLabels[currentLabelIndex] = newLabel;
+    }
     dispatch(editLabels(boardId, newLabels));
     // reset();
   };
 
+
   return (
     <Modal
       isOpen={props.isOpen}
-      onRequestClose={() => props.onClose(props.type)}
+      onRequestClose={() => {
+        reset();
+        props.onClose(props.type)
+      }}
       style={{
         overlay: {
           backgroundColor: "none",
@@ -75,13 +82,15 @@ const LabelEditor = (props) => {
             type="text"
             {...register("name")}
           />
+
           <h6 className="card-subtitle">Select a color</h6>
           <div>
             {colors.map((color, index) => {
-              // let isDisabled = false;
               let isSelected = false;
               let key = index + Math.random() * 1000;
               if (color === props.defaultColor) isSelected = true;
+              let isDisabled = false;
+              if (!isSelected && boardLabels.some(label => label.color === color)) isDisabled = true;
               return (
                 <div key={key}>
                   <input
@@ -100,6 +109,7 @@ const LabelEditor = (props) => {
                   />
                 </div>
               );
+
             })}
           </div>
           <hr style={{ margin: "8px 0px" }} />
@@ -109,6 +119,7 @@ const LabelEditor = (props) => {
             </button>
             <button className="btn submit-button danger d-flex-grow-0 ms-auto">
               Delete
+
             </button>
           </div>
         </form>
