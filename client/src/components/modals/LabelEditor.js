@@ -37,7 +37,12 @@ const LabelEditor = (props) => {
     (label) => label.color === props.defaultColor
   );
 
-  const { register, handleSubmit, reset, formState: { isDirty, isValid } } = useForm();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { isDirty, isValid },
+  } = useForm();
   const onSubmit = (data) => {
     const newLabel = { color: data.color };
     data.name.length ? (newLabel.name = data.name) : (newLabel.name = null);
@@ -59,17 +64,17 @@ const LabelEditor = (props) => {
       return;
     }
     const newLabels = [...boardLabels];
-    newLabels.splice(currentLabelIndex,1);
+    newLabels.splice(currentLabelIndex, 1);
     dispatch(editLabels(boardId, newLabels));
     props.onClose();
-  }
+  };
 
   return (
     <Modal
       isOpen={props.isOpen}
       onRequestClose={() => {
         reset();
-        props.onClose(props.type)
+        props.onClose(props.type);
       }}
       style={{
         overlay: {
@@ -102,7 +107,11 @@ const LabelEditor = (props) => {
               let key = index + Math.random() * 1000;
               if (color === props.defaultColor) isSelected = true;
               let isDisabled = false;
-              if (!isSelected && boardLabels.some(label => label.color === color)) isDisabled = true;
+              if (
+                !isSelected &&
+                boardLabels.some((label) => label.color === color)
+              )
+                isDisabled = true;
               return (
                 <div key={key}>
                   <input
@@ -122,18 +131,24 @@ const LabelEditor = (props) => {
                   />
                 </div>
               );
-
             })}
           </div>
           <hr style={{ margin: "8px 0px" }} />
           <div className="d-flex">
-            <button className="btn btn-primary d-flex-grow-0" type="submit" disabled={!isDirty || !isValid}>
-              {(props.type === "Edit") && <span>Edit</span>}
-              {(props.type === "Create") && <span>Add</span>}
+            <button
+              className="btn submit-button d-flex-grow-0"
+              type="submit"
+              disabled={!isDirty || !isValid}
+            >
+              {props.type === "Edit" && <span>Edit</span>}
+              {props.type === "Create" && <span>Add</span>}
             </button>
-            <button className="btn btn-danger d-flex-grow-0 ms-auto" onClick={handleDeleteClick}>
-              {(props.type === "Edit") && <span>Delete</span>}
-              {(props.type === "Create") && <span>Cancel</span>}
+            <button
+              className="btn submit-button d-flex-grow-0 ms-auto"
+              onClick={handleDeleteClick}
+            >
+              {props.type === "Edit" && <span>Delete</span>}
+              {props.type === "Create" && <span>Cancel</span>}
             </button>
           </div>
         </form>
