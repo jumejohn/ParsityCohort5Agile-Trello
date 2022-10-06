@@ -34,14 +34,7 @@ const List = (props) => {
           </div>
           <div className="" style={{ "overflowY": "auto" }}>
             <ul className="list-group gap-2">
-              {cards.map((card) => <CardOnList 
-                key={card._id} 
-                cardId={card._id} 
-                cardTitle={card.cardTitle} 
-                cardLabel={card.cardLabel}
-                cardDescription={card.cardDescription} 
-                listId={props.listId} 
-              />)}
+              {props.children}
             </ul>
           </div>
         </div>

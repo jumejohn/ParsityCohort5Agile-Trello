@@ -25,6 +25,8 @@ import { fetchBoard } from "../actions/BoardFetch";
 import AddListBtn from "./AddListBtn";
 // import List from "./List";
 import { SortableList } from './SortableList';
+import { SortableCard } from './SortableCard';
+
 
 const BoardView = () => {
   const dispatch = useDispatch();
@@ -288,7 +290,21 @@ const BoardView = () => {
             name={list.listName}
             listId={list._id}
             boardId={boardId}
-          />
+          >
+            <SortableContext
+                    items={containers}
+                    strategy={horizontalListSortingStrategy}
+                  >
+              {list.cards.map((card) => <SortableCard 
+                  key={card._id} 
+                  cardId={card._id} 
+                  cardTitle={card.cardTitle} 
+                  cardLabel={card.cardLabel}
+                  cardDescription={card.cardDescription} 
+                  listId={list._id} 
+                />)}
+              </SortableContext>
+            </SortableList>
         ))}
         </SortableContext>
         <AddListBtn boardId={boardId} />
