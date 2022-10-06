@@ -12,8 +12,8 @@ const CardModalTitle = () => {
   const currentUser = useSelector(
     (state) => state.rootReducer.user.currentUser.username
   );
-  console.log(currentUser);
-  console.log("cardModalTitle", currentCard);
+  // console.log(currentUser);
+  // console.log("cardModalTitle", currentCard);
   const dispatch = useDispatch();
   const { reset, register, handleSubmit } = useForm();
 

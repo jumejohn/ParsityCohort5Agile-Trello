@@ -3,7 +3,7 @@ import Modal from "react-modal";
 import { useSelector, useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import PropTypes from "prop-types";
-import { editLabels } from "../../actions/EditLabels";
+import { editLabels } from "../../actions/EditBoardLabels";
 
 const LabelEditor = (props) => {
   const colors = [

@@ -66,37 +66,39 @@ router
     });
   })
 
+  // So far, this is just used for updating a card's labels
   .put("/:cardId", requireAuth, async function (req, res, next) {
     const cardId = req.params.cardId;
+    const updateQuery = {};
+    if (req.body.cardTitle) updateQuery.cardTitle = req.body.cardTitle;
+    if (req.body.cardLabel) updateQuery.cardLabel = req.body.cardLabel;
+    if (req.body.cardDescription) updateQuery.cardDescription = req.body.cardDescription;
+    if (req.body.cardComments) updateQuery.cardComments = req.body.cardComment;
     const {
       listId,
-      cardTitle,
-      cardLabel,
-      cardDescription,
-      cardComment,
-      username,
+      // username,
     } = req.body;
 
     List.findById(listId).exec((err, list) => {
       if (err) return next(err);
 
-      const activtyLog = createActivityLog(username, "saved to", list.listName);
-      const comment = createComment(username, cardComment);
-      console.log(activtyLog);
+      // const activtyLog = createActivityLog(username, "saved to", list.listName);
+      // const comment = createComment(username, cardComment);
+      // console.log(activtyLog);
 
-      const update = {
-        cardTitle: cardTitle,
-        cardLabel: cardLabel,
-        cardDescription: cardDescription,
-      };
+      // const update = {
+      //   cardTitle: cardTitle,
+      //   cardLabel: cardLabel,
+      //   cardDescription: cardDescription,
+      // };
 
       const filter = { _id: cardId };
-      Card.findOneAndUpdate(filter, update, {
+      Card.findOneAndUpdate(filter, updateQuery, {
         new: true,
       })
-        .updateOne({ $push: { cardComments: comment } })
-        .updateOne({ $push: { cardActivity: activtyLog } })
-        .exec((err) => {
+        // .updateOne({ $push: { cardComments: comment } })
+        // .updateOne({ $push: { cardActivity: activtyLog } })
+        .exec((err, card) => {
           if (err) {
             res.status(400).send(err);
             return next(err);
@@ -105,7 +107,7 @@ router
               .populate("cards")
               .exec((err, list) => {
                 if (err) return next(err);
-                res.status(200).send(list);
+                res.status(200).send({list: list, card: card});
               });
           }
         });

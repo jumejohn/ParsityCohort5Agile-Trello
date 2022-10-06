@@ -3,14 +3,18 @@ import { loadCard } from "../actions/LoadCard";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import PropTypes from "prop-types";
 import { postComment } from "../actions/PostComment";
 import CommentsDiplay from "./CardCommentDisplay";
 import CardModalTitle from "./CardModalTitle";
 import CardActivity from "./CardActivity";
 import "../css/Card.css";
 import CardModalDescription from "./CardModalDescription";
+import LabelModal from "./modals/LabelModal";
+import { editCardLabels } from "../actions/EditCardLabels";
+import LabelEditor from "./modals/LabelEditor";
 
-const Card = () => {
+const Card = (props) => {
   const dispatch = useDispatch();
   const thisCard = localStorage.card;
   useEffect(() => {
@@ -23,6 +27,7 @@ const Card = () => {
   const currentUser = useSelector(
     (state) => state.rootReducer.user.currentUser.username || null
   );
+  const currentBoardLabels = useSelector(state => state.rootReducer.currentBoard.labels);
   const onSubmit = (data) => {
     dispatch(postComment(data, currentCard));
     reset();
@@ -32,6 +37,31 @@ const Card = () => {
   const handleClick = () => {
     setIsShow(!isShow);
   };
+
+  // For label modal
+  const [labelModalIsOpen, setLabelModalIsOpen] = useState(false);
+  const toggleLabelModalIsOpen = () => {
+    setLabelModalIsOpen(!labelModalIsOpen);
+  }
+  const handleLabelChange = (labelIndex) => {
+    let newArray = [...currentCard.cardLabel];
+    let toggledLabel = currentBoardLabels[labelIndex];
+    let alreadyChecked = newArray.findIndex((label) => label.color === toggledLabel.color);
+    (alreadyChecked > -1) ? newArray.splice(alreadyChecked, 1) : newArray.push(toggledLabel);
+    dispatch(editCardLabels(props.listId, currentCard._id, newArray));
+  }
+  // For label editor modal
+  const [labelEditorIsOpen, setLabelEditorIsOpen] = useState(false);
+  const [labelEditorType, setLabelEditorType] = useState("Edit");
+  const [labelEditorDefaults, setLabelEditorDefaults] = useState({ color: null, name: null })
+  const toggleLabelEditorIsOpen = () => {
+    setLabelEditorIsOpen(!labelEditorIsOpen);
+  }
+  const openLabelEditor = (type, color, name) => {
+    if (type !== labelEditorType) setLabelEditorType(type);
+    setLabelEditorDefaults({ color: color, name: name });
+    toggleLabelEditorIsOpen();
+  }
 
   if (Object.keys(currentCard).length > 0) {
     return (
@@ -53,6 +83,31 @@ const Card = () => {
                   key={index}
                 />
               ))}
+              <button 
+                className="col-1 btn btn-secondary label-button"
+                onClick={toggleLabelModalIsOpen}
+              >
+                <i className="fa fa-plus fa-1.5" />
+              </button>
+              {labelModalIsOpen && (
+                <LabelModal 
+                  isOpen={labelModalIsOpen}
+                  onClose={toggleLabelModalIsOpen}
+                  onChange={handleLabelChange}
+                  // toggleChange={() => console.log("ToggleChange")}
+                  cardLabels={currentCard.cardLabel}
+                  openLabelEditor={openLabelEditor}
+                />
+              )}
+              {labelEditorIsOpen && (
+                <LabelEditor
+                  isOpen={labelEditorIsOpen}
+                  onClose={toggleLabelEditorIsOpen}
+                  type={labelEditorType}
+                  defaultName={labelEditorDefaults.name}
+                  defaultColor={labelEditorDefaults.color}
+                />
+              )}
           </div>
           <div className="card-text description">
             <CardModalDescription />
@@ -122,3 +177,7 @@ const Card = () => {
 };
 
 export default Card;
+
+Card.propTypes = {
+  listId: PropTypes.string,
+}
