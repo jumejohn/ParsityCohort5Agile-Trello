@@ -14,9 +14,10 @@ const CommentsDiplay = () => {
     //load the card that is clicked
     renderComments();
   }, []);
-  const handleClick = (e, currentCard) => {
-    dispatch(deleteComment(e.target.id, currentCard));
-    renderComments();
+  const handleClick = (e) => {
+    console.log("commentId", e.target.id);
+    deleteComment(e.target.id, currentCard);
+    // renderComments();
   };
   const renderComments = () => {
     if (currentComments) {
@@ -32,7 +33,7 @@ const CommentsDiplay = () => {
               <td>
                 <button
                   id={comment._id}
-                  onClick={handleClick}
+                  onClick={(e) => handleClick(e)}
                   className="btn submit-button ms-auto"
                   type="button"
                 >
