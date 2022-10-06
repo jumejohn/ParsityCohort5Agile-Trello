@@ -38,7 +38,7 @@ const BoardView = () => {
   // const [lists, setLists] = useState(items);
   // const [containers, setContainers] = useState(Object.keys(lists));
   const [activeId, setActiveId] = useState(null);
-  const isSortingContainer = activeId ? containers.includes(activeId) : false;
+  // const isSortingContainer = activeId ? containers.includes(activeId) : false;
   const lastOverId = useRef(null);
   const recentlyMovedToNewContainer = useRef(false);
   const sensors = useSensors(
@@ -165,6 +165,7 @@ const BoardView = () => {
         strategy: MeasuringStrategy.Always,
       },
     }}
+    onDragCancel={onDragCancel}
     onDragStart={({ active }) => {
       setActiveId(active.id);
       setClonedItems(lists);
