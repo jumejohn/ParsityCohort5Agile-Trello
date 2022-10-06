@@ -44,11 +44,14 @@ const CardQuickEditModal = (props) => {
   const [labelEditorIsOpen, setLabelEditorIsOpen] = useState(false);
   const [labelEditorType, setLabelEditorType] = useState("Edit");
   const [labelEditorDefaults, setLabelEditorDefaults] = useState({ color: null, name: null });
-  const toggleLabelEditorIsOpen = (type, color, name) => {
-    if (type !== labelEditorType) setLabelEditorType(type);
-    setLabelEditorDefaults({ color: color, name: name });
+  const toggleLabelEditorIsOpen = () => {
     setLabelEditorIsOpen(!labelEditorIsOpen);
     toggleLabelModalIsOpen();
+  }
+  const openLabelEditor = (type, color, name) => {
+    if (type !== labelEditorType) setLabelEditorType(type);
+    setLabelEditorDefaults({ color: color, name: name });
+    toggleLabelEditorIsOpen();
   }
 
   const dispatch = useDispatch();
@@ -115,15 +118,15 @@ const CardQuickEditModal = (props) => {
         onChange={toggleCardLabels}
         toggleChange={setLabelsChanged}
         cardLabels={cardLabels}
-        openLabelEditor={toggleLabelEditorIsOpen}
+        openLabelEditor={openLabelEditor}
       />
-      <LabelEditor
+      {labelEditorIsOpen && (<LabelEditor
         isOpen={labelEditorIsOpen}
         onClose={toggleLabelEditorIsOpen}
         type={labelEditorType}
         defaultName={labelEditorDefaults.name}
         defaultColor={labelEditorDefaults.color}
-      />
+      />)}
     </Modal>
   );
 };

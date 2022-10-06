@@ -28,21 +28,31 @@ const LabelEditor = (props) => {
   const boardLabels = useSelector(state => state.rootReducer.currentBoard.labels);
   const currentLabelIndex = boardLabels.findIndex(label => label.color === props.defaultColor);
 
-  const { register, handleSubmit, reset, handleChange } = useForm();
+  const { register, handleSubmit, reset, formState: { isDirty, isValid } } = useForm();
   const onSubmit = (data) => {
     const newLabel = {color: data.color};
     (data.name.length) ? newLabel.name = data.name : newLabel.name = null;
     let newLabels = [...boardLabels];
     newLabels[currentLabelIndex] = newLabel;
-    console.log(newLabels);
     dispatch(editLabels(boardId, newLabels));
-    // reset();
+    props.onClose();
+    reset();
+  }
+
+  const handleDeleteClick = () => {
+    const newLabels = [...boardLabels];
+    newLabels.splice(currentLabelIndex,1);
+    dispatch(editLabels(boardId, newLabels));
+    props.onClose();
   }
 
   return(
     <Modal
       isOpen={props.isOpen}
-      onRequestClose={() => props.onClose(props.type)}
+      onRequestClose={() => {
+        reset();
+        props.onClose(props.type)
+      }}
       style={{
         "overlay": {
           "backgroundColor": "none",
@@ -61,16 +71,17 @@ const LabelEditor = (props) => {
       <div className="card-body" style={{"padding": "0.5em"}}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <h6 className="card-subtitle">Title</h6>
-          <input className="form-control" type="text" {...register("name")}/>
+          <input className="form-control" type="text" {...register("name")} defaultValue={props.defaultName}/>
           <h6 className="card-subtitle">Select a color</h6>
           <div>
             {colors.map((color, index) => {
-              // let isDisabled = false;
               let isSelected = false;
               if (color === props.defaultColor) isSelected = true;
+              let isDisabled = false;
+              if (!isSelected && boardLabels.some(label => label.color === color)) isDisabled = true;
               return (
                 <>
-                  <input key={index} id={color} type="radio" {...register("color")} value={color} className="btn-check" autoComplete="off" defaultChecked={isSelected} />
+                  <input key={index} id={color} type="radio" {...register("color")} value={color} className="btn-check" autoComplete="off" defaultChecked={isSelected} disabled={isDisabled} />
                   <label className="btn" style={{"backgroundColor": color}} htmlFor={color} />
                 </>
               )
@@ -78,8 +89,8 @@ const LabelEditor = (props) => {
           </div>          
           <hr style={{"margin": "8px 0px"}}/>
           <div className="d-flex">
-            <button className="btn btn-primary d-flex-grow-0" type="submit">Save</button>
-            <button className="btn btn-danger d-flex-grow-0 ms-auto">Delete</button>
+            <button className="btn btn-primary d-flex-grow-0" type="submit" disabled={!isDirty || !isValid}>Save</button>
+            <button className="btn btn-danger d-flex-grow-0 ms-auto" onClick={handleDeleteClick}>Delete</button>
           </div>
         </form>
       </div>
