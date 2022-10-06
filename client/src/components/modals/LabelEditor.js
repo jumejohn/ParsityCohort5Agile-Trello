@@ -33,13 +33,22 @@ const LabelEditor = (props) => {
     const newLabel = {color: data.color};
     (data.name.length) ? newLabel.name = data.name : newLabel.name = null;
     let newLabels = [...boardLabels];
-    newLabels[currentLabelIndex] = newLabel;
+    if (props.type === "Create") {
+      newLabels.push(newLabel);
+    } else {
+      newLabels[currentLabelIndex] = newLabel;
+    }
     dispatch(editLabels(boardId, newLabels));
     props.onClose();
     reset();
   }
 
   const handleDeleteClick = () => {
+    if (props.type === "Create") {
+      props.onClose();
+      reset();
+      return;
+    }
     const newLabels = [...boardLabels];
     newLabels.splice(currentLabelIndex,1);
     dispatch(editLabels(boardId, newLabels));
@@ -89,8 +98,14 @@ const LabelEditor = (props) => {
           </div>          
           <hr style={{"margin": "8px 0px"}}/>
           <div className="d-flex">
-            <button className="btn btn-primary d-flex-grow-0" type="submit" disabled={!isDirty || !isValid}>Save</button>
-            <button className="btn btn-danger d-flex-grow-0 ms-auto" onClick={handleDeleteClick}>Delete</button>
+            <button className="btn btn-primary d-flex-grow-0" type="submit" disabled={!isDirty || !isValid}>
+              {(props.type === "Edit") && <span>Edit</span>}
+              {(props.type === "Create") && <span>Add</span>}
+            </button>
+            <button className="btn btn-danger d-flex-grow-0 ms-auto" onClick={handleDeleteClick}>
+              {(props.type === "Edit") && <span>Delete</span>}
+              {(props.type === "Create") && <span>Cancel</span>}
+            </button>
           </div>
         </form>
       </div>
