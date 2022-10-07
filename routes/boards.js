@@ -106,7 +106,8 @@ router
           new: true,
         })
     }
-    Board.findOneAndUpdate({_id: boardId}, {lists: lists}, {new: true})
+
+    Board.findOneAndUpdate({_id: boardId}, { $set: {lists: lists} }, {new: true})
     .populate('users')
     .populate({ path: 'lists', populate: { path: 'cards' } })
     .exec((err, board) => {
@@ -116,7 +117,7 @@ router
         return next(err)
       } else {
         console.log(board)
-        return res.status(200).send(lists).end()
+        return res.status(200).send(board).end()
       }
     })
   })
