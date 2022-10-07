@@ -1,0 +1,14 @@
+.list-title{
+    font-family: courier, sans;
+    letter-spacing: -1px;
+    color: #666666;
+    font-size: larger;
+    font-weight: 600;
+}
+
+.list-surround{
+    background-color: #f2f8f9;
+    letter-spacing: -1px;
+    box-shadow: rgb(0 0 0) -10px 8px 0px;
+    border-radius: 0%;
+}

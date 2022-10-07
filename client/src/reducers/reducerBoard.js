@@ -29,7 +29,7 @@ const reducerBoard = (state = initialState, action) => {
         ...state,
         lists: newLists3,
       }
-    // dispatched by editListTitle, deleteCard, quickEditCard action creators
+    // dispatched by editListTitle, deleteCard, quickEditCard, and editCardLabels action creators
     case "UPDATE_LIST":
       let newLists4 = [...state.lists];
       let listToUpdateIndex = newLists4.findIndex(list => list._id == action.payload._id);
@@ -47,7 +47,6 @@ const reducerBoard = (state = initialState, action) => {
         lists: newLists5,
       }
     case "UPDATE_BOARD":
-      console.log("board updated!")
       return action.payload;
     case "RESET_CURRENT_BOARD":
       return initialState;

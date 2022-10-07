@@ -3,13 +3,18 @@ import { loadCard } from "../actions/LoadCard";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import PropTypes from "prop-types";
 import { postComment } from "../actions/PostComment";
 import CommentsDiplay from "./CardCommentDisplay";
 import CardModalTitle from "./CardModalTitle";
 import CardActivity from "./CardActivity";
+import "../css/Card.css";
 import CardModalDescription from "./CardModalDescription";
+import LabelModal from "./modals/LabelModal";
+import { editCardLabels } from "../actions/EditCardLabels";
+import LabelEditor from "./modals/LabelEditor";
 
-const Card = () => {
+const Card = (props) => {
   const dispatch = useDispatch();
   const thisCard = localStorage.card;
   useEffect(() => {
@@ -22,6 +27,7 @@ const Card = () => {
   const currentUser = useSelector(
     (state) => state.rootReducer.user.currentUser.username || null
   );
+  const currentBoardLabels = useSelector(state => state.rootReducer.currentBoard.labels);
   const onSubmit = (data) => {
     dispatch(postComment(data, currentCard));
     reset();
@@ -32,11 +38,36 @@ const Card = () => {
     setIsShow(!isShow);
   };
 
+  // For label modal
+  const [labelModalIsOpen, setLabelModalIsOpen] = useState(false);
+  const toggleLabelModalIsOpen = () => {
+    setLabelModalIsOpen(!labelModalIsOpen);
+  }
+  const handleLabelChange = (labelIndex) => {
+    let newArray = [...currentCard.cardLabel];
+    let toggledLabel = currentBoardLabels[labelIndex];
+    let alreadyChecked = newArray.findIndex((label) => label.color === toggledLabel.color);
+    (alreadyChecked > -1) ? newArray.splice(alreadyChecked, 1) : newArray.push(toggledLabel);
+    dispatch(editCardLabels(props.listId, currentCard._id, newArray));
+  }
+  // For label editor modal
+  const [labelEditorIsOpen, setLabelEditorIsOpen] = useState(false);
+  const [labelEditorType, setLabelEditorType] = useState("Edit");
+  const [labelEditorDefaults, setLabelEditorDefaults] = useState({ color: null, name: null })
+  const toggleLabelEditorIsOpen = () => {
+    setLabelEditorIsOpen(!labelEditorIsOpen);
+  }
+  const openLabelEditor = (type, color, name) => {
+    if (type !== labelEditorType) setLabelEditorType(type);
+    setLabelEditorDefaults({ color: color, name: name });
+    toggleLabelEditorIsOpen();
+  }
+
   if (Object.keys(currentCard).length > 0) {
     return (
       <div className="card">
         <div className="card-body">
-          <h5 className="card-title">
+          <h5 className="card-title-modal">
             <CardModalTitle />
           </h5>
           <div
@@ -47,40 +78,73 @@ const Card = () => {
             {currentCard.cardLabel.length > 0 &&
               currentCard.cardLabel.map((label, index) => (
                 <button
-                  className="col-3 btn"
+                  className="col-3 btn label-button"
                   style={{ backgroundColor: label.color }}
                   key={index}
                 />
               ))}
+              <button 
+                className="col-1 btn btn-secondary label-button"
+                onClick={toggleLabelModalIsOpen}
+              >
+                <i className="fa fa-plus fa-1.5" />
+              </button>
+              {labelModalIsOpen && (
+                <LabelModal 
+                  isOpen={labelModalIsOpen}
+                  onClose={toggleLabelModalIsOpen}
+                  onChange={handleLabelChange}
+                  // toggleChange={() => console.log("ToggleChange")}
+                  cardLabels={currentCard.cardLabel}
+                  openLabelEditor={openLabelEditor}
+                />
+              )}
+              {labelEditorIsOpen && (
+                <LabelEditor
+                  isOpen={labelEditorIsOpen}
+                  onClose={toggleLabelEditorIsOpen}
+                  type={labelEditorType}
+                  defaultName={labelEditorDefaults.name}
+                  defaultColor={labelEditorDefaults.color}
+                />
+              )}
           </div>
-          <div className="card-text">
+          <div className="card-text description">
             <CardModalDescription />
           </div>
         </div>
         <>
           <div>
             {isShow ? (
-              <button id="activityShow" onClick={handleClick}>
+              <button
+                id="activityShow"
+                className="submit-button activity-button"
+                onClick={handleClick}
+              >
                 Hide Activity
               </button>
             ) : (
-              <button id="activityShow" onClick={handleClick}>
+              <button
+                id="activityShow"
+                className="submit-button activity-button"
+                onClick={handleClick}
+              >
                 Show Activity
               </button>
             )}
           </div>
-          <div className="container">
+          <div className="container comment-form">
             <form onSubmit={handleSubmit(onSubmit)}>
-              <label className="form-label">User:</label>
+              <label className="form-label comment-title">User:</label>
               <input
                 type="text"
                 readOnly
-                className="form-control-plaintext"
+                className="form-control-plaintext comment-title"
                 value={currentUser}
                 {...register("commentUser")}
               />
               <div className="mb-3">
-                <label className="form-label">Comment:</label>
+                <label className="form-label comment-title">Comment:</label>
                 <textarea
                   className="form-control"
                   rows="3"
@@ -88,16 +152,16 @@ const Card = () => {
                 ></textarea>
               </div>
               <div className="input-group mb-3">
-                <button type="submit" className="btn btn-primary">
+                <button type="submit" className="btn submit-button">
                   Submit Comment
                 </button>
               </div>
             </form>
           </div>
-          <div>
+          <table className="comment-table">
             <CommentsDiplay />
-          </div>
-          <div>
+          </table>
+          <div className="activity-log">
             {isShow ? (
               <CardActivity>show/hide CardActivity</CardActivity>
             ) : (
@@ -113,3 +177,7 @@ const Card = () => {
 };
 
 export default Card;
+
+Card.propTypes = {
+  listId: PropTypes.string,
+}

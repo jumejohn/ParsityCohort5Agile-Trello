@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import PropTypes from "prop-types";
 import ClickDetectWrapper from "./ClickDetectWrapper";
 import { editListTitle } from "../actions/EditListTitle";
+import "../css/List.css";
 
 const ListTitle = (props) => {
   const dispatch = useDispatch();
@@ -14,7 +15,7 @@ const ListTitle = (props) => {
   const toggleTitleIsEditing = () => {
     setTitleIsEditing(!titleIsEditing);
     reset();
-  }
+  };
 
   const editSubmit = (data, event) => {
     // do not dispatch if edit field hasn't changed or is empty
@@ -24,27 +25,33 @@ const ListTitle = (props) => {
     }
     dispatch(editListTitle(data.titleEditField, props.listId, props.listCards));
     toggleTitleIsEditing();
-  }
+  };
 
   if (titleIsEditing) {
     return (
       <ClickDetectWrapper callback={toggleTitleIsEditing}>
         <form onSubmit={handleSubmit(editSubmit)}>
-          <input 
+          <input
             className="form-control"
             defaultValue={props.name}
             {...register("titleEditField")}
           />
         </form>
       </ClickDetectWrapper>
-    )
+    );
   }
 
   // by default
   return (
-    <button onClick={toggleTitleIsEditing} className="btn btn-dark" style={{"backgroundColor": "transparent"}}>{props.name}</button>
-  )
-}
+    <button
+      onClick={toggleTitleIsEditing}
+      className="btn list-title"
+      style={{ backgroundColor: "transparent" }}
+    >
+      {props.name}
+    </button>
+  );
+};
 
 export default ListTitle;
 
@@ -52,4 +59,4 @@ ListTitle.propTypes = {
   name: PropTypes.string.isRequired,
   listId: PropTypes.string.isRequired,
   listCards: PropTypes.array,
-}
+};

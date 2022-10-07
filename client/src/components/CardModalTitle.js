@@ -13,8 +13,8 @@ const CardModalTitle = () => {
   const currentUser = useSelector(
     (state) => state.rootReducer.user.currentUser.username
   );
-  console.log(currentUser);
-  console.log("cardModalTitle", currentCard);
+  // console.log(currentUser);
+  // console.log("cardModalTitle", currentCard);
   const dispatch = useDispatch();
   const { reset, register, handleSubmit } = useForm();
 
@@ -32,7 +32,11 @@ const CardModalTitle = () => {
     <>
       <div>
         {isShow ? (
-          <button id="activityShow" onClick={handleClick}>
+          <button
+            className="btn modal-title"
+            id="activityShow"
+            onClick={handleClick}
+          >
             {currentCard.cardTitle}
           </button>
         ) : (
@@ -45,9 +49,17 @@ const CardModalTitle = () => {
                   {...register("cardTitle")}
                   defaultValue={currentCard.cardTitle}
                 ></textarea>
-                <button type="submit" className="btn btn-primary">
+                <button type="submit" className="btn submit-button">
                   Update Title
                 </button>
+                <span> </span>
+                <span> </span>
+                <button
+                  onClick={handleClick}
+                  className="btn-close submit-button  close-button"
+                  type="button"
+                  aria-label="Close"
+                />
               </form>
             </div>
           </div>
