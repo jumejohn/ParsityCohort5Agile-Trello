@@ -25,26 +25,28 @@ const List = (props) => {
   let name = props.name;
 
   return (
-
     <>
-      <div className="card bg-black">
-        <div className="card-body" style={{"paddingBottom": "0"}} >
-          <div className="card-title text-white row d-flex align-items-center" >
-            <div className="col-11 d-flex align-items-center justify-content-between" >
-            <ListTitle name={name} listId={props.listId} listCards={cards} /> 
-            <i className="fa fa-bars stretch-2 fa-2x ml-auto" aria-hidden="true"   {...props.attributes}{...props.listeners}/>
+      <div className="card list-surround">
+        <div className="card-body" style={{ paddingBottom: "0" }}>
+          <div className="card-title row d-flex align-items-center">
+            <div className="col-11 d-flex align-items-center justify-content-between">
+              <ListTitle name={name} listId={props.listId} listCards={cards} />
+              <i
+                className="fa fa-bars stretch-2 fa-2x ml-auto"
+                aria-hidden="true"
+                {...props.attributes}
+                {...props.listeners}
+              />
             </div>
-            <button className="btn-close btn-close-white col-1" onClick={toggleAreYouSureIsOpen} type="button" aria-label="Close" /> 
-
-    
-
+            <button
+              className="btn-close btn-close-black col-1"
+              onClick={toggleAreYouSureIsOpen}
+              type="button"
+              aria-label="Close"
+            />
           </div>
           <div className="" style={{ overflowY: "auto" }}>
-            <ul className="list-group gap-2">
-
-              {props.children}
-
-            </ul>
+            <ul className="list-group gap-2">{props.children}</ul>
           </div>
         </div>
         <div className="card-footer d-grid">

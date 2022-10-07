@@ -23,14 +23,13 @@ const removeModalStyles = {
     right: "30%",
     bottom: "10%",
   },
-}
+};
 const Display = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [title, setTitle] = useState("");
-  const [boards, setBoards] = useState([])
-  const [removeModalIsOpen, setRemoveIsOpen] = useState(false)
+  const [boards, setBoards] = useState([]);
+  const [removeModalIsOpen, setRemoveIsOpen] = useState(false);
   const user = useSelector((state) => state.rootReducer.user.currentUser);
-
 
   const fetchBoardData = () => {
     const url = `/organization/${user.organization._id}/boards`;
@@ -38,37 +37,35 @@ const Display = () => {
     const config = {
       method: "get",
       url,
-      headers: { Authorization: `Bearer ${token}` }
+      headers: { Authorization: `Bearer ${token}` },
     };
 
     axios(config).then((data) => {
-      setBoards(data.data.orgBoards)
-    })
-  }
-
+      setBoards(data.data.orgBoards);
+    });
+  };
 
   useEffect(() => {
-    if(user && boards.length === 0){
-      fetchBoardData()
+    if (user && boards.length === 0) {
+      fetchBoardData();
     }
-  }, [user])
+  }, [user]);
 
   const navigate = useNavigate();
   function openModal() {
     setIsOpen(true);
   }
 
-
   function closeModal() {
     setIsOpen(false);
   }
 
   function openRemoveModal() {
-    setRemoveIsOpen(true)
+    setRemoveIsOpen(true);
   }
 
   function closeRemoveModal() {
-    setRemoveIsOpen(false)
+    setRemoveIsOpen(false);
   }
 
   const createBoard = (e) => {
@@ -99,32 +96,45 @@ const Display = () => {
     const config = {
       method: "delete",
       url,
-      headers: { Authorization: `Bearer ${token}` }
+      headers: { Authorization: `Bearer ${token}` },
     };
     axios(config).then(() => {
       // refresh page
-      navigate(0)
-    })
-    closeRemoveModal()
-  }
+      navigate(0);
+    });
+    closeRemoveModal();
+  };
 
   const renderBoardList = () => {
-    if(user){
+    if (user) {
       const list = boards.map((board) => {
         return (
           <li key={board._id} className="list-item row mb-2">
             <span className="col-md-6">{board.boardName}</span>
-            <button type="button" className="btn btn-danger col-md-4" onClick={() => removeBoard(board._id)}>Remove</button>
+            <button
+              type="button"
+              className="btn submit-button danger col-md-4"
+              onClick={() => removeBoard(board._id)}
+            >
+              Remove
+            </button>
           </li>
-        )
-      })
-      return list
+        );
+      });
+      return list;
     }
-  }
+  };
 
   const renderBoards = () => {
     const boardsArray = boards.map((board, i) => {
-      return <Board key={i} boardId={board._id} boardName={board.boardName} numLists={board.lists.length}></Board>;
+      return (
+        <Board
+          key={i}
+          boardId={board._id}
+          boardName={board.boardName}
+          numLists={board.lists.length}
+        ></Board>
+      );
     });
 
     return boardsArray;
@@ -136,11 +146,13 @@ const Display = () => {
           {renderBoards()}
           <button className="card2__add" onClick={openModal}>
             <h3 className="board__btn">Add New Board</h3>
-              <p className="small"></p>
-              
-            </button>
-          <button className="btn-danger card2__remove" onClick={openRemoveModal}>
-          <h3 className="board__btn">Remove a Board</h3>
+            <p className="small"></p>
+          </button>
+          <button
+            className="btn-danger card2__remove"
+            onClick={openRemoveModal}
+          >
+            <h3 className="board__btn">Remove a Board</h3>
           </button>
         </section>
         <Modal
@@ -151,7 +163,12 @@ const Display = () => {
         >
           <div className="scroll-component">
             <div className="scroll-content">
-              <button onClick={closeRemoveModal}>Close</button>
+              <button
+                onClick={closeRemoveModal}
+                className="btn-close submit-button ms-auto"
+                type="button"
+                aria-label="Close"
+              />
               <h2>Remove a Board</h2>
               <ul>{renderBoardList()}</ul>
             </div>
@@ -163,18 +180,27 @@ const Display = () => {
           style={addModalStyles}
           contentLabel="Example Modal"
         >
-          <button onClick={closeModal}>Close</button>
+          <button
+            onClick={closeModal}
+            className="btn-close submit-button ms-auto"
+            type="button"
+            aria-label="Close"
+          />{" "}
           <h2>Create New Board</h2>
           <div>Board Name</div>
           <form onSubmit={(e) => createBoard(e)}>
             <input onChange={(e) => setTitle(e.target.value)} />
-            <button type="submit">Create</button>
+            <button className="submit-button save-button" type="submit">
+              Create
+            </button>
           </form>
         </Modal>
       </section>
     );
   } else {
-    return <div className="d-flex justify-content-center">Loading boards...</div>;
+    return (
+      <div className="d-flex justify-content-center">Loading boards...</div>
+    );
   }
 };
 Modal.setAppElement("#root");

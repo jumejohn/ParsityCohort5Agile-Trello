@@ -39,7 +39,7 @@ const CardModalDescription = () => {
             <div className="mb-3">
               <form onSubmit={handleSubmit(onSubmit)}>
                 <textarea
-                  className="form-control"
+                  className="form-control text-input"
                   rows="3"
                   {...register("cardDescription")}
                   defaultValue={currentCard.cardDescription}

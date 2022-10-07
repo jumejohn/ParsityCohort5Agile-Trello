@@ -3,6 +3,7 @@ var router = express.Router();
 const Board = require('../models/Board');
 const Organization = require('../models/Organization')
 const List = require('../models/List')
+
 const passport = require('passport');
 const passportService = require('../authentication/passport');
 const requireAuth = passport.authenticate('jwt', { session: false });
@@ -15,33 +16,31 @@ router
       .populate('users')
       .populate({ path: 'lists', populate: { path: 'cards' } })
       .exec((err, board) => {
-        if(err) return next(err)
-        res.status(200).send(board).end()
-      })
-  })
-  
-// POST add new board
-  .post('/', requireAuth, async function(req, res, next){
-    const {boardName, organization, users} = req.body
-    const newBoard = await new Board({boardName, organization, users}).save((err, board) => {
-      if(err) return next(err)
-      Organization.updateOne(
-        { _id: organization},
-        { $push: { orgBoards: [board._id]}},
-        function(err, result) {
-          if(err){
-            return next(err)
-          }
-          else{
-            return res.send(board).status(200)
-          }
-        }
-        
-        )
-      })
-
+        if (err) return next(err);
+        res.status(200).send(board).end();
+      });
   })
 
+  // POST add new board
+  .post('/', requireAuth, async function (req, res, next) {
+    const { boardName, organization, users } = req.body;
+    const newBoard = await new Board({ boardName, organization, users }).save(
+      (err, board) => {
+        if (err) return next(err);
+        Organization.updateOne(
+          { _id: organization },
+          { $push: { orgBoards: [board._id] } },
+          function (err, result) {
+            if (err) {
+              return next(err);
+            } else {
+              return res.send(board).status(200);
+            }
+          }
+        );
+      }
+    );
+  })
 
   // POST add new board
   .post('/', requireAuth, function (req, res, next) {
@@ -76,15 +75,14 @@ router
     // const { boardName, users, lists, labels } = req.body;
     // const update = { boardName: boardName, users: users, lists: lists, labels: labels };
     const filter = { _id: boardId };
-    const updatedBoard = await Board.findOneAndUpdate(filter, updateQuery, { new: true })
+    const updatedBoard = await Board.findOneAndUpdate(filter, updateQuery, {
+      new: true,
+    })
       .populate('users')
       .populate({ path: 'lists', populate: { path: 'cards' } })
       .exec((err, board) => {
         if (err) return next(err);
-        res
-          .status(200)
-          .send(board)
-          .end();
+        res.status(200).send(board).end();
       });
   })
 
@@ -108,7 +106,6 @@ router
           new: true,
         })
     }
-
     Board.findOneAndUpdate({_id: boardId}, {lists: lists}, {new: true})
     .populate('users')
     .populate({ path: 'lists', populate: { path: 'cards' } })

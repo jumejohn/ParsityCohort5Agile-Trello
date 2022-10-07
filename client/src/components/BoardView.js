@@ -1,4 +1,6 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import { editBoardTitle } from "../actions/EditBoardTitle";
+import { useForm } from "react-hook-form";
+import React, { useState, useCallback, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import {
@@ -13,7 +15,7 @@ import {
   PointerSensor,
   MeasuringStrategy,
   DragOverlay,
-} from '@dnd-kit/core';
+} from "@dnd-kit/core";
 import {
   SortableContext,
   arrayMove,
@@ -21,15 +23,15 @@ import {
   sortableKeyboardCoordinates,
   horizontalListSortingStrategy,
   rectSortingStrategy,
-} from '@dnd-kit/sortable';
+} from "@dnd-kit/sortable";
 
 import { fetchBoard } from "../actions/BoardFetch";
 import AddListBtn from "./AddListBtn";
 import List from "./List";
-import { SortableList } from './SortableList';
-import { SortableCard } from './SortableCard';
-import Card from './Card';
-import CardClone from './CardClone';
+import { SortableList } from "./SortableList";
+import { SortableCard } from "./SortableCard";
+import Card from "./Card";
+import CardClone from "./CardClone";
 
 import { moveLists } from '../actions/MoveLists';
 import { moveCard } from '../actions/MoveCard';
@@ -37,13 +39,23 @@ const BoardView = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   let { boardId } = useParams();
+  const { reset, register, handleSubmit } = useForm();
+  const [isShow, setIsShow] = useState(false);
+  // const currentUser = useSelector(
+  //   (state) => state.rootReducer.user.currentUser.username
+  // );
+
   const token = localStorage.token;
   const board = useSelector(({rootReducer}) => rootReducer.currentBoard)
   const user = useSelector(({rootReducer}) => rootReducer.user.currentUser?.username)
   const name = useSelector((state) => state.rootReducer.currentBoard.boardName);
   const items = useSelector((state) => state.rootReducer.currentBoard.lists);
-  const containers = useSelector(({rootReducer}) => rootReducer.normalizedLists.order)
-  const lists = useSelector(({rootReducer}) => rootReducer.normalizedLists.normalized)
+  const containers = useSelector(
+    ({ rootReducer }) => rootReducer.normalizedLists.order
+  );
+  const lists = useSelector(
+    ({ rootReducer }) => rootReducer.normalizedLists.normalized
+  );
   // const [lists, setLists] = useState(items);
   // const [containers, setContainers] = useState(Object.keys(lists));
   const [activeId, setActiveId] = useState(null);
@@ -57,7 +69,7 @@ const BoardView = () => {
     }),
     useSensor(MyPointerSensor, {
       activationConstraint: {
-        distance: 2
+        distance: 2,
       },
     })
   );
@@ -70,6 +82,16 @@ const BoardView = () => {
       }
     });
   }, []);
+
+  const onSubmit = (data) => {
+    dispatch(editBoardTitle(data, boardId));
+    reset();
+    setIsShow(!isShow);
+  };
+
+  const handleClick = () => {
+    setIsShow(!isShow);
+  };
 
   const collisionDetectionStrategy = useCallback(
     (args) => {
@@ -89,7 +111,7 @@ const BoardView = () => {
           ? // If there are droppables intersecting with the pointer, return those
             pointerIntersections
           : rectIntersection(args);
-      let overId = getFirstCollision(intersections, 'id');
+      let overId = getFirstCollision(intersections, "id");
 
       if (overId != null) {
         if (overId in lists) {
@@ -155,27 +177,26 @@ const BoardView = () => {
       // Reset items to their original state in case items have been
       // Dragged across containers
       dispatch({
-        type: 'RESET_LIST',
-        payload: clonedItems
-      })
+        type: "RESET_LIST",
+        payload: clonedItems,
+      });
     }
 
     setActiveId(null);
     setClonedItems(null);
   };
   const findCardTitle = (cardId) => {
-    let title = ''
-    for(const listId in lists){
-      if(lists[listId].includes(cardId)){
-        const list = items.find(item => {
-          return item._id == listId
-        })
-        title = list.cards.find(card => card._id == cardId).cardTitle
+    let title = "";
+    for (const listId in lists) {
+      if (lists[listId].includes(cardId)) {
+        const list = items.find((item) => {
+          return item._id == listId;
+        });
+        title = list.cards.find((card) => card._id == cardId).cardTitle;
       }
     }
-    return title
-  }
-
+    return title;
+  };
 
   useEffect(() => {
     requestAnimationFrame(() => {
@@ -185,35 +206,33 @@ const BoardView = () => {
 
   return (
     <DndContext
-    sensors={sensors}
-    collisionDetection={collisionDetectionStrategy}
-    measuring={{
-      droppable: {
-        strategy: MeasuringStrategy.Always,
-      },
-    }}
-    onDragStart={({ active }) => {
-      
-      setActiveId(active.id);
-      setClonedItems(lists);
-    }}
-    onDragOver={({ active, over }) => {
-      const overId = over?.id;
+      sensors={sensors}
+      collisionDetection={collisionDetectionStrategy}
+      measuring={{
+        droppable: {
+          strategy: MeasuringStrategy.Always,
+        },
+      }}
+      onDragStart={({ active }) => {
+        setActiveId(active.id);
+        setClonedItems(lists);
+      }}
+      onDragOver={({ active, over }) => {
+        const overId = over?.id;
 
-      // Note: when moving lists we just return here and do not do anything
-      if (overId == null || active.id in lists) {
-        return;
-      }
+        // Note: when moving lists we just return here and do not do anything
+        if (overId == null || active.id in lists) {
+          return;
+        }
 
-      const overContainer = findContainer(overId);
-      const activeContainer = findContainer(active.id);
+        const overContainer = findContainer(overId);
+        const activeContainer = findContainer(active.id);
 
-      if (!overContainer || !activeContainer) {
-        return;
-      }
+        if (!overContainer || !activeContainer) {
+          return;
+        }
 
-      if (activeContainer !== overContainer) {
-        
+        if (activeContainer !== overContainer) {
           const activeItems = lists[activeContainer];
           const overItems = lists[overContainer];
           const overIndex = overItems.indexOf(overId);
@@ -271,100 +290,136 @@ const BoardView = () => {
           
       }
 
-      const activeContainer = findContainer(active.id);
 
-      if (!activeContainer) {
-        setActiveId(null);
-        return;
-      }
+        const activeContainer = findContainer(active.id);
 
-      const overId = over?.id;
+        if (!activeContainer) {
+          setActiveId(null);
+          return;
+        }
 
-      if (overId == null) {
-        setActiveId(null);
-        return;
-      }
+        const overId = over?.id;
 
-      const overContainer = findContainer(overId);
+        if (overId == null) {
+          setActiveId(null);
+          return;
+        }
 
-      if (overContainer) {
-        const activeIndex = lists[activeContainer].indexOf(active.id);
-        const overIndex = lists[overContainer].indexOf(overId);
-        if (activeIndex !== overIndex) {
-          const updatedLists = {
-            ...lists,
-            [overContainer]: arrayMove(
-              lists[overContainer],
-              activeIndex,
-              overIndex
-            ),
+        const overContainer = findContainer(overId);
+
+        if (overContainer) {
+          const activeIndex = lists[activeContainer].indexOf(active.id);
+          const overIndex = lists[overContainer].indexOf(overId);
+          if (activeIndex !== overIndex) {
+            const updatedLists = {
+              ...lists,
+              [overContainer]: arrayMove(
+                lists[overContainer],
+                activeIndex,
+                overIndex
+              ),
+            };
+            dispatch({
+              type: "MOVE_CARD",
+              payload: { order: containers, updatedLists },
+            });
           }
           Promise.all([
             dispatch({type: "MOVE_CARD", payload: {order: containers, updatedLists}}),
             dispatch(moveCard(boardId, token, updatedLists, containers, items, board))
           ])
 
-        }
-      }
 
-      setActiveId(null);
-    }}
-  >
-    <div className="container-fluid">
-      <div className="row">
-        <h3 className="board-name">{name}</h3>
+        }
+
+        setActiveId(null);
+      }}
+    >
+      <div className="container-fluid">
+        <div className="row">
+          {!isShow ? (
+            <button className="btn modal-title" onClick={handleClick}>
+              {name}
+            </button>
+          ) : (
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <textarea
+                className="form-control text-input"
+                rows="1"
+                {...register("boardDescription")}
+                defaultValue={name}
+              ></textarea>
+              <button type="submit" className="btn submit-button">
+                Edit Board Name
+              </button>
+              <span> </span>
+              <span> </span>
+              <button
+                onClick={handleClick}
+                className="btn-close submit-button ms-auto"
+                type="button"
+                aria-label="Close"
+              />
+            </form>
+          )}
+        </div>
       </div>
 
       <div className="row d-flex flex-nowrap">
-      <SortableContext
-        items={containers}
-        strategy={horizontalListSortingStrategy}
-      >
-        {items.map((list) => (
-          <SortableList
-            key={list._id}
-            cards={list.cards}
-            name={list.listName}
-            listId={list._id}
-            boardId={boardId}
-          >
-            <SortableContext
-                    items={lists[list._id]}
-                    strategy={rectSortingStrategy}
-                  >
-              {list.cards.map((card) => <SortableCard 
-                  key={card._id} 
-                  cardId={card._id} 
-                  cardTitle={card.cardTitle} 
-                  cardLabel={card.cardLabel}
-                  cardDescription={card.cardDescription} 
-                  listId={list._id} 
-                />)}
+        <SortableContext
+          items={containers}
+          strategy={horizontalListSortingStrategy}
+        >
+          {items.map((list) => (
+            <SortableList
+              key={list._id}
+              cards={list.cards}
+              name={list.listName}
+              listId={list._id}
+              boardId={boardId}
+            >
+              <SortableContext
+                items={lists[list._id]}
+                strategy={rectSortingStrategy}
+              >
+                {list.cards.map((card) => (
+                  <SortableCard
+                    key={card._id}
+                    cardId={card._id}
+                    cardTitle={card.cardTitle}
+                    cardLabel={card.cardLabel}
+                    cardDescription={card.cardDescription}
+                    listId={list._id}
+                  />
+                ))}
               </SortableContext>
             </SortableList>
-        ))}
+          ))}
         </SortableContext>
         <DragOverlay>
-                {activeId ? (containers.includes(activeId) ? null : <CardClone id={activeId} cardId={activeId}
-                  cardTitle={findCardTitle(activeId)} 
-                  />) : null}
-                  
-              </DragOverlay>
+          {activeId ? (
+            containers.includes(activeId) ? null : (
+              <CardClone
+                id={activeId}
+                cardId={activeId}
+                cardTitle={findCardTitle(activeId)}
+              />
+            )
+          ) : null}
+        </DragOverlay>
         <AddListBtn boardId={boardId} />
       </div>
-    </div>
-  </DndContext>
+    </DndContext>
   );
 };
 
 export default BoardView;
 
-
 class MyPointerSensor extends PointerSensor {
   static activators = [
     {
-      eventName: 'onPointerDown',
-      handler: ({nativeEvent: event}) => {
+      eventName: "onPointerDown",
+      handler: ({ nativeEvent: event }) => {
         if (
           !event.isPrimary ||
           event.button !== 0 ||
@@ -372,10 +427,12 @@ class MyPointerSensor extends PointerSensor {
         ) {
           return false;
         }
-        if(document.getElementsByClassName('ReactModal__Body--open').length == 1){
+        if (
+          document.getElementsByClassName("ReactModal__Body--open").length == 1
+        ) {
           return false;
         }
-        
+
         return true;
       },
     },
@@ -384,11 +441,11 @@ class MyPointerSensor extends PointerSensor {
 
 function isInteractiveElement(element) {
   const interactiveElements = [
-    'modal',
-    'input',
-    'textarea',
-    'select',
-    'option',
+    "modal",
+    "input",
+    "textarea",
+    "select",
+    "option",
   ];
 
   if (interactiveElements.includes(element.tagName.toLowerCase())) {
