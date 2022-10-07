@@ -1,9 +1,12 @@
-import { FETCH_BOARD } from '../actions/BoardFetch';
-import { CREATE_CARD } from '../actions/CreateCard';
-import { CREATE_LIST } from '../actions/CreateList';
-import { DELETE_LIST } from '../actions/DeleteList';
-import { HANDLE_LOGOUT } from '../actions/Logout';
+
 import { UPDATE_BOARD } from '../actions/EditBoardTitle';
+import _ from 'lodash'
+import { FETCH_BOARD } from "../actions/BoardFetch";
+import { CREATE_CARD } from "../actions/CreateCard";
+import { CREATE_LIST } from "../actions/CreateList";
+import { DELETE_LIST } from "../actions/DeleteList";
+import { HANDLE_LOGOUT } from "../actions/Logout";
+
 const initialState = {
   boardName: '',
   lists: [],
@@ -30,9 +33,11 @@ const reducerBoard = (state = initialState, action) => {
       return {
         ...state,
         lists: newLists3,
-      };
-    // dispatched by editListTitle, deleteCard, quickEditCard action creators
-    case 'UPDATE_LIST':
+
+      }
+    // dispatched by editListTitle, deleteCard, quickEditCard, and editCardLabels action creators
+    case "UPDATE_LIST":
+
       let newLists4 = [...state.lists];
       let listToUpdateIndex = newLists4.findIndex(
         (list) => list._id == action.payload._id
@@ -52,16 +57,51 @@ const reducerBoard = (state = initialState, action) => {
         ...state,
         lists: newLists5,
       };
-    // case 'UPDATE_BOARD':
-    //   console.log('board updated!');
-    //   return action.payload;
     case UPDATE_BOARD:
       console.log('board updated!');
+      }
+    case "UPDATE_BOARD":
       return action.payload;
     case 'RESET_CURRENT_BOARD':
       return initialState;
     case HANDLE_LOGOUT:
       return initialState;
+    case "MOVE_LIST":
+      const order = action.payload.newOrder
+      const oldLists = action.payload.oldLists
+      
+      const newLists = order.map(id => {
+        return oldLists.find(list => list._id == id)
+      })
+      return {
+        ...state, lists: newLists
+      }
+    case "MOVE_CARD":
+      const updatedLists = action.payload.updatedLists
+      const containers = action.payload.order
+
+      const newData = containers.map((id) => {
+        // fill lists with: 
+        // _id
+        // cards
+        // listName
+        const listName = state.lists.find(list => list._id == id).listName
+        const cards = updatedLists[id].map(cardId => {
+          const res =  _.find(state.lists, { cards: [ { _id: cardId } ] } ).cards.find(card => card._id == cardId)
+          return res
+          // state.lists.find(list => id == list._id).cards.find(card => card._id == cardId)
+          
+        })
+        return {
+          _id: id,
+          listName,
+          cards
+        }
+      })
+      
+      return {
+        ...state, lists: newData
+      }
     default:
       return state;
   }
