@@ -93,11 +93,11 @@ router
       // const { boardDescription, username } = req.body;
       const { boardDescription } = req.body;
       // const activityLog = createActivityLog(username, 'changed');
-      // console.log('this one', boardDescription);
+      console.log('boardDescription ONEEEEE', boardDescription);
       // console.log('this one name', username);
-
+      // console.log('???', req.body);
       const filter = { _id: boardId };
-      const update = { boardDescription: boardDescription };
+      const update = { boardName: boardDescription };
       Board.findOneAndUpdate(filter, update, { new: true })
 
         // .updateOne({ $push: { cardActivity: activityLog } })
@@ -109,11 +109,12 @@ router
             updatedBoard = Board.findOne({ _id: boardId })
               .populate('users')
               .populate({ path: 'lists', populate: { path: 'cards' } })
-              .exec((err, updatedBoard) => {
+              .exec((err, board) => {
+                console.log('Checkthis updatedBoard!: ', board);
                 if (err) {
                   return next(err);
                 } else {
-                  res.status(200).send(updatedBoard);
+                  res.status(200).send(board);
                 }
               });
           }

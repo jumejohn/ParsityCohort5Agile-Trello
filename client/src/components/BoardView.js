@@ -31,29 +31,8 @@ const BoardView = () => {
     });
   }, []);
 
-  // return (
-  //   <div className='container-fluid'>
-  //     <div className='row'>
-  //       <h3>{name}</h3>
-  //     </div>
-
-  //     <div className='row d-flex flex-nowrap'>
-  //       {lists.map((list) => (
-  //         <List
-  //           key={list._id}
-  //           cards={list.cards}
-  //           name={list.listName}
-  //           listId={list._id}
-  //           boardId={boardId}
-  //         />
-  //       ))}
-  //       <AddListBtn boardId={boardId} />
-  //     </div>
-  //   </div>
-  // );
-
   const onSubmit = (data) => {
-    dispatch(editBoardTitle(data));
+    dispatch(editBoardTitle(data, boardId));
     reset();
     setIsShow(!isShow);
   };
