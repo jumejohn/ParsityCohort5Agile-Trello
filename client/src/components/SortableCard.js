@@ -20,17 +20,10 @@ export function SortableCard(props) {
   return (
     <div
       ref={setNodeRef}
-
-      style={{
-        ...style,
-        transition,
-        transform: CSS.Translate.toString(transform),
-        opacity: isDragging ? 0.5 : undefined,
-        height: '20px',
-      }}
+      {...attributes}
+      {...listeners}
+      style={style}
     >
-      <button       {...attributes}
-      {...listeners}>handle</button>
       <CardOnList cardId={props.cardId} 
                   cardTitle={props.cardTitle} 
                   cardLabel={props.cardLabel}

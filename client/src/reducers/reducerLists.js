@@ -57,7 +57,8 @@ const reducerLists = (state = initialState, action) => {
     case "MOVE_CARD":
       return {
         ...state,
-        normalized: action.payload
+        order: action.payload.order,
+        normalized: action.payload.updatedLists
       }
     case "MOVE_LIST":
       return {

@@ -47,7 +47,8 @@ const BoardView = () => {
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
-    })
+    }),
+    useSensor(MyPointerSensor)
   );
 
   useEffect(() => {
@@ -226,7 +227,7 @@ const BoardView = () => {
               ),
             ],
           };
-          dispatch({type: "MOVE_CARD", payload: updatedLists})
+          dispatch({type: "MOVE_CARD", payload: {order: containers, updatedLists}})
       }
     }}
     onDragEnd={({ active, over }) => {
@@ -266,7 +267,7 @@ const BoardView = () => {
               overIndex
             ),
           }
-          dispatch({type: "MOVE_LIST", payload: updatedLists})
+          dispatch({type: "MOVE_CARD", payload: {order: containers, updatedLists}})
         }
       }
 
@@ -292,7 +293,7 @@ const BoardView = () => {
             boardId={boardId}
           >
             <SortableContext
-                    items={containers}
+                    items={lists[list._id]}
                     strategy={horizontalListSortingStrategy}
                   >
               {list.cards.map((card) => <SortableCard 
@@ -315,3 +316,39 @@ const BoardView = () => {
 };
 
 export default BoardView;
+
+
+class MyPointerSensor extends PointerSensor {
+  static activators = [
+    {
+      eventName: 'onPointerDown',
+      handler: ({nativeEvent: event}) => {
+        if (
+          !event.isPrimary ||
+          event.button !== 0 ||
+          isInteractiveElement(event.target)
+        ) {
+          return false;
+        }
+
+        return true;
+      },
+    },
+  ];
+}
+
+function isInteractiveElement(element) {
+  const interactiveElements = [
+    'button',
+    'input',
+    'textarea',
+    'select',
+    'option',
+  ];
+
+  if (interactiveElements.includes(element.tagName.toLowerCase())) {
+    return true;
+  }
+
+  return false;
+}
