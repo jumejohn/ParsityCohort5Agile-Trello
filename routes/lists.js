@@ -78,6 +78,31 @@ router
     .populate('cards');
     res.send(updateList)
     res.status(200);
-  });
+  })
+
+  .put('/:listId/update', requireAuth, async function (req, res, next) {
+    const listId = req.params.boardId
+    const {boardId, lists, cards, username }= req.body
+    const updatedBoard = Board.updateOne((
+      {_id: boardId},
+      { lists: lists}),
+      
+      function(err, result){
+        const updatedList = List.updateOne((
+        {_id: listId},
+        { cards: cards}),
+
+        function(err, result){
+          const returnBoard = Board.findById(boardId)
+          .populate({ path: 'lists', populate:{path: 'cards'}})
+          .exec((err, board) => {
+            if(err){
+              res.status(400).send(err)
+            } else {
+              res.send(board).status(200)
+            }})
+        })
+      })
+    })
 
 module.exports = router;

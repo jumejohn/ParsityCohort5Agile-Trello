@@ -55,7 +55,6 @@ const reducerBoard = (state = initialState, action) => {
     case "MOVE_LIST":
       const order = action.payload.newOrder
       const oldLists = action.payload.oldLists
-      
       const newLists = order.map(id => {
         return oldLists.find(list => list._id == id)
       })
