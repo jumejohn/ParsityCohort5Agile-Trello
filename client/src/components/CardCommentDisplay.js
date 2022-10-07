@@ -2,9 +2,9 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteComment } from "../actions/DeleteComment";
 
-const currentCard = localStorage.card;
-
 const CommentsDiplay = () => {
+  const currentCard =
+    useSelector((state) => state.rootReducer.currentCard) || null;
   const dispatch = useDispatch();
   const currentComments = useSelector(
     (state) => state.rootReducer.currentCard.cardComments
