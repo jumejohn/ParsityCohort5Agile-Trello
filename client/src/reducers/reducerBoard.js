@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import { FETCH_BOARD } from "../actions/BoardFetch";
 import { CREATE_CARD } from "../actions/CreateCard";
 import { CREATE_LIST } from "../actions/CreateList";
@@ -51,6 +52,42 @@ const reducerBoard = (state = initialState, action) => {
       return initialState;
     case HANDLE_LOGOUT:
       return initialState;
+    case "MOVE_LIST":
+      const order = action.payload.newOrder
+      const oldLists = action.payload.oldLists
+      
+      const newLists = order.map(id => {
+        return oldLists.find(list => list._id == id)
+      })
+      return {
+        ...state, lists: newLists
+      }
+    case "MOVE_CARD":
+      const updatedLists = action.payload.updatedLists
+      const containers = action.payload.order
+
+      const newData = containers.map((id) => {
+        // fill lists with: 
+        // _id
+        // cards
+        // listName
+        const listName = state.lists.find(list => list._id == id).listName
+        const cards = updatedLists[id].map(cardId => {
+          const res =  _.find(state.lists, { cards: [ { _id: cardId } ] } ).cards.find(card => card._id == cardId)
+          return res
+          // state.lists.find(list => id == list._id).cards.find(card => card._id == cardId)
+          
+        })
+        return {
+          _id: id,
+          listName,
+          cards
+        }
+      })
+      
+      return {
+        ...state, lists: newData
+      }
     default:
       return state;
   }

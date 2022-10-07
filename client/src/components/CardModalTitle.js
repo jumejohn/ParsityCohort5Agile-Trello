@@ -6,6 +6,7 @@ import { editCardModalTitle } from "../actions/EditCardModalTitle";
 
 const CardModalTitle = () => {
   const [isShow, setIsShow] = React.useState(true);
+  
   const currentCard = useSelector(
     (state) => state.rootReducer.currentCard || null
   );

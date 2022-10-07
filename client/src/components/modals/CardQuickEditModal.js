@@ -100,6 +100,7 @@ const CardQuickEditModal = (props) => {
           display: "block",
           height: "fit-content",
         },
+        
       }}
     >
       <div
