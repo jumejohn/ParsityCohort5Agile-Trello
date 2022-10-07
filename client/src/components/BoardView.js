@@ -33,8 +33,8 @@ import { SortableCard } from "./SortableCard";
 import Card from "./Card";
 import CardClone from "./CardClone";
 
-import { moveLists } from '../actions/MoveLists';
-import { moveCard } from '../actions/MoveCard';
+import { moveLists } from "../actions/MoveLists";
+import { moveCard } from "../actions/MoveCard";
 const BoardView = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -46,8 +46,10 @@ const BoardView = () => {
   // );
 
   const token = localStorage.token;
-  const board = useSelector(({rootReducer}) => rootReducer.currentBoard)
-  const user = useSelector(({rootReducer}) => rootReducer.user.currentUser?.username)
+  const board = useSelector(({ rootReducer }) => rootReducer.currentBoard);
+  const user = useSelector(
+    ({ rootReducer }) => rootReducer.user.currentUser?.username
+  );
   const name = useSelector((state) => state.rootReducer.currentBoard.boardName);
   const items = useSelector((state) => state.rootReducer.currentBoard.lists);
   const containers = useSelector(
@@ -272,24 +274,30 @@ const BoardView = () => {
             ],
           };
           Promise.all([
-            dispatch({type: "MOVE_CARD", payload: {order: containers, updatedLists}}),
-            dispatch(moveCard(boardId, token, updatedLists, containers, items, board))
-          ])
-      }
-    }}
-    onDragEnd={({ active, over }) => {
-      // If id is in items we are moving a CONTAINER
-      if (active.id in lists && over?.id) {
+            dispatch({
+              type: "MOVE_CARD",
+              payload: { order: containers, updatedLists },
+            }),
+            dispatch(
+              moveCard(boardId, token, updatedLists, containers, items, board)
+            ),
+          ]);
+        }
+      }}
+      onDragEnd={({ active, over }) => {
+        // If id is in items we are moving a CONTAINER
+        if (active.id in lists && over?.id) {
           const activeIndex = containers.indexOf(active.id);
           const overIndex = containers.indexOf(over.id);
           const newOrder = arrayMove(containers, activeIndex, overIndex);
           Promise.all([
-            dispatch({type:"MOVE_LIST", payload: { newOrder, oldLists: items }}),
-            dispatch(moveLists(boardId, token, newOrder, items, user, board)) 
-          ])
-          
-      }
-
+            dispatch({
+              type: "MOVE_LIST",
+              payload: { newOrder, oldLists: items },
+            }),
+            dispatch(moveLists(boardId, token, newOrder, items, user, board)),
+          ]);
+        }
 
         const activeContainer = findContainer(active.id);
 
@@ -319,20 +327,19 @@ const BoardView = () => {
                 overIndex
               ),
             };
-            dispatch({
-              type: "MOVE_CARD",
-              payload: { order: containers, updatedLists },
-            });
+            Promise.all([
+              dispatch({
+                type: "MOVE_CARD",
+                payload: { order: containers, updatedLists },
+              }),
+              dispatch(
+                moveCard(boardId, token, updatedLists, containers, items, board)
+              ),
+            ]);
           }
-          Promise.all([
-            dispatch({type: "MOVE_CARD", payload: {order: containers, updatedLists}}),
-            dispatch(moveCard(boardId, token, updatedLists, containers, items, board))
-          ])
 
-
+          setActiveId(null);
         }
-
-        setActiveId(null);
       }}
     >
       <div className="container-fluid">
