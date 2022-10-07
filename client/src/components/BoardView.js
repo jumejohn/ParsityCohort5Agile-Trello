@@ -252,7 +252,10 @@ const BoardView = () => {
               ),
             ],
           };
-          dispatch({type: "MOVE_CARD", payload: {order: containers, updatedLists}})
+          Promise.all([
+            dispatch({type: "MOVE_CARD", payload: {order: containers, updatedLists}}),
+            dispatch(moveCard(boardId, token, updatedLists, containers, items, board))
+          ])
       }
     }}
     onDragEnd={({ active, over }) => {

@@ -7,8 +7,7 @@ export const moveCard = (boardId, token, newLists, order, oldLists, board) => (d
 
   const updatedLists = newLists
   const containers = order
-  const previousLists = oldLists
-  debugger
+  const previousLists = oldLists  
   const newData = containers.map((id) => {
     // fill lists with: 
     // _id
@@ -21,7 +20,7 @@ export const moveCard = (boardId, token, newLists, order, oldLists, board) => (d
       cards
     }
   })
-  debugger
+  
   return axios( { 
       method: "put",
       url,
@@ -30,7 +29,6 @@ export const moveCard = (boardId, token, newLists, order, oldLists, board) => (d
         lists: newData
       } })
     .then(function (response) {
-      debugger
       dispatch({
         type: FETCH_BOARD,
         payload: response.data,
