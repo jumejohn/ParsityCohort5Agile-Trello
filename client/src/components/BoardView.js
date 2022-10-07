@@ -335,7 +335,7 @@ const BoardView = () => {
                 className="form-control text-input"
                 rows="1"
                 {...register("boardDescription")}
-                // defaultValue={newDescription.boardDescription}
+                defaultValue={name}
               ></textarea>
               <button type="submit" className="btn submit-button">
                 Edit Board Name
