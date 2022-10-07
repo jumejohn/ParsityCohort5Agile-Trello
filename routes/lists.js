@@ -78,6 +78,53 @@ router
     .populate('cards');
     res.send(updateList)
     res.status(200);
-  });
+  })
 
-module.exports = router;
+  .put('/:listId/update', requireAuth, async function (req, res, next) {
+    const listId = req.params.boardId
+    const {boardId, lists, cards, username }= req.body
+    const updatedBoard = Board.updateOne((
+      {_id: boardId},
+      { lists: lists}),
+      
+      function(err, result){
+        const updatedList = List.updateOne((
+        {_id: listId},
+        { cards: cards}),
+
+        function(err, result){
+          const returnBoard = Board.findById(boardId)
+          .populate({ path: 'lists', populate:{path: 'cards'}})
+          .exec((err, board) => {
+            if(err){
+              res.status(400).send(err)
+            } else {
+              res.send(board).status(200)
+            }})
+        })
+      })
+    })
+    
+    module.exports = router;
+    
+    // .populate({ path: 'lists', populate: {path: 'cards'}}).exec()
+
+// const newList = await new List({ listName }).save((err, list) => {
+//   if(err) return next(err)
+//   Board.updateOne(
+//     { _id: board },
+//     { $push: { lists: [list._id]}},
+//     function(err, result) {
+//       if(err){
+//         res.status(400).send(err)
+//       } else {
+//         res.send(list).status(200)
+//       }
+//     })
+//   })
+
+[
+  '633d0be355338ccaaf4060a9', '633dc0f555338ccaaf406322', '633dc0f955338ccaaf406329','633dc0fd55338ccaaf406330', '633dc0fd55338ccaaf406330', '633efc8eed4246b486db8366', '633efcb7e3dfa0720045e148' ]
+  [
+    '633efcbfe3dfa0720045e14f', '633efcc4e3dfa0720045e157'
+  ]
