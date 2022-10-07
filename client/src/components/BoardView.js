@@ -323,77 +323,79 @@ const BoardView = () => {
         setActiveId(null);
       }}
     >
-
-    <div className='container-fluid'>
-      <div className='row'>
-        {!isShow ? (
-          <button onClick={handleClick}>{name}</button>
-        ) : (
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <textarea
-              className='form-control'
-              rows='1'
-              {...register('boardDescription')}
-              // defaultValue={newDescription.boardDescription}
-            ></textarea>
-            <button type='submit' className='btn btn-primary'>
-              Edit Board Name
+      <div className="container-fluid">
+        <div className="row">
+          {!isShow ? (
+            <button className="btn modal-title" onClick={handleClick}>
+              {name}
             </button>
-            <button
-              onClick={handleClick}
-              className='btn-close submit-button ms-auto'
-              type='button'
-              aria-label='Close'
-            />
-          </form>
-        )}
-      </div>
+          ) : (
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <textarea
+                className="form-control text-input"
+                rows="1"
+                {...register("boardDescription")}
+                // defaultValue={newDescription.boardDescription}
+              ></textarea>
+              <button type="submit" className="btn submit-button">
+                Edit Board Name
+              </button>
+              <span> </span>
+              <span> </span>
+              <button
+                onClick={handleClick}
+                className="btn-close submit-button ms-auto"
+                type="button"
+                aria-label="Close"
+              />
+            </form>
+          )}
+        </div>
       </div>
 
-        <div className="row d-flex flex-nowrap">
-          <SortableContext
-            items={containers}
-            strategy={horizontalListSortingStrategy}
-          >
-            {items.map((list) => (
-              <SortableList
-                key={list._id}
-                cards={list.cards}
-                name={list.listName}
-                listId={list._id}
-                boardId={boardId}
+      <div className="row d-flex flex-nowrap">
+        <SortableContext
+          items={containers}
+          strategy={horizontalListSortingStrategy}
+        >
+          {items.map((list) => (
+            <SortableList
+              key={list._id}
+              cards={list.cards}
+              name={list.listName}
+              listId={list._id}
+              boardId={boardId}
+            >
+              <SortableContext
+                items={lists[list._id]}
+                strategy={rectSortingStrategy}
               >
-                <SortableContext
-                  items={lists[list._id]}
-                  strategy={rectSortingStrategy}
-                >
-                  {list.cards.map((card) => (
-                    <SortableCard
-                      key={card._id}
-                      cardId={card._id}
-                      cardTitle={card.cardTitle}
-                      cardLabel={card.cardLabel}
-                      cardDescription={card.cardDescription}
-                      listId={list._id}
-                    />
-                  ))}
-                </SortableContext>
-              </SortableList>
-            ))}
-          </SortableContext>
-          <DragOverlay>
-            {activeId ? (
-              containers.includes(activeId) ? null : (
-                <CardClone
-                  id={activeId}
-                  cardId={activeId}
-                  cardTitle={findCardTitle(activeId)}
-                />
-              )
-            ) : null}
-          </DragOverlay>
-          <AddListBtn boardId={boardId} />
-        </div>
+                {list.cards.map((card) => (
+                  <SortableCard
+                    key={card._id}
+                    cardId={card._id}
+                    cardTitle={card.cardTitle}
+                    cardLabel={card.cardLabel}
+                    cardDescription={card.cardDescription}
+                    listId={list._id}
+                  />
+                ))}
+              </SortableContext>
+            </SortableList>
+          ))}
+        </SortableContext>
+        <DragOverlay>
+          {activeId ? (
+            containers.includes(activeId) ? null : (
+              <CardClone
+                id={activeId}
+                cardId={activeId}
+                cardTitle={findCardTitle(activeId)}
+              />
+            )
+          ) : null}
+        </DragOverlay>
+        <AddListBtn boardId={boardId} />
       </div>
     </DndContext>
   );
