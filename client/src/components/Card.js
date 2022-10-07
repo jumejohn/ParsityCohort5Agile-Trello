@@ -13,8 +13,10 @@ import CardModalDescription from "./CardModalDescription";
 import LabelModal from "./modals/LabelModal";
 import { editCardLabels } from "../actions/EditCardLabels";
 import LabelEditor from "./modals/LabelEditor";
+import Modal from "react-modal";
 
 const Card = (props) => {
+  Modal.setAppElement("#card");
   const dispatch = useDispatch();
   const thisCard = localStorage.card;
   useEffect(() => {
@@ -190,3 +192,5 @@ export default Card;
 Card.propTypes = {
   listId: PropTypes.string,
 };
+
+document.getElementById("card");

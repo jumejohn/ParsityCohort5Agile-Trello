@@ -78,6 +78,7 @@ const CardOnList = (props) => {
           ))}
       </div>
       <div
+        id="card"
         className="d-flex align-items-start"
         onMouseEnter={() => setButtonsAreShown(true)}
         onMouseLeave={() => setButtonsAreShown(false)}
@@ -144,7 +145,7 @@ const CardOnList = (props) => {
           }}
         >
           <button onClick={handleCloseModalClick}>x</button>
-          <Card className="card-modal" listId={props.listId}/>
+          <Card className="card-modal" listId={props.listId} />
         </Modal>
       </div>
     </div>
