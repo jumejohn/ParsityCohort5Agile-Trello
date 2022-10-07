@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 const Board = require('../models/Board');
 const Organization = require('../models/Organization')
-
+const List = require('../models/List')
 const passport = require('passport');
 const passportService = require('../authentication/passport');
 const requireAuth = passport.authenticate('jwt', { session: false });
@@ -86,6 +86,40 @@ router
           .send(board)
           .end();
       });
-  });
+  })
+
+  .put('/:boardId/lists', requireAuth, async function (req, res, next){
+    const boardId = req.params.boardId
+    // const data = req.body.data
+    // let dataLists = req.body.data.lists
+    // let data = req.body
+    let dataLists = req.body.data.lists
+    const lists = []
+    console.log(dataLists)
+    for (let i = 0; i < dataLists.length; i++) {
+      const newCardsArr = []
+      for (let j = 0; j < dataLists[i].cards.length; j++) {
+        const element = dataLists[i].cards[j];
+        newCardsArr.push(element)
+      }
+      const filter = {_id: dataLists[i]._id}
+        lists.push(dataLists[i])
+        const update = {cards: newCardsArr}
+        const updatedList = await List.findOneAndUpdate(filter, update, {
+          new: true,
+        })
+        const updatedBoard = await Board.findOneAndUpdate({_id: boardId}, {update: lists}, {new: true})
+        .populate({path: 'lists', populate: {path: 'cards'}})
+        .exec((err, board) => {
+          if(err){
+            res.status(400).send(err)
+            return next(err)
+          } else {
+            res.status(200).json(board)
+          }
+        })
+    }
+  })
 
 module.exports = router;
+

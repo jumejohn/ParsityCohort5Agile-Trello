@@ -257,7 +257,8 @@ const BoardView = () => {
           const activeIndex = containers.indexOf(active.id);
           const overIndex = containers.indexOf(over.id);
           const newOrder = arrayMove(containers, activeIndex, overIndex);
-          dispatch({type: "MOVE_LIST", payload: {newOrder, oldLists: items}}) 
+          dispatch({type: "MOVE_LIST", payload: {newOrder, oldLists: items}})
+          //add action here 
       }
 
       const activeContainer = findContainer(active.id);
@@ -289,6 +290,7 @@ const BoardView = () => {
             ),
           }
           dispatch({type: "MOVE_CARD", payload: {order: containers, updatedLists}})
+          //new action here
         }
       }
 
