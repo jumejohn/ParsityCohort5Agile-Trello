@@ -9,7 +9,7 @@ import {
   rectIntersection,
   DndContext,
   getFirstCollision,
-  KeyboardSensor,
+  // KeyboardSensor,
   useSensors,
   useSensor,
   PointerSensor,
@@ -64,11 +64,13 @@ const BoardView = () => {
   // const isSortingContainer = activeId ? containers.includes(activeId) : false;
   const lastOverId = useRef(null);
   const recentlyMovedToNewContainer = useRef(false);
+
   const sensors = useSensors(
     useSensor(PointerSensor),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
-    }),
+    // useSensor(KeyboardSensor, {
+    //   "interface KeyboardCodes": defaultKeyboardCodes,
+    //   coordinateGetter: sortableKeyboardCoordinates,
+    // }),
     useSensor(MyPointerSensor, {
       activationConstraint: {
         distance: 2,
