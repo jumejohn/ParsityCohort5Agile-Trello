@@ -4,7 +4,7 @@ import { deleteComment } from "../actions/DeleteComment";
 
 const CommentsDiplay = () => {
   const currentCard =
-    useSelector((state) => state.rootReducer.currentCard) || null;
+    useSelector((state) => state.rootReducer.currentCard._id) || null;
   const dispatch = useDispatch();
   const currentComments = useSelector(
     (state) => state.rootReducer.currentCard.cardComments
