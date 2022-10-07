@@ -6,7 +6,7 @@ import { editCardModalTitle } from "../actions/EditCardModalTitle";
 
 const CardModalTitle = () => {
   const [isShow, setIsShow] = React.useState(true);
-  
+
   const currentCard = useSelector(
     (state) => state.rootReducer.currentCard || null
   );
@@ -44,7 +44,7 @@ const CardModalTitle = () => {
             <div className="mb-3">
               <form onSubmit={handleSubmit(onSubmit)}>
                 <textarea
-                  className="form-control"
+                  className="form-control text-input"
                   rows="1"
                   {...register("cardTitle")}
                   defaultValue={currentCard.cardTitle}
