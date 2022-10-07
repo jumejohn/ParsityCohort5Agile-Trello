@@ -28,7 +28,7 @@ export function SortableList({boardId, cards, listId, name, children}) {
         ...style,
         transition,
         transform: CSS.Translate.toString(transform),
-        opacity: isDragging ? 0.8 : undefined,
+        opacity: isDragging ? 0.5 : undefined,
       }}
       className="col-3">
 

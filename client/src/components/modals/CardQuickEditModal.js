@@ -90,6 +90,7 @@ const CardQuickEditModal = (props) => {
           display: "block",
           height: "fit-content",
         },
+        
       }}
     >
       <div className="list-group-item" style={{ width: "100%", backgroundColor: "white"}}>

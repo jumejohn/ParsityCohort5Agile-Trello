@@ -70,7 +70,7 @@ const CardOnList = (props) => {
         ))}
     </div>
     <div
-      className="d-flex align-items-center justify-content-between"
+      className="d-flex align-items-start"
       style={{ backgroundColor: "white" }}
       onMouseEnter={() => setButtonsAreShown(true)}
       onMouseLeave={() => setButtonsAreShown(false)}
@@ -79,12 +79,11 @@ const CardOnList = (props) => {
         value={props.cardId}
         onClick={handleCardClick}
         className="list-group-item list-group-item-action"
-        style={{width:"50%"}}
       >
         {props.cardTitle}
       </button>
       {buttonsAreShown && (
-        <div className="btn-group pr-2">
+        <div className="btn-group">
           <button
             className="btn"
             style={{ padding: "0.15rem 0.3rem" }}
@@ -92,8 +91,7 @@ const CardOnList = (props) => {
             type="button"
             aria-label="Edit Card Title"
           >
-            {/* <i className="fa fa-pencil fa-2x" /> */}
-            EDIT
+            <i className="fa fa-pencil fa-2x" />
           </button>
           <button
             className="btn"
@@ -102,8 +100,7 @@ const CardOnList = (props) => {
             type="button"
             aria-label="Delete Card"
           >
-            {/* <i className="fa fa-times-circle-o fa-2x" /> */}
-            X
+            <i className="fa fa-times-circle-o fa-2x" />
           </button>
         </div>
       )}

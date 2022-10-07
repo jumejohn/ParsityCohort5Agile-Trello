@@ -12,6 +12,7 @@ import {
   useSensor,
   PointerSensor,
   MeasuringStrategy,
+  DragOverlay,
 } from '@dnd-kit/core';
 import {
   SortableContext,
@@ -19,14 +20,16 @@ import {
   verticalListSortingStrategy,
   sortableKeyboardCoordinates,
   horizontalListSortingStrategy,
+  rectSortingStrategy,
 } from '@dnd-kit/sortable';
 
 import { fetchBoard } from "../actions/BoardFetch";
 import AddListBtn from "./AddListBtn";
-// import List from "./List";
+import List from "./List";
 import { SortableList } from './SortableList';
 import { SortableCard } from './SortableCard';
-
+import Card from './Card';
+import CardClone from './CardClone';
 
 const BoardView = () => {
   const dispatch = useDispatch();
@@ -48,7 +51,11 @@ const BoardView = () => {
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
     }),
-    useSensor(MyPointerSensor)
+    useSensor(MyPointerSensor, {
+      activationConstraint: {
+        distance: 2
+      },
+    })
   );
 
   useEffect(() => {
@@ -152,6 +159,19 @@ const BoardView = () => {
     setActiveId(null);
     setClonedItems(null);
   };
+  const findCardTitle = (cardId) => {
+    let title = ''
+    for(const listId in lists){
+      if(lists[listId].includes(cardId)){
+        const list = items.find(item => {
+          return item._id == listId
+        })
+        title = list.cards.find(card => card._id == cardId).cardTitle
+      }
+    }
+    return title
+  }
+
 
   useEffect(() => {
     requestAnimationFrame(() => {
@@ -169,6 +189,7 @@ const BoardView = () => {
       },
     }}
     onDragStart={({ active }) => {
+      
       setActiveId(active.id);
       setClonedItems(lists);
     }}
@@ -294,7 +315,7 @@ const BoardView = () => {
           >
             <SortableContext
                     items={lists[list._id]}
-                    strategy={horizontalListSortingStrategy}
+                    strategy={rectSortingStrategy}
                   >
               {list.cards.map((card) => <SortableCard 
                   key={card._id} 
@@ -308,6 +329,12 @@ const BoardView = () => {
             </SortableList>
         ))}
         </SortableContext>
+        <DragOverlay>
+                {activeId ? (containers.includes(activeId) ? null : <CardClone id={activeId} cardId={activeId}
+                  cardTitle={findCardTitle(activeId)} 
+                  />) : null}
+                  
+              </DragOverlay>
         <AddListBtn boardId={boardId} />
       </div>
     </div>
@@ -330,7 +357,10 @@ class MyPointerSensor extends PointerSensor {
         ) {
           return false;
         }
-
+        if(document.getElementsByClassName('ReactModal__Body--open').length == 1){
+          return false;
+        }
+        
         return true;
       },
     },
@@ -339,7 +369,7 @@ class MyPointerSensor extends PointerSensor {
 
 function isInteractiveElement(element) {
   const interactiveElements = [
-    'button',
+    'modal',
     'input',
     'textarea',
     'select',
