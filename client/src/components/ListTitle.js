@@ -32,7 +32,7 @@ const ListTitle = (props) => {
       <ClickDetectWrapper callback={toggleTitleIsEditing}>
         <form onSubmit={handleSubmit(editSubmit)}>
           <input
-            className="form-control"
+            className="form-control text-input"
             defaultValue={props.name}
             {...register("titleEditField")}
           />

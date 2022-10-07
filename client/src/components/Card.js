@@ -27,7 +27,9 @@ const Card = (props) => {
   const currentUser = useSelector(
     (state) => state.rootReducer.user.currentUser.username || null
   );
-  const currentBoardLabels = useSelector(state => state.rootReducer.currentBoard.labels);
+  const currentBoardLabels = useSelector(
+    (state) => state.rootReducer.currentBoard.labels
+  );
   const onSubmit = (data) => {
     dispatch(postComment(data, currentCard));
     reset();
@@ -42,26 +44,33 @@ const Card = (props) => {
   const [labelModalIsOpen, setLabelModalIsOpen] = useState(false);
   const toggleLabelModalIsOpen = () => {
     setLabelModalIsOpen(!labelModalIsOpen);
-  }
+  };
   const handleLabelChange = (labelIndex) => {
     let newArray = [...currentCard.cardLabel];
     let toggledLabel = currentBoardLabels[labelIndex];
-    let alreadyChecked = newArray.findIndex((label) => label.color === toggledLabel.color);
-    (alreadyChecked > -1) ? newArray.splice(alreadyChecked, 1) : newArray.push(toggledLabel);
+    let alreadyChecked = newArray.findIndex(
+      (label) => label.color === toggledLabel.color
+    );
+    alreadyChecked > -1
+      ? newArray.splice(alreadyChecked, 1)
+      : newArray.push(toggledLabel);
     dispatch(editCardLabels(props.listId, currentCard._id, newArray));
-  }
+  };
   // For label editor modal
   const [labelEditorIsOpen, setLabelEditorIsOpen] = useState(false);
   const [labelEditorType, setLabelEditorType] = useState("Edit");
-  const [labelEditorDefaults, setLabelEditorDefaults] = useState({ color: null, name: null })
+  const [labelEditorDefaults, setLabelEditorDefaults] = useState({
+    color: null,
+    name: null,
+  });
   const toggleLabelEditorIsOpen = () => {
     setLabelEditorIsOpen(!labelEditorIsOpen);
-  }
+  };
   const openLabelEditor = (type, color, name) => {
     if (type !== labelEditorType) setLabelEditorType(type);
     setLabelEditorDefaults({ color: color, name: name });
     toggleLabelEditorIsOpen();
-  }
+  };
 
   if (Object.keys(currentCard).length > 0) {
     return (
@@ -83,31 +92,31 @@ const Card = (props) => {
                   key={index}
                 />
               ))}
-              <button 
-                className="col-1 btn btn-secondary label-button"
-                onClick={toggleLabelModalIsOpen}
-              >
-                <i className="fa fa-plus fa-1.5" />
-              </button>
-              {labelModalIsOpen && (
-                <LabelModal 
-                  isOpen={labelModalIsOpen}
-                  onClose={toggleLabelModalIsOpen}
-                  onChange={handleLabelChange}
-                  // toggleChange={() => console.log("ToggleChange")}
-                  cardLabels={currentCard.cardLabel}
-                  openLabelEditor={openLabelEditor}
-                />
-              )}
-              {labelEditorIsOpen && (
-                <LabelEditor
-                  isOpen={labelEditorIsOpen}
-                  onClose={toggleLabelEditorIsOpen}
-                  type={labelEditorType}
-                  defaultName={labelEditorDefaults.name}
-                  defaultColor={labelEditorDefaults.color}
-                />
-              )}
+            <button
+              className="col-1 btn btn-secondary label-button"
+              onClick={toggleLabelModalIsOpen}
+            >
+              <i className="fa fa-plus fa-1.5" />
+            </button>
+            {labelModalIsOpen && (
+              <LabelModal
+                isOpen={labelModalIsOpen}
+                onClose={toggleLabelModalIsOpen}
+                onChange={handleLabelChange}
+                // toggleChange={() => console.log("ToggleChange")}
+                cardLabels={currentCard.cardLabel}
+                openLabelEditor={openLabelEditor}
+              />
+            )}
+            {labelEditorIsOpen && (
+              <LabelEditor
+                isOpen={labelEditorIsOpen}
+                onClose={toggleLabelEditorIsOpen}
+                type={labelEditorType}
+                defaultName={labelEditorDefaults.name}
+                defaultColor={labelEditorDefaults.color}
+              />
+            )}
           </div>
           <div className="card-text description">
             <CardModalDescription />
@@ -146,7 +155,7 @@ const Card = (props) => {
               <div className="mb-3">
                 <label className="form-label comment-title">Comment:</label>
                 <textarea
-                  className="form-control"
+                  className="form-control text-input"
                   rows="3"
                   {...register("commentText")}
                 ></textarea>
@@ -180,4 +189,4 @@ export default Card;
 
 Card.propTypes = {
   listId: PropTypes.string,
-}
+};
