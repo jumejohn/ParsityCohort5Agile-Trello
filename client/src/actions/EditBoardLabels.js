@@ -4,7 +4,7 @@ export const editLabels = (boardId, newLabels) => (dispatch) => {
   const token = localStorage.token;
   axios({
     method: "put",
-    url: `/boards/${boardId}`,
+    url: `https://parsitycohort5agile-trello-production.up.railway.app/boards/${boardId}`,
     headers: {'Authorization': `Bearer ${token}`},
     data: {
       labels: newLabels,

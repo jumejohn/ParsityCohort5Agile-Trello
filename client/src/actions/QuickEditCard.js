@@ -6,7 +6,7 @@ export const quickEditCard =
     const token = localStorage.token;
     axios({
       method: "put",
-      url: `/cards/${cardId}`,
+      url: `https://parsitycohort5agile-trello-production.up.railway.app/cards/${cardId}`,
       headers: { Authorization: `Bearer ${token}` },
       data: {
         listId: listId,
@@ -16,7 +16,7 @@ export const quickEditCard =
         cardComments: cardComments,
       },
     }).then((response) => {
-      console.log(response);
+      // console.log(response);
       dispatch({ type: "UPDATE_LIST", payload: response.data });
     });
   };

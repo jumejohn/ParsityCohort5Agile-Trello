@@ -3,7 +3,7 @@ import _ from 'lodash'
 import { FETCH_BOARD } from "./BoardFetch";
 export const MOVE_CARD = "MOVE_CARD";
 export const moveCard = (boardId, token, newLists, order, oldLists, board) => (dispatch) => {
-  const url = `/boards/${boardId}/lists`;
+  const url = `https://parsitycohort5agile-trello-production.up.railway.app/boards/${boardId}/lists`;
 
   const updatedLists = newLists
   const containers = order

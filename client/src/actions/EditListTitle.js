@@ -4,7 +4,7 @@ export const editListTitle = (newTitle, listId, cards) => (dispatch) => {
   const token = localStorage.token;
   axios({
     method: "put",
-    url: `/lists/${listId}`,
+    url: `https://parsitycohort5agile-trello-production.up.railway.app/lists/${listId}`,
     headers: {'Authorization': `Bearer ${token}`},
     data: {
       listName: newTitle,
@@ -12,7 +12,7 @@ export const editListTitle = (newTitle, listId, cards) => (dispatch) => {
     },
   })
     .then((response) => {
-      console.log(response);
+      // console.log(response);
       dispatch({type: "UPDATE_LIST", payload: response.data});
     })
 }

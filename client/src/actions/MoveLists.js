@@ -2,7 +2,7 @@ import axios from "axios";
 import { FETCH_BOARD } from "./BoardFetch";
 export const MOVE_LIST = "MOVE_LIST";
 export const moveLists = (boardId, token, newOrder, oldLists, username, board) => (dispatch) => {
-  const url = `/boards/${boardId}`;
+  const url = `https://parsitycohort5agile-trello-production.up.railway.app/boards/${boardId}`;
 
   const order = newOrder
   const lists = oldLists

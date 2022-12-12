@@ -6,7 +6,7 @@ export const deleteComment = (comment, cardId) => (dispatch) => {
 
   axios({
     method: "delete",
-    url: `/cards/${cardId}/comment/${comment}`,
+    url: `https://parsitycohort5agile-trello-production.up.railway.app/cards/${cardId}/comment/${comment}`,
     headers: { Authorization: `Bearer ${token}` },
   }).then((response) => {
     console.log("delete comment", response);
