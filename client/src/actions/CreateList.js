@@ -5,7 +5,7 @@ export const createList = (title, boardId) => (dispatch) => {
   const token = localStorage.token;
   axios({
     method: "post",
-    url: "/lists/",
+    url: "https://parsitycohort5agile-trello-production.up.railway.app/lists/",
     headers: {'Authorization': `Bearer ${token}`},
     data: {
       listName: title,

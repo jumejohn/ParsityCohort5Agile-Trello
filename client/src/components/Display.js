@@ -32,7 +32,7 @@ const Display = () => {
   const user = useSelector((state) => state.rootReducer.user.currentUser);
 
   const fetchBoardData = () => {
-    const url = `/organization/${user.organization._id}/boards`;
+    const url = `https://parsitycohort5agile-trello-production.up.railway.app/organization/${user.organization._id}/boards`;
     const token = localStorage.token;
     const config = {
       method: "get",
@@ -70,7 +70,7 @@ const Display = () => {
 
   const createBoard = (e) => {
     e.preventDefault();
-    const url = `/boards/`;
+    const url = `https://parsitycohort5agile-trello-production.up.railway.app/boards/`;
     const token = localStorage.token;
     const config = {
       method: "post",
@@ -91,7 +91,7 @@ const Display = () => {
   };
 
   const removeBoard = (id) => {
-    const url = `/boards/${id}`;
+    const url = `https://parsitycohort5agile-trello-production.up.railway.app/boards/${id}`;
     const token = localStorage.token;
     const config = {
       method: "delete",

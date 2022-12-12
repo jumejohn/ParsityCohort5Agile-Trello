@@ -8,7 +8,7 @@ export const editCardModalDescription =
     console.log("action", newDescription);
     axios({
       method: "put",
-      url: `/cards/${cardId}/updatedescription`,
+      url: `https://parsitycohort5agile-trello-production.up.railway.app/cards/${cardId}/updatedescription`,
       headers: { Authorization: `Bearer ${token}` },
       data: {
         cardDescription: newDescription.cardDescription,

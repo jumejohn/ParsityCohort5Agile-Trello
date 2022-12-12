@@ -7,7 +7,7 @@ export const editBoardTitle = (newDescription, boardId) => (dispatch) => {
   console.log('action!!!', newDescription);
   axios({
     method: 'put',
-    url: `/boards/${boardId}/updatedescription`,
+    url: `https://parsitycohort5agile-trello-production.up.railway.app/boards/${boardId}/updatedescription`,
     headers: { Authorization: `Bearer ${token}` },
     data: {
       boardDescription: newDescription.boardDescription,

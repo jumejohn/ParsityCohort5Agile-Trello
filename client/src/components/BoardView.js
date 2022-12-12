@@ -45,7 +45,7 @@ const BoardView = () => {
   //   (state) => state.rootReducer.user.currentUser.username
   // );
 
-  const token = localStorage.token;
+  const token = localStorage.getItem('token');
   const board = useSelector(({ rootReducer }) => rootReducer.currentBoard);
   const user = useSelector(
     ({ rootReducer }) => rootReducer.user.currentUser?.username
@@ -77,13 +77,15 @@ const BoardView = () => {
   );
 
   useEffect(() => {
-    dispatch(fetchBoard(boardId, token)).then((res) => {
+    // console.log('this is the board id thing' + boardId)
+    const t = localStorage.getItem('token')
+    dispatch(fetchBoard(boardId, t)).then((res) => {
       if (!res) {
         console.log("no such board!");
         navigate("/b");
       }
     });
-  }, []);
+  }, [boardId]);
 
   const onSubmit = (data) => {
     dispatch(editBoardTitle(data, boardId));

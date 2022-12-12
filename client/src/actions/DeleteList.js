@@ -5,7 +5,7 @@ export const deleteList = (listId) => (dispatch) => {
   const token = localStorage.token;
   axios({
     method: "delete",
-    url: `/lists/${listId}`,
+    url: `https://parsitycohort5agile-trello-production.up.railway.app/lists/${listId}`,
     headers: {'Authorization': `Bearer ${token}`},
   })
     .then(() => dispatch({ type: DELETE_LIST, payload: listId }))

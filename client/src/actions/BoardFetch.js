@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const FETCH_BOARD = "FETCH_BOARD";
 export const fetchBoard = (boardId, token) => (dispatch) => {
-  const url = `/boards/${boardId}`;
+  const url = `https://parsitycohort5agile-trello-production.up.railway.app/boards/${boardId}`;
 
   return axios
     .get(url, { headers: { Authorization: `Bearer ${token}` } })

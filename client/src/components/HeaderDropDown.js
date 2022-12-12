@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import PropTypes from "prop-types";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, redirect, Link } from "react-router-dom";
 import "../css/Header.css";
 
 const HeaderDropDown = (props) => {
@@ -36,9 +36,7 @@ const HeaderDropDown = (props) => {
             : false;
           return (
             <li key={i}>
-              <a className={itemClass} href={boardLink}>
-                {board.boardName}
-              </a>
+              <Link className={itemClass} to={boardLink}>{board.boardName}</Link>
             </li>
           );
         })}
