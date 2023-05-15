@@ -11,6 +11,7 @@ import BoardViewLayout from './components/BoardViewLayout';
 import BoardView from './components/BoardView';
 import Login from './components/Login';
 import NoBoardView from './components/NoBoardView';
+import Register from './components/Register';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -23,6 +24,7 @@ root.render(
         <Route path="*" element={<NoBoardView />} />
       </Route>
       <Route exact path="/login" element={<Login />} />
+      <Route exact path="/register" element={<Register />} />
       </Routes>
     </BrowserRouter>
   </Provider>
