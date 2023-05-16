@@ -18,13 +18,13 @@ root.render(
   <Provider store={store}>
     <BrowserRouter>
       <Routes>
-      <Route path="/" element={<App />} />
-      <Route path="/b" element={<BoardViewLayout />}>
-        <Route path=":boardId" element={<BoardView />} />
-        <Route path="*" element={<NoBoardView />} />
-      </Route>
-      <Route exact path="/login" element={<Login />} />
-      <Route exact path="/register" element={<Register />} />
+        <Route path="/" element={<App />} />
+        <Route path="/b" element={<BoardViewLayout />}>
+          <Route path=":boardId" element={<BoardView />} />
+          <Route path="*" element={<NoBoardView />} />
+        </Route>
+        <Route exact path="/login" element={<Login />} />
+        <Route exact path="/register" element={<Register />} />
       </Routes>
     </BrowserRouter>
   </Provider>
