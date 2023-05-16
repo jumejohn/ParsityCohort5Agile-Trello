@@ -1,13 +1,14 @@
 import axios from "axios";
 import { UPDATE_CARD } from "./PostComment";
+import { axiosAuth } from "../utils/axiosAuth";
 
 export const editCardModalTitle = (newTitle, currentUser) => (dispatch) => {
   const token = localStorage.token;
   const cardId = localStorage.card;
   // console.log("action", newTitle);
-  axios({
+  axiosAuth({
     method: "put",
-    url: `https://parsitycohort5agile-trello-production.up.railway.app/cards/${cardId}/updatetitle`,
+    url: `/cards/${cardId}/updatetitle`,
     headers: { Authorization: `Bearer ${token}` },
     data: {
       cardTitle: newTitle.cardTitle,

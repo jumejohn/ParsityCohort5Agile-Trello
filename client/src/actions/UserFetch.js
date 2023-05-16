@@ -1,11 +1,12 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { axiosAuth } from "../utils/axiosAuth";
 export const FETCH_USER = "FETCH_USER";
 export const fetchUser = (token) => async (dispatch) => {
-  const url = `https://parsitycohort5agile-trello-production.up.railway.app/auth/current_user`;
+  const url = `/auth/current_user`;
 
-  axios
-    .get(url, { headers: { Authorization: `Bearer ${token}` } })
+  axiosAuth
+    .get(url)
     .then(function (response) {
       console.log("fetchuseraction", response.data);
       dispatch({

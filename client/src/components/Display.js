@@ -5,6 +5,7 @@ import "../css/Display.css";
 import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import axios from "axios";
+import { axiosAuth } from "../utils/axiosAuth";
 
 const addModalStyles = {
   content: {
@@ -32,7 +33,7 @@ const Display = () => {
   const user = useSelector((state) => state.rootReducer.user.currentUser);
 
   const fetchBoardData = () => {
-    const url = `https://parsitycohort5agile-trello-production.up.railway.app/organization/${user.organization._id}/boards`;
+    const url = `/organization/${user.organization._id}/boards`;
     const token = localStorage.token;
     const config = {
       method: "get",
@@ -40,7 +41,7 @@ const Display = () => {
       headers: { Authorization: `Bearer ${token}` },
     };
 
-    axios(config).then((data) => {
+    axiosAuth(config).then((data) => {
       setBoards(data.data.orgBoards);
     });
   };
@@ -70,7 +71,7 @@ const Display = () => {
 
   const createBoard = (e) => {
     e.preventDefault();
-    const url = `https://parsitycohort5agile-trello-production.up.railway.app/boards/`;
+    const url = `/boards/`;
     const token = localStorage.token;
     const config = {
       method: "post",
@@ -82,7 +83,7 @@ const Display = () => {
         users: user.organization.orgMembers,
       },
     };
-    axios(config)
+    axiosAuth(config)
       .then((res) => {
         closeModal();
         navigate(`/b/${res.data._id}`);
@@ -91,14 +92,14 @@ const Display = () => {
   };
 
   const removeBoard = (id) => {
-    const url = `https://parsitycohort5agile-trello-production.up.railway.app/boards/${id}`;
+    const url = `/boards/${id}`;
     const token = localStorage.token;
     const config = {
       method: "delete",
       url,
       headers: { Authorization: `Bearer ${token}` },
     };
-    axios(config).then(() => {
+    axiosAuth(config).then(() => {
       // refresh page
       navigate(0);
     });

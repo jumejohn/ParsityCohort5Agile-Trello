@@ -52,13 +52,19 @@ const Login = () => {
   const { register, handleSubmit } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
+    console.log(data)
     dispatch(
       handleLogin(data, () => {
         navigate("/");
       })
     );
   };
+
+  const gotoRegister = () => {
+    navigate("/register")
+  }
+
+
   // For now, we will search the users array, then dispatch the action
   // Later, we can use axios to send a request to the server, then dispatch
   // based on success
@@ -101,9 +107,12 @@ const Login = () => {
                   </label>
                 </div>
                 <div className="input_div">
-                  <input type="submit" className="input_submit_button" />
+                  <input type="submit" className="input_submit_button" value="Login"/>
                 </div>
               </form>
+              <div className="input_div mt-2">
+                  <input type="button" className="input_submit_button" value="Register" onClick={() => gotoRegister()}></input>
+              </div>
             </div>
           </div>
         </div>

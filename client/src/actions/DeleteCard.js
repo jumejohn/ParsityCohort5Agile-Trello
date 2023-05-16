@@ -1,10 +1,11 @@
 import axios from "axios";
+import { axiosAuth } from "../utils/axiosAuth";
 
 export const deleteCard = (cardId, listId) => (dispatch) => {
   const token = localStorage.token;
-  axios({
+  axiosAuth({
     method: "delete",
-    url: `https://parsitycohort5agile-trello-production.up.railway.app/cards/${cardId}`,
+    url: `/cards/${cardId}`,
     headers: {'Authorization': `Bearer ${token}`},
     data: {
       listId: listId,

@@ -1,8 +1,9 @@
 import axios from "axios";
 import { FETCH_BOARD } from "./BoardFetch";
+import { axiosAuth } from "../utils/axiosAuth";
 export const MOVE_LIST = "MOVE_LIST";
 export const moveLists = (boardId, token, newOrder, oldLists, username, board) => (dispatch) => {
-  const url = `https://parsitycohort5agile-trello-production.up.railway.app/boards/${boardId}`;
+  const url = `/boards/${boardId}`;
 
   const order = newOrder
   const lists = oldLists
@@ -14,7 +15,7 @@ export const moveLists = (boardId, token, newOrder, oldLists, username, board) =
   const newBoard = {...board, lists: newLists}
 
 
-  return axios( { 
+  return axiosAuth( { 
       method: "put",
       url,
       headers: { Authorization: `Bearer ${token}` },

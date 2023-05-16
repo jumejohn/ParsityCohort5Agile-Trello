@@ -30,5 +30,7 @@ router.get('/auth/signout', (req, res) => {
   req.logout();
   res.send('Logged out!');
 });
+
+router.post('/auth/register', Auth.register);
 // router.post('/auth/signin', Auth.signin);
 module.exports = router;

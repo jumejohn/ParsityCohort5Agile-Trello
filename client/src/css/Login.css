@@ -29,6 +29,8 @@
     font-family: courier, sans;
     letter-spacing: -1px;
     box-shadow: rgb(0 0 0) -10px 8px 0px;
+    margin-left: 14px;
+    margin-top: 5px;
 }
 
 .input_submit_button:hover {
