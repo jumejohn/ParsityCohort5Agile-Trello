@@ -51,7 +51,7 @@ app.use("/user", userRoutes);
 app.use("/lists", listRoutes);
 app.use("/cards", cardRoutes);
 
-if (process.env.NODE_ENV === "production") {
+if (process.env.RAILWAY_ENVIRONMENT === "production") {
   // Express will serve up production assets
   // like our main.js file, or main.css file!
   // app.use(express.static("client/build"));
