@@ -1,11 +1,12 @@
 import axios from "axios";
+import { axiosAuth } from "../utils/axiosAuth";
 
 export const EDIT_CARD_LABELS = "EDIT_CARD_LABELS";
 export const editCardLabels = (listId, cardId, newLabels) => (dispatch) => {
   const token = localStorage.token;
-  axios({
+  axiosAuth({
     method: "put",
-    url: `https://parsitycohort5agile-trello-production.up.railway.app/cards/${cardId}`,
+    url: `/cards/${cardId}`,
     headers: { Authorization: `Bearer ${token}` },
     data: {
       listId: listId,

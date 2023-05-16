@@ -1,12 +1,13 @@
 import axios from "axios";
+import { axiosAuth } from "../utils/axiosAuth";
 
 export const quickEditCard =
   (cardId, listId, newCardTitle, cardLabel, cardDescription, cardComments) =>
   (dispatch) => {
     const token = localStorage.token;
-    axios({
+    axiosAuth({
       method: "put",
-      url: `https://parsitycohort5agile-trello-production.up.railway.app/cards/${cardId}`,
+      url: `/cards/${cardId}`,
       headers: { Authorization: `Bearer ${token}` },
       data: {
         listId: listId,

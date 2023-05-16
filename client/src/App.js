@@ -8,6 +8,7 @@ ReactModal.defaultStyles.overlay.zIndex = "5";
 const App = () => {
 
   if (!localStorage.token) {
+    debugger
     return <Navigate to="/login" />;
   }
 

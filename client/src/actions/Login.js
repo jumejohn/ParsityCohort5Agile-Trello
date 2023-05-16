@@ -1,9 +1,10 @@
 import axios from "axios";
 import { HANDLE_LOGIN } from "./types";
+import { axiosAuth } from "../utils/axiosAuth";
 export const handleLogin = (userData, callback) => (dispatch) => {
-  const url = `https://parsitycohort5agile-trello-production.up.railway.app/auth/signin`;
+  const url = `/auth/signin`;
 
-  axios
+  axiosAuth
     .post(url, userData)
     .then(function (response) {
       dispatch({

@@ -23,14 +23,11 @@ exports.signin = function (req, res, next) {
   });
 };
 
-exports.currentUser = function (req, res) {
+exports.currentUser = function (req, res) { 
   const user = {
     username: req.user.username,
     firstname: req.user.firstname,
     lastname: req.user.lastname,
-    email: req.user.email,
-    phone: req.user.phone,
-    avatarUrl: req.user.avatarUrl,
     organization: req.user.organization,
     token: tokenForUser(req.user),
   };
@@ -64,27 +61,27 @@ exports.register = async function (req, res, next) {
   await userOrg
     .save()
 
-
   // create new user document from schema
-  const newUser = new User({ username, firstName, lastName, organization: userOrg._id });
+  const newUser = new User({ username, firstname: firstName, lastname: lastName, organization: userOrg._id, email: username });
 
+  // console.log(newUser)
   // call password creation function from model
   newUser.setPassword(password);
-
+  // console.log(newUser)
 
   // save to database
-  newUser
+  await newUser
     .save()
-    .then(() => {
+    .then((user) => {
+
       // return 201 if successful
       // generate a signed son web token with the contents of user object and return it in the response
       // const token = jwt.sign(newUser.toJSON(), keys.JWT_SECRET, {
       //   expiresIn: keys.JWT_EXPIRES_IN,
       // });
-
       const userWithToken = newUser.toJSON();
 
       return res.status(201).send({ success: true, user: userWithToken });
     })
-    .catch((err) => res.status(500).send({ success: false }));
+    .catch((err) => res.status(500).send({ success: false, message: "not saved correctly", error: err }));
 }

@@ -1,12 +1,13 @@
 import axios from "axios";
+import { axiosAuth } from "../utils/axiosAuth";
 export const UPDATE_CARD = "UPDATE_CARD";
 
 export const deleteComment = (comment, cardId) => (dispatch) => {
   const token = localStorage.token;
 
-  axios({
+  axiosAuth({
     method: "delete",
-    url: `https://parsitycohort5agile-trello-production.up.railway.app/cards/${cardId}/comment/${comment}`,
+    url: `/cards/${cardId}/comment/${comment}`,
     headers: { Authorization: `Bearer ${token}` },
   }).then((response) => {
     console.log("delete comment", response);

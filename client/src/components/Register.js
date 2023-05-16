@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { handleLogin } from "../actions/Login";
 import { useNavigate } from "react-router-dom";
 import "../css/Login.css";
+import { handleRegister } from "../actions/Register";
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -12,7 +13,7 @@ const Register = () => {
 
   const onSubmit = (data) => {
     dispatch(
-      handleLogin(data, () => {
+      handleRegister(data, () => {
         navigate("/");
       })
     );
@@ -48,6 +49,26 @@ const Register = () => {
                   type={"password"}
                   {...register("password")}
                   placeholder="password"
+                  className="input_field"
+                />
+              </label>
+            </div>
+            <div className="input_div">
+              <label className="input_label">
+                <h5>First Name:</h5>
+                <input
+                  {...register("firstName")}
+                  placeholder="first name"
+                  className="input_field"
+                />
+              </label>
+            </div>
+            <div className="input_div">
+              <label className="input_label">
+                <h5>Last Name:</h5>
+                <input
+                  {...register("lastName")}
+                  placeholder="last name"
                   className="input_field"
                 />
               </label>
