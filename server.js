@@ -60,7 +60,6 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 
   // Express will serve up the index.html file
   // if it doesn't recognize the route
-  const path = require("path");
   app.get('*', (req,res) =>{
     res.sendFile(path.join(__dirname+'/client/build/index.html'));
 });
