@@ -51,12 +51,12 @@ app.use("/user", userRoutes);
 app.use("/lists", listRoutes);
 app.use("/cards", cardRoutes);
 
-if (process.env.RAILWAY_ENVIRONMENT === "production") {
+if (process.env.ENVIRONMENT === "production") {
   // Express will serve up production assets
   // like our main.js file, or main.css file!
   // app.use(express.static("client/build"));
   // Serve the static files from the React app
-app.use(express.static(path.join(__dirname, 'client/build')));
+  app.use(express.static(path.join(__dirname, 'client/build')));
 
   // Express will serve up the index.html file
   // if it doesn't recognize the route

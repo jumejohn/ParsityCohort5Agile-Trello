@@ -79,8 +79,9 @@ exports.register = async function (req, res, next) {
       // const token = jwt.sign(newUser.toJSON(), keys.JWT_SECRET, {
       //   expiresIn: keys.JWT_EXPIRES_IN,
       // });
-      const userWithToken = newUser.toJSON();
-
+      
+      const userWithToken = newUser.toJSON()
+      console.log(userWithToken, 'user')
       return res.status(201).send({ success: true, user: userWithToken });
     })
     .catch((err) => res.status(500).send({ success: false, message: "not saved correctly", error: err }));

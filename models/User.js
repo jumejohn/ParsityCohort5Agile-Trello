@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const OrganizationSchema = require('./Organization');
 const keys = require('../config/keys')
 const jwt = require('jsonwebtoken')
+const jwtSimple = require('jwt-simple');
 
 const UserSchema = new Schema({
   username: { type: String, required: true, unique: true },
@@ -43,9 +44,22 @@ UserSchema.methods.toJSON = function () {
 
   console.log(this)
   return {
-    _id: this._id,
-    token: `${this.createToken()}`,
-  };
+    token: jwtSimple.encode(
+      {
+        sub: this._id,
+        iat: Math.round(Date.now() / 1000),
+        exp: Math.round(Date.now() / 1000 + 5 * 60 * 60),
+      },
+    keys.TOKEN_SECRET
+  ),
+  userID: this._id
+}
+  // {
+  //   _id: this._id,
+  //   token: `${this.createToken()}`,
+  // };
 };
+
+
 
 module.exports = mongoose.model('User', UserSchema);
