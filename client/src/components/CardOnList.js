@@ -55,11 +55,13 @@ const CardOnList = (props) => {
   const handleCardClick = (e) => {
     setButtonsAreShown(false);
     setModalIsOpen(true);
+    dispatch({type: "HANDLE_DISABLE"})
     console.log("this should be cardId", e.target.value);
     localStorage.setItem("card", e.target.value);
   };
   const handleCloseModalClick = () => {
     setModalIsOpen(false);
+    dispatch({type: "HANDLE_ENABLE"})
   };
 
   return (
