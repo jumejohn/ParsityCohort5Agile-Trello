@@ -1,8 +1,9 @@
 import axios from 'axios';
 // Default config options
-// https://parsitycohort5agile-trello-production.up.railway.app/
+// http://localhost:3000
+// 
 const defaultOptions = {
-  baseURL: 'http://localhost:3000',
+  baseURL: 'https://parsitycohort5agile-trello-production.up.railway.app',
   headers: {
     'Content-Type': 'application/json',
   },

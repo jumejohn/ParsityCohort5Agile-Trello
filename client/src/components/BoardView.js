@@ -41,6 +41,9 @@ const BoardView = () => {
   let { boardId } = useParams();
   const { reset, register, handleSubmit } = useForm();
   const [isShow, setIsShow] = useState(false);
+
+  const disabledDnd = useSelector((state) => state.rootReducer.disabledDnd.disabled)
+
   // const currentUser = useSelector(
   //   (state) => state.rootReducer.user.currentUser.username
   // );
@@ -378,6 +381,7 @@ const BoardView = () => {
         <SortableContext
           items={containers}
           strategy={horizontalListSortingStrategy}
+          disabled={disabledDnd} 
         >
           {items.map((list) => (
             <SortableList
@@ -390,6 +394,7 @@ const BoardView = () => {
               <SortableContext
                 items={lists[list._id]}
                 strategy={rectSortingStrategy}
+                disabled={disabledDnd}
               >
                 {list.cards.map((card) => (
                   <SortableCard
@@ -405,7 +410,7 @@ const BoardView = () => {
             </SortableList>
           ))}
         </SortableContext>
-        <DragOverlay>
+        <DragOverlay disabled={disabledDnd}>
           {activeId ? (
             containers.includes(activeId) ? null : (
               <CardClone
@@ -437,7 +442,7 @@ class MyPointerSensor extends PointerSensor {
           return false;
         }
         if (
-          document.getElementsByClassName("ReactModal__Body--open").length == 1
+          document.getElementsByClassName("ReactModal__Overlay").length > 0
         ) {
           return false;
         }
