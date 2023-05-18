@@ -33,7 +33,9 @@ const jwtOptions = {
 
 const jwtLogin = new JwtStrategy(jwtOptions, (payload, done) => {
   
-  User.findById(payload._id)
+  console.log('in JWT strategy')
+  console.log(payload)
+  User.findById(payload.sub)
     .populate({
       path: 'organization',
       populate: {
