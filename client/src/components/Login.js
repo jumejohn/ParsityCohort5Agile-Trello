@@ -4,47 +4,7 @@ import { useForm } from "react-hook-form";
 import { handleLogin } from "../actions/Login";
 import { useNavigate } from "react-router-dom";
 import "../css/Login.css";
-
-// hardcoded users for now
-const users = [
-  {
-    username: "tester2",
-    firstname: "Mark",
-    lastname: "Cook",
-    email: "mark.cook@email.com",
-    phone: 222333444,
-    avatarUrl: "https://thumbs.dreamstime.com/z/cool-kid-10482439.jpg",
-    contacts: [],
-    organization: [],
-    password: "password",
-  },
-];
-const org1 = {
-  _id: "12345",
-  orgName: "test organization",
-  orgOwner: "tester1",
-  orgBoards: [],
-};
-const board1 = {
-  boardname: "Test Board",
-  users: [],
-  lists: [
-    {
-      _id: "1",
-      listName: "todos",
-      cards: [
-        {
-          cardTitle: "Clean Room",
-        },
-        {
-          cardTitle: "Wash Dishes",
-        },
-      ],
-    },
-  ],
-};
-org1.orgBoards.push(board1);
-users[0].organization.push(org1);
+import { handleRegister } from "../actions/Register";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -62,6 +22,21 @@ const Login = () => {
 
   const gotoRegister = () => {
     navigate("/register")
+  }
+
+  const demoLogin = () => {
+    const date = new Date();
+    let dummyData = date.getTime();
+    const demoUser = {
+      username: `testuser${dummyData}`,
+      password: `testuser${dummyData}`,
+      firstName: dummyData,
+      lastName: dummyData,
+    }
+    dispatch(
+      handleRegister(demoUser, () => {
+        navigate("/");
+    }))
   }
 
 
@@ -112,6 +87,9 @@ const Login = () => {
               </form>
               <div className="input_div mt-2">
                   <input type="button" className="input_submit_button" value="Register" onClick={() => gotoRegister()}></input>
+              </div>
+              <div className="input_div mt-2">
+                  <input type="button" className="input_submit_button" value="Demo Login" onClick={() => demoLogin()}></input>
               </div>
             </div>
           </div>
