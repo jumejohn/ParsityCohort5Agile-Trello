@@ -224,6 +224,7 @@ router
       const cardId = req.params.cardId
       const commentId = req.params.commentId
       const { username, commentText } = req.body
+
       const activtyLog = createActivityLog(username, 'updated comment')
       Card.findById(cardId)
         .updateOne({ $push: { cardActivity: activtyLog } })
