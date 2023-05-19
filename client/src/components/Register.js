@@ -26,7 +26,7 @@ const Register = () => {
   return (      
   <>
     <header className="input_header">
-      <h1 className="input_h1">Cohort 5 Agile Project Board</h1>
+      <h1 className="input_h1">Agile Project Board</h1>
     </header>
     <div className="input_div">
       <div className="input_jumbotron">
