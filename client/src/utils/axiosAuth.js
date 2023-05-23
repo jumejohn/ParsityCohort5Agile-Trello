@@ -1,6 +1,6 @@
 import axios from 'axios'
 // Default config options
-// http://localhost:3000
+// http://localhost:8000
 //
 const defaultOptions = {
   baseURL: 'http://localhost:8000',

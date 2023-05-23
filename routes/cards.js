@@ -119,10 +119,10 @@ router
     '/:cardId/comment/:commentId',
     requireAuth,
     async function (req, res, next) {
+      const { username } = req.user
       const cardId = req.params.cardId
       const commentId = req.params.commentId
       const card = await Card.findById(cardId)
-      const activityLog = createActivityLog(username, 'deleted a comment')
       let newCommentArray = []
       card.cardComments.filter((comment) => {
         if (comment._id != commentId) {
@@ -130,6 +130,10 @@ router
         }
       })
       card.cardComments = newCommentArray
+
+      const activityLog = createActivityLog(username, 'deleted a comment')
+      card.cardActivity.push(activityLog)
+
       await card.save()
       res.send(card).status(204).end()
     }
