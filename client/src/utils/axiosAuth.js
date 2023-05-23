@@ -3,8 +3,8 @@ import axios from 'axios'
 // http://localhost:8000
 //
 const defaultOptions = {
-  baseURL: 'http://localhost:8000',
-  // baseURL: 'https://parsitycohort5agile-trello-production.up.railway.app',
+  // baseURL: 'http://localhost:8000',
+  baseURL: 'https://parsitycohort5agile-trello-production.up.railway.app',
   headers: {
     'Content-Type': 'application/json',
   },
