@@ -1,24 +1,27 @@
-import { EDIT_CARD_LABELS } from "../actions/EditCardLabels";
-import { LOAD_CARD } from "../actions/LoadCard";
-import { HANDLE_LOGOUT } from "../actions/Logout";
-import { CREATE_COMMENT } from "../actions/PostComment";
-import { UPDATE_CARD } from "../actions/PostComment";
+import { EDIT_CARD_LABELS } from '../actions/EditCardLabels'
+import { UPDATE_COMMENT } from '../actions/EditComment'
+import { LOAD_CARD } from '../actions/LoadCard'
+import { HANDLE_LOGOUT } from '../actions/Logout'
+import { CREATE_COMMENT } from '../actions/PostComment'
+import { UPDATE_CARD } from '../actions/PostComment'
 
-const initialState = {};
+const initialState = {}
 const reducerCard = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_CARD:
       // console.log("current reducer Card:", action.payload);
-      return action.payload;
+      return action.payload
     case EDIT_CARD_LABELS:
-      return action.payload;
+      return action.payload
     case HANDLE_LOGOUT:
-      return initialState;
+      return initialState
     case UPDATE_CARD:
-      return action.payload;
+      return action.payload
+    case UPDATE_COMMENT:
+      return action.payload
     default:
-      return state;
+      return state
   }
-};
+}
 
-export default reducerCard;
+export default reducerCard
